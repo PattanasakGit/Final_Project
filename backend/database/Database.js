@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-
-var collection = 'test';
-const uri = 'mongodb://127.0.0.1:27017/Test';
+const uri = 'mongodb://127.0.0.1:27017/Final_Project';
 
 async function connectDatabase() {
     try {
@@ -79,7 +77,7 @@ async function getDataById(id , DataModel) {
   }
 }
 
-async function getNextUserId(DataModel) {
+async function getNextDataId(DataModel) {
   try {
     const data = await DataModel.find().sort({ ID: -1 }).limit(1).exec();
     const maxUserId = data.length > 0 ? data[0].ID : 0;
@@ -98,5 +96,5 @@ module.exports = {
   updateData,
   deleteData,
   getDataById,
-  getNextUserId,
+  getNextDataId,
 };
