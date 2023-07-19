@@ -26,7 +26,7 @@ async function addLogin(req, res) {
     await insertData(Login, DataModel); 
 
     console.log('Login added successfully');
-    res.status(200).json({ message: 'Login added successfully' });
+    res.status(200).json({ status : true ,   message: 'Login added successfully' });
   } catch (error) {
     console.error('Failed to insert Login:', error);
     res.status(500).json({ error: error.message });
@@ -52,7 +52,7 @@ async function updateLogin(req, res) {
     await updateData(id, newData, DataModel); 
 
     console.log('Login updated successfully');
-    res.status(200).json({ message: 'Login updated successfully' });
+    res.status(200).json({ status : true ,   message: 'Login updated successfully' });
   } catch (error) {
     console.error('Failed to update Login:', error);
     res.status(500).json({ error: error.message });
@@ -66,7 +66,7 @@ async function deleteLogin(req, res) {
     await deleteData(id, DataModel);
 
     console.log('Login deleted successfully');
-    res.status(200).json({ message: 'Login deleted successfully' });
+    res.status(200).json({ status : true ,   message: 'Login deleted successfully' });
   } catch (error) {
     console.error('Failed to delete Login:', error);
     res.status(500).json({ error: error.message });

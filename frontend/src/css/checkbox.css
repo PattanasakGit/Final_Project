@@ -1,0 +1,18 @@
+@import url(https://icons8.com/icon/VFaz7MkjAiu0/done);
+
+.checkbox input[type="checkbox"]:checked+.slider {
+    background-color: rgb(5, 178, 5);
+    border-radius: 5px;
+    border: 2px solid rgb(5, 178, 5);
+}
+
+.checkbox input[type="checkbox"]:checked+.slider::before {
+    content: "✓";
+    color: white;
+}
+
+.checkbox input[type="checkbox"]+.slider {
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 5px;
+    border: 2px solid #f56200;
+}

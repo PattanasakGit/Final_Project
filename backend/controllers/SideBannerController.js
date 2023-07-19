@@ -25,7 +25,7 @@ async function addSideBanner(req, res) {
     await insertData(SideBanner, DataModel); 
 
     console.log('SideBanner added successfully');
-    res.status(200).json({ message: 'SideBanner added successfully' });
+    res.status(200).json({ status : true ,   message: 'SideBanner added successfully' });
   } catch (error) {
     console.error('Failed to insert SideBanner:', error);
     res.status(500).json({ error: error.message });
@@ -51,7 +51,7 @@ async function updateSideBanner(req, res) {
     await updateData(id, newData, DataModel); 
 
     console.log('SideBanner updated successfully');
-    res.status(200).json({ message: 'SideBanner updated successfully' });
+    res.status(200).json({ status : true ,   message: 'SideBanner updated successfully' });
   } catch (error) {
     console.error('Failed to update SideBanner:', error);
     res.status(500).json({ error: error.message });
@@ -65,7 +65,7 @@ async function deleteSideBanner(req, res) {
     await deleteData(id, DataModel);
 
     console.log('SideBanner deleted successfully');
-    res.status(200).json({ message: 'SideBanner deleted successfully' });
+    res.status(200).json({ status : true ,   message: 'SideBanner deleted successfully' });
   } catch (error) {
     console.error('Failed to delete SideBanner:', error);
     res.status(500).json({ error: error.message });

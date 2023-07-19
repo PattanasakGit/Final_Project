@@ -24,7 +24,7 @@ async function addStatusProduct(req, res) {
     await insertData(StatusProduct, DataModel); // เพิ่มผู้ใช้ในฐานข้อมูล
 
     console.log('StatusProduct added successfully');
-    res.status(200).json({ message: 'StatusProduct added successfully' });
+    res.status(200).json({ status : true ,   message: 'StatusProduct added successfully' });
   } catch (error) {
     console.error('Failed to insert StatusProduct:', error);
     res.status(500).json({ error: error.message });
@@ -51,7 +51,7 @@ async function updateStatusProduct(req, res) {
     await updateData(id, newData, DataModel); // อัปเดตข้อมูลผู้ใช้ในฐานข้อมูล
 
     console.log('StatusProduct updated successfully');
-    res.status(200).json({ message: 'StatusProduct updated successfully' });
+    res.status(200).json({ status : true ,   message: 'StatusProduct updated successfully' });
   } catch (error) {
     console.error('Failed to update StatusProduct:', error);
     res.status(500).json({ error: error.message });
@@ -65,7 +65,7 @@ async function deleteStatusProduct(req, res) {
     await deleteData(id, DataModel); // ลบข้อมูลผู้ใช้จากฐานข้อมูล
 
     console.log('StatusProduct deleted successfully');
-    res.status(200).json({ message: 'StatusProduct deleted successfully' });
+    res.status(200).json({ status : true ,   message: 'StatusProduct deleted successfully' });
   } catch (error) {
     console.error('Failed to delete StatusProduct:', error);
     res.status(500).json({ error: error.message });

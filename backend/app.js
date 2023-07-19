@@ -1,4 +1,5 @@
 const express = require('express');
+var cors  = require('cors');
 const app = express();
 const port = 8000;
 
@@ -13,6 +14,7 @@ const { addStatusProduct, listStatusProducts, updateStatusProduct, deleteStatusP
 const { addCategoryProduct, listCategoryProducts, updateCategoryProduct, deleteCategoryProduct, getCategoryProductById} = require('./controllers/CategoryProductController');
 
 app.use(express.json());
+app.use(cors());
 
 // User API
 app.post('/createUser', addUser);

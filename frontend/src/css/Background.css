@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap');
+
+.pageSignUp {
+    font-family: 'Noto Sans Thai', sans-serif;
+    min-height: 100vh;
+    /* height: 130px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background: linear-gradient(90deg, rgba(250, 0, 0, 0.109) 0%, rgba(255, 255, 255, 0.056) 100%); */
+    background-color: rgb(255, 255, 255);
+    background-image: url('https://images.unsplash.com/photo-1620095198790-2f663d67677d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');
+    background-size: 100% 100%;
+    background-position: center;
+    /* backdrop-filter: blur(70px); */
+    background-attachment: fixed;
+}
+
+
+.contentPage {
+    font-family: 'Noto Sans Thai', sans-serif;
+    /* position: absolute; */
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    padding-Top: 2rem;
+    padding-bottom: 3rem;
+    width: 90%;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.199);
+    /* background-image: url('https://images.unsplash.com/photo-1557682260-96773eb01377?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1429&q=80'); */
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    /* border-radius: 10px;
+    border: 1px solid rgba(15, 1, 1, 0.5); */
+}
+
+.formInput {
+    /* max-width: 600; */
+    width: 95%;
+    margin-top: 3rem;
+
+}
+
+.ThepatforInput {
+    border: 2px solid #5e5e5e53;
+    border-radius: 7px;
+    width: 100%;
+    height: 50px;
+    background-color: #ffffff0e;
+    color: black;
+    font-size: 20px;
+    /* font-family: 'Krub', sans-serif; */
+    font-family: 'Noto Sans Thai', sans-serif;
+    text-align: left;
+    padding-left: 15px;
+
+}
+
+.Thepatradio {
+    border: 2px solid #5e5e5e53;
+    border-radius: 80px;
+    width: 100%;
+    height: 50px;
+    background-color: #ffffff0e;
+    color: black;
+    font-size: 20px;
+    /* font-family: 'Krub', sans-serif; */
+    font-family: 'Noto Sans Thai', sans-serif;
+
+}
+
+.ThepatforInput:focus {
+    border-color: #ffcc00;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+    outline: none;
+}
+
+.backform {
+    font-family: 'Noto Sans Thai', sans-serif;
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #fefefee0;
+    backdrop-filter: blur(100px);
+    border-radius: 20px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.Texttoppic {
+
+    font-family: 'Noto Sans Thai', sans-serif;
+    font-size: 35px;
+    color: black;
+}
+
+.swal2-popup {
+    font-size: 1rem !important;
+    font-family: 'Noto Sans Thai', sans-serif !important;
+}
+
+
+
+
+/* ===================================================================== */
+/* ส่วนของปุ่มกด */
+
+/* relevant portion */
+.TP_fun_button {
+    border: 2.5px solid #ffc802 !important;
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    background-color: #F86F03 !important;
+    color: #ffffff;
+    font-size: 20px  !important;
+    border-radius: 10px  !important;
+    padding: 10px 20px;
+    width: 80%;
+    height: 50px;
+}
