@@ -29,7 +29,7 @@ async function addDataWeb(req, res) {
     await insertData(DataWeb, DataModel); 
 
     console.log('DataWeb added successfully');
-    res.status(200).json({ message: 'DataWeb added successfully' });
+    res.status(200).json({ status : true ,   message: 'DataWeb added successfully' });
   } catch (error) {
     console.error('Failed to insert DataWeb:', error);
     res.status(500).json({ error: error.message });
@@ -55,7 +55,7 @@ async function updateDataWeb(req, res) {
 
     await updateData(id, newData, DataModel);
     console.log('DataWeb updated successfully');
-    res.status(200).json({ message: 'DataWeb updated successfully' });
+    res.status(200).json({ status : true ,   message: 'DataWeb updated successfully' });
   } catch (error) {
     console.error('Failed to update DataWeb:', error);
     res.status(500).json({ error: error.message });
@@ -69,7 +69,7 @@ async function deleteDataWeb(req, res) {
     await deleteData(id, DataModel);
 
     console.log('DataWeb deleted successfully');
-    res.status(200).json({ message: 'DataWeb deleted successfully' });
+    res.status(200).json({ status : true ,   message: 'DataWeb deleted successfully' });
   } catch (error) {
     console.error('Failed to delete DataWeb:', error);
     res.status(500).json({ error: error.message });

@@ -24,7 +24,7 @@ async function addRole(req, res) {
     await insertData(Role, DataModel); 
 
     console.log('Role added successfully');
-    res.status(200).json({ message: 'Role added successfully' });
+    res.status(200).json({ status : true ,   message: 'Role added successfully' });
   } catch (error) {
     console.error('Failed to insert Role:', error);
     res.status(500).json({ error: error.message });
@@ -50,7 +50,7 @@ async function updateRole(req, res) {
     await updateData(id, newData, DataModel); 
 
     console.log('Role updated successfully');
-    res.status(200).json({ message: 'Role updated successfully' });
+    res.status(200).json({ status : true ,   message: 'Role updated successfully' });
   } catch (error) {
     console.error('Failed to update Role:', error);
     res.status(500).json({ error: error.message });
@@ -64,7 +64,7 @@ async function deleteRole(req, res) {
     await deleteData(id, DataModel);
 
     console.log('Role deleted successfully');
-    res.status(200).json({ message: 'Role deleted successfully' });
+    res.status(200).json({ status : true ,   message: 'Role deleted successfully' });
   } catch (error) {
     console.error('Failed to delete Role:', error);
     res.status(500).json({ error: error.message });

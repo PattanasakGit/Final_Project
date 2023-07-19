@@ -25,7 +25,7 @@ async function addTopBanner(req, res) {
     await insertData(TopBanner, DataModel); 
 
     console.log('TopBanner added successfully');
-    res.status(200).json({ message: 'TopBanner added successfully' });
+    res.status(200).json({ status : true ,  message: 'TopBanner added successfully' });
   } catch (error) {
     console.error('Failed to insert TopBanner:', error);
     res.status(500).json({ error: error.message });
@@ -51,7 +51,7 @@ async function updateTopBanner(req, res) {
     await updateData(id, newData, DataModel); 
 
     console.log('TopBanner updated successfully');
-    res.status(200).json({ message: 'TopBanner updated successfully' });
+    res.status(200).json({ status : true ,  message: 'TopBanner updated successfully' });
   } catch (error) {
     console.error('Failed to update TopBanner:', error);
     res.status(500).json({ error: error.message });
@@ -65,7 +65,7 @@ async function deleteTopBanner(req, res) {
     await deleteData(id, DataModel);
 
     console.log('TopBanner deleted successfully');
-    res.status(200).json({ message: 'TopBanner deleted successfully' });
+    res.status(200).json({ status : true ,  message: 'TopBanner deleted successfully' });
   } catch (error) {
     console.error('Failed to delete TopBanner:', error);
     res.status(500).json({ error: error.message });

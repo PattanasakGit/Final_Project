@@ -23,7 +23,7 @@ async function addCategoryProduct(req, res) {
 
     await insertData(CategoryProduct, DataModel);
     console.log('CategoryProduct added successfully');
-    res.status(200).json({ message: 'CategoryProduct added successfully' });
+    res.status(200).json({ status : true ,   message: 'CategoryProduct added successfully' });
   } catch (error) {
     console.error('Failed to insert CategoryProduct:', error);
     res.status(500).json({ error: error.message });
@@ -49,7 +49,7 @@ async function updateCategoryProduct(req, res) {
 
     await updateData(id, newData, DataModel); 
     console.log('CategoryProduct updated successfully');
-    res.status(200).json({ message: 'CategoryProduct updated successfully' });
+    res.status(200).json({ status : true ,   message: 'CategoryProduct updated successfully' });
   } catch (error) {
     console.error('Failed to update CategoryProduct:', error);
     res.status(500).json({ error: error.message });
@@ -63,7 +63,7 @@ async function deleteCategoryProduct(req, res) {
     await deleteData(id, DataModel); 
 
     console.log('CategoryProduct deleted successfully');
-    res.status(200).json({ message: 'CategoryProduct deleted successfully' });
+    res.status(200).json({ status : true ,   message: 'CategoryProduct deleted successfully' });
   } catch (error) {
     console.error('Failed to delete CategoryProduct:', error);
     res.status(500).json({ error: error.message });

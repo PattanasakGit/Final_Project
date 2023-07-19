@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400');
+@import url('https://fonts.googleapis.com/css2?family=Krub&display=swap');
+
+
+body,
+html {
+  font-family: 'Krub', sans-serif;
+  background-image: url('https://img.freepik.com/free-photo/black-friday-elements-assortment_23-2149074075.jpg?w=1800&t=st=1689507203~exp=1689507803~hmac=c65c31c8a2c0a7f6061d1999102e1ff3f7f0aeb77465fc1c27a833d0218fb0ea');
+  background-size: cover;
+  background-position: center;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+.container {
+  margin: 0;
+  top: 50px;
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  transform: translateX(-50%);
+  background-color: rgba(254, 254, 254, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border-top: 10px solid #ff4304;
+  border-bottom: 10px solid #ff4304;
+  width: 400px;
+  height: 500px;
+  /* box-shadow: 1px 1px 108.8px 19.2px rgb(255, 255, 255); */
+}
+
+.box h4 {
+  font-family: 'Krub', sans-serif;
+  color: #ff6600;
+  font-size: 35px;
+  margin-top: 60px;
+}
+
+.box h4 span {
+  color: #0095ff;
+  font-weight: lighter;
+  font-size: 28px;
+}
+
+.box h5 {
+  font-family: 'Krub', sans-serif;
+  font-size: 13px;
+  color: #464d64;
+  letter-spacing: 1.5px;
+  margin-top: -15px;
+  margin-bottom: 70px;
+}
+
+.box input[type='text'],
+.box input[type='password'] {
+  display: block;
+  margin: 20px auto;
+  background: #fafafa73;
+  border: 1px solid #00000057;
+  border-radius: 5px;
+  padding: 14px 10px;
+  width: 320px;
+  outline: none;
+  color: #000000;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+::-webkit-input-placeholder {
+  color: #0000002d;
+}
+
+.box input[type='text']:focus,
+.box input[type='password']:focus {
+  border: 1px solid #000000;
+}
+
+a {
+  color: #5c7fda;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+label input[type='checkbox'] {
+  display: none;
+}
+
+label span {
+  height: 13px;
+  width: 13px;
+  border: 2px solid #464d64;
+  border-radius: 2px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  float: left;
+  left: 7.5%;
+}
+
+.btn1 {
+  border: 0;
+  background: #ff5500;
+  color: #dfdeee;
+  border-radius: 100px;
+  width: 340px;
+  height: 49px;
+  font-size: 16px;
+  position: absolute;
+  top: 79%;
+  left: 8%;
+  transition: 0.3s;
+  cursor: pointer;
+  box-shadow: 1px 1px 0.1px .5px rgba(0, 0, 0, 0.361);
+}
+
+.btn1:hover {
+  background: #b40900;
+  /* background: #5d33e6; */
+}
+
+.rmb {
+  position: absolute;
+  margin-left: -24%;
+  margin-top: 0px;
+  color: #dfdeee;
+  font-size: 13px;
+}
+
+.forgetpass {
+  position: relative;
+  float: right;
+  right: 28px;
+}
+
+.dnthave {
+  position: absolute;
+  top: 92%;
+  left: 24%;
+}
+
+[type='checkbox']:checked+span:before {
+  font-family: FontAwesome;
+  font-size: 16px;
+  content: '\f00c';
+  position: absolute;
+  top: -4px;
+  color: #896cec;
+  left: -1px;
+  width: 13px;
+}
+
+.typcn {
+  position: absolute;
+  left: 339px;
+  top: 282px;
+  color: #000000;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.typcn.active {
+  color: #7f60eb;
+}
+
+.error {
+  background: #ff3333;
+  text-align: center;
+  width: 337px;
+  height: 20px;
+  padding: 2px;
+  border: 0;
+  border-radius: 5px;
+  margin: 10px auto 10px;
+  position: absolute;
+  top: 31%;
+  left: 7.2%;
+  color: white;
+  display: none;
+}
+
+.footer .fa {
+  color: #7f5feb;
+}
+
+
+
+/* บันทด checkbox */
+.containercheckbox {
+  display: flex;
+  align-items: center;
+  margin-left: 25px;
+}
+
+.checkbox-containercheckbox {
+  flex: 0.1;
+}
+
+.text-containercheckbox {
+  flex: 0.5;
+  text-align: left;
+  font-size: 13px;
+  color:#464d64;
+}
+
+.link-containercheckbox {
+  flex: 1;
+}

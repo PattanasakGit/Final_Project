@@ -26,7 +26,7 @@ async function addAdvert(req, res) {
     await insertData(Advert, DataModel); 
 
     console.log('Advert added successfully');
-    res.status(200).json({ message: 'Advert added successfully' });
+    res.status(200).json({ status : true ,   message: 'Advert added successfully' });
   } catch (error) {
     console.error('Failed to insert Advert:', error);
     res.status(500).json({ error: error.message });
@@ -53,7 +53,7 @@ async function updateAdvert(req, res) {
     await updateData(id, newData, DataModel); 
 
     console.log('Advert updated successfully');
-    res.status(200).json({ message: 'Advert updated successfully' });
+    res.status(200).json({ status : true ,   message: 'Advert updated successfully' });
   } catch (error) {
     console.error('Failed to update Advert:', error);
     res.status(500).json({ error: error.message });
@@ -67,7 +67,7 @@ async function deleteAdvert(req, res) {
     await deleteData(id, DataModel);
 
     console.log('Advert deleted successfully');
-    res.status(200).json({ message: 'Advert deleted successfully' });
+    res.status(200).json({ status : true ,   message: 'Advert deleted successfully' });
   } catch (error) {
     console.error('Failed to delete Advert:', error);
     res.status(500).json({ error: error.message });
