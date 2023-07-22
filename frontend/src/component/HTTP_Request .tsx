@@ -64,7 +64,7 @@ export const submitLogin = (data: any, part: string) => {
           window.location.href = 'http://localhost:3000/Home'; // เมื่อหมดเวลา 1 วินาที จะเปลี่ยนหน้าไปที่ /Home
         });
       }
-       else {
+      else {
         Swal.fire({
           title: 'เข้าสู่ระบบไม่สำเร็จ',
           text: res.error,
@@ -79,19 +79,6 @@ export const submitLogin = (data: any, part: string) => {
       });
     });
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
 //==============================================================================================================================================================================================================
 export const TP_VerifyEmail = (data: any, part: string) => {
   const apiUrl = `http://localhost:${port}/${part}`;
@@ -185,6 +172,20 @@ export const TP_VerifyEmail = (data: any, part: string) => {
       });
     });
 };
+//==============================================================================================================================================================================================================
+export const listProduct = (part: string) => {
+  const apiUrl = `http://localhost:${port}/${part}`;
+
+  return axios.get(apiUrl)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+};
+
 
 
 
