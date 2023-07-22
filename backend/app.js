@@ -1,21 +1,25 @@
 const express = require('express');
-var cors  = require('cors');
+var cors = require('cors');
 const app = express();
 const port = 8000;
-
+const { Login } = require('./controllers/LoginController');
 const { connectDatabase, closeDatabase } = require('./database/Database.js');
-const { addUser, listUsers, updateUser, deleteUser, getUserById} = require('./controllers/userController');
-const { addAdvert, listAdverts, updateAdvert, deleteAdvert, getAdvertById} = require('./controllers/AdvertController');
-const { addDataWeb, listDataWebs, updateDataWeb, deleteDataWeb, getDataWebById} = require('./controllers/datawebController');
+const { TP_VerifyEmail_Check_Pass } = require('./controllers/TP_VerifyEmail');
+const { addAdvert, listAdverts, updateAdvert, deleteAdvert, getAdvertById } = require('./controllers/AdvertController');
 const { addProduct, listProducts, updateProduct, deleteProduct, getProductById } = require('./controllers/productController');
-const { addTopBanner, listTopBanners, updateTopBanner, deleteTopBanner, getTopBannerById} = require('./controllers/TopBannerController');
-const { addSideBanner, listSideBanners, updateSideBanner, deleteSideBanner, getSideBannerById} = require('./controllers/SideBannerController');
-const { addStatusProduct, listStatusProducts, updateStatusProduct, deleteStatusProduct, getStatusProductById} = require('./controllers/StatusProductController');
-const { addCategoryProduct, listCategoryProducts, updateCategoryProduct, deleteCategoryProduct, getCategoryProductById} = require('./controllers/CategoryProductController');
+const { addDataWeb, listDataWebs, updateDataWeb, deleteDataWeb, getDataWebById } = require('./controllers/datawebController');
+const { addUser, listUsers, updateUser, deleteUser, getUserById, User_Verify_Email } = require('./controllers/userController');
+const { addTopBanner, listTopBanners, updateTopBanner, deleteTopBanner, getTopBannerById } = require('./controllers/TopBannerController');
+const { addSideBanner, listSideBanners, updateSideBanner, deleteSideBanner, getSideBannerById } = require('./controllers/SideBannerController');
+const { addStatusProduct, listStatusProducts, updateStatusProduct, deleteStatusProduct, getStatusProductById } = require('./controllers/StatusProductController');
+const { addCategoryProduct, listCategoryProducts, updateCategoryProduct, deleteCategoryProduct, getCategoryProductById } = require('./controllers/CategoryProductController');
 
 app.use(express.json());
 app.use(cors());
 
+app.post('/Login', Login);
+app.post('/TP_VerifyEmail', TP_VerifyEmail_Check_Pass);
+app.post('/User_Verify_Email', User_Verify_Email);
 // User API
 app.post('/createUser', addUser);
 app.put('/updateUser/:id', updateUser);
@@ -65,6 +69,7 @@ app.put('/updateStatusProduct/:id', updateStatusProduct);
 app.delete('/deleteStatusProduct/:id', deleteStatusProduct);
 app.get('/getStatusProduct/:id', getStatusProductById);
 app.get('/listStatusProduct', listStatusProducts)
+
 
 // Middleware สำหรับจัดการข้อผิดพลาดในรูปแบบ JSON response
 app.use((err, req, res, next) => {
