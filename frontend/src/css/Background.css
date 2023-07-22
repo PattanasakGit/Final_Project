@@ -118,6 +118,7 @@
     height: 50px;
 }
 
+
 /* ================================================== home Page ======================================================== */ 
 .content_Home_Page {
     font-family: 'Noto Sans Thai', sans-serif;
@@ -148,4 +149,49 @@
     height: 500px;
     object-fit: cover;
     object-position: center;
+}
+.table_show_products{
+    font-family: 'Noto Sans Thai', sans-serif;
+    /* position: absolute; */
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    width: 90%;
+    height: auto;
+    background-color: rgba(255, 255, 255, 0.425);
+    /* background-image: url('https://images.unsplash.com/photo-1557682260-96773eb01377?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1429&q=80');
+    background-size: cover;
+    background-position: center; */
+    border-radius: 20px;
+    backdrop-filter: blur(70px);
+    /* border-radius: 10px;
+    border: 1px solid rgba(15, 1, 1, 0.5); */
+    justify-content: flex-start;
+    
+}
+.TP_btn_s{
+    border: 2.5px solid #ffc802 !important;
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    background-color: #F86F03 !important;
+    color: #ffffff;
+    font-size: 20px  !important;
+    border-radius: 10px  !important;
+    padding: 10px 20px;
+    width: 10% !important;
+    height: 50px;
+    margin-left: 1rem;
+
+}
+.TP_btn_sell{
+    border: 2.5px solid #ffc802 !important;
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    background-color: #048000 !important;
+    color: #ffffff;
+    font-size: 20px  !important;
+    border-radius: 10px  !important;
+    padding: 10px 20px;
+    width: 10% !important;
+    height: 50px;
+    margin-right: 1rem;
+
 }
