@@ -15,6 +15,8 @@ const NavBar = () => {
     setAnchorEl(null);
   };
 
+  function handleLogout() { window.location.href = 'http://localhost:3000/Login'; }
+
   return (
     // <AppBar className="NavBar">
       <div className="NavBar">
@@ -34,7 +36,7 @@ const NavBar = () => {
           <Button color="inherit">About</Button>
           <Button color="inherit">Services</Button>
           <Button color="inherit">Pricing</Button>
-          <Button color="inherit">Contact</Button>
+          <button className='Nav_button' onClick={handleLogout} >LOGOUT</button>
         </Box>
 
 

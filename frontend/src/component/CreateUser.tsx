@@ -6,7 +6,8 @@ import { bgcolor, border, color, height, margin } from "@mui/system";
 import React, { useState } from 'react';
 import { Grid, TextField, FormControl, FormControlLabel, Radio, RadioGroup, Button, Typography, Box } from '@mui/material';
 import { validateForm } from "./Validateinput";
-import { submit } from "./FetchData";
+import { TP_VerifyEmail, submit } from "./HTTP_Request ";
+
 
 //============================
 const Path = 'createUser'
@@ -31,7 +32,7 @@ const CreateUser = () => {
       U_GENDER: gender,
       U_PHONE: phone,
       U_EMAIL: email,
-      U_IMG:'',
+      U_IMG: '',
       ABOUT_ME: about,
       U_PASSWORD: passworld1,
       pass1: passworld1,
@@ -39,10 +40,9 @@ const CreateUser = () => {
     }
 
     if (validateForm(data).isValid) {  //ผ่าน ไม่มี errors
-
-      submit(data,Path) //ส่งข้อมูลไป fetch  เพื่อส่งข้อมูลผ่าน api ไป backend 
-      console.log(data);
-
+      // submit(data,Path) //ส่งข้อมูลไป fetch  เพื่อส่งข้อมูลผ่าน api ไป backend 
+      TP_VerifyEmail(data,'User_Verify_Email'); 
+      
     } else { //ตรวจพบ errors
       Swal.fire({
         titleText: validateForm(data).messageErrors[0],
@@ -54,7 +54,7 @@ const CreateUser = () => {
 
   return (
     <div className="pageSignUp">
-      <NavBar />
+      {/* <NavBar /> */}
       <div className="contentPage">
         <Grid container spacing={3}>
 
@@ -144,7 +144,7 @@ const CreateUser = () => {
                     className="ThepatforInput"
                     placeholder="อีเมล"
                     value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    onChange={(event) => setEmail(event.target.value.toLowerCase())}
                   />
                 </FormControl>
               </Box>
@@ -175,7 +175,7 @@ const CreateUser = () => {
           </Grid>
           <Grid item xs={12} sm={12}>
             <Box>
-              <Button variant="contained"  onClick={handleSubmit}  className="TP_fun_button" >
+              <Button variant="contained" onClick={handleSubmit} className="TP_fun_button" >
                 SIGN UP
               </Button>
             </Box>
@@ -188,14 +188,3 @@ const CreateUser = () => {
 };
 
 export default CreateUser;
-
-
-
-
-
-
-
-
-
-
-

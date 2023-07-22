@@ -2,23 +2,20 @@ import { useState } from 'react';
 import '../css/login.css';
 import '../css/checkbox.css';
 // import submit from '../component/FetchData';
-import { submit } from "./FetchData";
+import { submitLogin } from "./HTTP_Request ";
 const Path = 'Login';
 
-
 function Login() {
-
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [emailInput, setEmail] = useState('');
   const [passwordInput, setPassword] = useState('');
 
   let data = {
-    EMAIL : emailInput,
-    PASSWORD : passwordInput,
-    ROLE:'User'
+    email : emailInput,
+    password : passwordInput,
+    role:'User'
   };
-
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -26,30 +23,20 @@ function Login() {
 
   const handleFormSubmit = (event: any) => {
     event.preventDefault();
-
-    console.log(emailInput);
-    console.log(passwordInput);
-    setErrorMessage(emailInput)
-
   };
 
   const handleClick = (): void => {
-    submit(data,Path)
+    submitLogin(data,'Login')
+    // console.log(data);
   };
-
-
-
   return (
 
-    <div className="App">
-      <div className="animated bounceInDown">
-        <div className="container">
-          <span className="error animated tada" id="msg">
-            {errorMessage}
-          </span>
-          <form name="form1" className="box" onSubmit={handleFormSubmit}>
+    <div className='backgroundLogin'>
+      <div>
+        <div className="Login_Container">
+          <form name="form1" className="box_login" onSubmit={handleFormSubmit}>
             <h4>
-              Yakkkai<span>.com</span>
+              Yakkkai.com
             </h4>
             <h5>โปรดเข้าสู่ระบบ</h5>
             <input
@@ -59,7 +46,7 @@ function Login() {
               placeholder="Email"
               autoComplete="off"
               value={emailInput}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event) => setEmail(event.target.value.toLowerCase())}
             />
             <i className="typcn typcn-eye" onClick={togglePasswordVisibility} id="eye"></i>
             <input
@@ -96,11 +83,10 @@ function Login() {
               onClick={handleClick}
               className="btn1" />
           </form>
-          <a href="#" className="dnthave">
+          <a href="http://localhost:3000/CreateUser" className="dnthave">
             Don’t have an account? Sign up
           </a>
         </div>
-        <div className="footer"></div>
       </div>
     </div>
 

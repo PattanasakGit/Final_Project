@@ -1,22 +1,22 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400');
-@import url('https://fonts.googleapis.com/css2?family=Krub&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap');
 
-
-body,
-html {
-  font-family: 'Krub', sans-serif;
-  background-image: url('https://img.freepik.com/free-photo/black-friday-elements-assortment_23-2149074075.jpg?w=1800&t=st=1689507203~exp=1689507803~hmac=c65c31c8a2c0a7f6061d1999102e1ff3f7f0aeb77465fc1c27a833d0218fb0ea');
-  background-size: cover;
-  background-position: center;
-  padding: 0;
-  margin: 0;
+.backgroundLogin{
+    min-height: 100vh;
+    /* height: 130px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background: linear-gradient(90deg, rgba(250, 0, 0, 0.109) 0%, rgba(255, 255, 255, 0.056) 100%); */
+    background-color: rgb(255, 255, 255);
+    background-image: url('https://img.freepik.com/free-photo/top-view-paper-bags-with-copy-space_23-2148305923.jpg?w=1800&t=st=1689949634~exp=1689950234~hmac=6032e483a502eabff6c79555d9b11ae184dcc62f2e179230ab7307799ec874e2');
+    background-size: cover;
+    background-position: center;
+    /* backdrop-filter: blur(70px); */
+    background-attachment: fixed;
 }
-
-
-
-.container {
+.Login_Container {
   margin: 0;
-  top: 50px;
+  top: 100px;
   left: 50%;
   position: absolute;
   text-align: center;
@@ -26,35 +26,29 @@ html {
   border-radius: 20px;
   border-top: 10px solid #ff4304;
   border-bottom: 10px solid #ff4304;
-  width: 400px;
-  height: 500px;
+  width: 450px;
+  height: 550px;
   /* box-shadow: 1px 1px 108.8px 19.2px rgb(255, 255, 255); */
 }
 
-.box h4 {
-  font-family: 'Krub', sans-serif;
+.box_login h4 {
+  font-family: 'Noto Sans Thai', sans-serif;
   color: #ff6600;
   font-size: 35px;
   margin-top: 60px;
 }
 
-.box h4 span {
-  color: #0095ff;
-  font-weight: lighter;
-  font-size: 28px;
-}
-
-.box h5 {
-  font-family: 'Krub', sans-serif;
-  font-size: 13px;
+.box_login h5 {
+  font-family: 'Noto Sans Thai', sans-serif;
+  font-size: 20px;
   color: #464d64;
   letter-spacing: 1.5px;
   margin-top: -15px;
   margin-bottom: 70px;
 }
 
-.box input[type='text'],
-.box input[type='password'] {
+.box_login input[type='text'],
+.box_login input[type='password'] {
   display: block;
   margin: 20px auto;
   background: #fafafa73;
@@ -75,8 +69,8 @@ html {
   color: #0000002d;
 }
 
-.box input[type='text']:focus,
-.box input[type='password']:focus {
+.box_login input[type='text']:focus,
+.box_login input[type='password']:focus {
   border: 1px solid #000000;
 }
 
@@ -93,7 +87,7 @@ label input[type='checkbox'] {
   display: none;
 }
 
-label span {
+label span.slider {
   height: 13px;
   width: 13px;
   border: 2px solid #464d64;
@@ -115,7 +109,7 @@ label span {
   font-size: 16px;
   position: absolute;
   top: 79%;
-  left: 8%;
+  left: 12%;
   transition: 0.3s;
   cursor: pointer;
   box-shadow: 1px 1px 0.1px .5px rgba(0, 0, 0, 0.361);
@@ -146,7 +140,7 @@ label span {
   left: 24%;
 }
 
-[type='checkbox']:checked+span:before {
+[type='checkbox']:checked+span.slider:before {
   font-family: FontAwesome;
   font-size: 16px;
   content: '\f00c';
