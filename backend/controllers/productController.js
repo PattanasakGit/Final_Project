@@ -25,7 +25,7 @@ const productSchema = new Schema({
 
 const DataModel = mongoose.model(str_collection, productSchema);
 
-function getProductDataModel(){
+function getProductDataModel() {
   return DataModel;
 }
 
@@ -115,5 +115,128 @@ async function getProductById(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
+//==================================== สำหรับการค้นหาข้อมูล  ===================================================
+async function getProductByName(req, res) {
+  try {
+    const { Name } = req.params;
+    const name = new RegExp(Name, 'i'); // 'ค้นหาหมดไม่สน เล็กใหญ่'
+    const Product = await DataModel.find({ P_NAME: name }).exec();
+    if (!Product) {
+      return res.status(404).json({ error: 'ไม่พบรายการที่ตรงกับชื่อการค้นหา' });
+    }
+    res.status(200).json(Product);
+  } catch (error) {
+    console.error('Failed to retrieve Product:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+async function getProductByCATEGORY(req, res) {
+  try {
+    const { C } = req.params;
+    const CATEGORY = new RegExp(C, 'i'); // 'ค้นหาหมดไม่สน เล็กใหญ่'
+    const Product = await DataModel.find({ P_CATEGORY: CATEGORY }).exec();
+    if (!Product) {
+      return res.status(404).json({ error: 'ไม่พบรายการที่ตรงกับชื่อการค้นหา' });
+    }
+    res.status(200).json(Product);
+  } catch (error) {
+    console.error('Failed to retrieve Product:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+async function getProductTYPE(req, res) {
+  try {
+    const { T } = req.params;
+    const Type = new RegExp(T, 'i'); // 'ค้นหาหมดไม่สน เล็กใหญ่'
+    const Product = await DataModel.find({ P_TYPE: Type }).exec();
+    if (!Product) {
+      return res.status(404).json({ error: 'ไม่พบรายการที่ตรงกับชื่อการค้นหา' });
+    }
+    res.status(200).json(Product);
+  } catch (error) {
+    console.error('Failed to retrieve Product:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
 
-module.exports = { addProduct, listProducts, updateProduct, deleteProduct, getProductById, getProductDataModel };
+
+
+
+async function getProductByMultipleConditions(req, res) {
+  try {
+    const { nameProduct, category, type, minPrice, maxPrice } = req.body;
+    let conditions = {};
+
+    // ตรวจสอบเงื่อนไขการค้น ชื่อ
+    if (nameProduct) {
+      const typeRegex = new RegExp(nameProduct, 'i'); // i หมายถึงไม่สนใจตัวอักษรใหญ่เล็ก
+      conditions.P_NAME = typeRegex;
+    }
+
+    // ตรวจสอบเงื่อนไขการค้น ว่าสินค้ามือหนึง/มือสอง
+    if (type) {
+      const typeRegex = new RegExp(type, 'i'); // i หมายถึงไม่สนใจตัวอักษรใหญ่เล็ก
+      conditions.P_TYPE = typeRegex;
+    }
+
+    // ตรวจสอบเงื่อนไขการค้นหาหมวดหมู่สินค้า
+    if (category) {
+      const categoryRegex = new RegExp(category, 'i'); // i หมายถึงไม่สนใจตัวอักษรใหญ่เล็ก
+      conditions.P_CATEGORY = categoryRegex;
+    }
+
+    // ตรวจสอบเงื่อนไขการค้นหาราคาสินค้า
+    if (minPrice || maxPrice) {
+      conditions.P_PRICE = {};
+      if (minPrice) {
+        conditions.P_PRICE.$gte = Number(minPrice);
+      }
+      if (maxPrice) {
+        conditions.P_PRICE.$lte = Number(maxPrice);
+      }
+    }
+
+    const Product = await DataModel.find(conditions).exec();
+    console.log('================================');
+    console.log(conditions);
+    console.log('================================');
+    
+    if (Product.length === 0) {
+      return res.status(404).json({ error: 'ไม่พบรายการที่ตรงกับเงื่อนไขการค้นหา' });
+    }
+
+    res.status(200).json(Product);
+  } catch (error) {
+    console.error('Failed to retrieve Product:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//==================================== สำหรับการค้นหาข้อมูล  ===================================================
+
+module.exports = {
+  addProduct,
+  listProducts,
+  updateProduct,
+  deleteProduct,
+  getProductById,
+  getProductDataModel,
+  getProductByName,
+  getProductByCATEGORY,
+  getProductTYPE,
+  getProductByMultipleConditions
+
+};

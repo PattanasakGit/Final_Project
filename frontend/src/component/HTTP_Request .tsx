@@ -175,20 +175,46 @@ export const TP_VerifyEmail = (data: any, part: string) => {
 //==============================================================================================================================================================================================================
 export const listProduct = (part: string) => {
   const apiUrl = `http://localhost:${port}/${part}`;
+  // const apiUrl = `http://localhost:8000/getProduct/1`;
 
   return axios.get(apiUrl)
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
-      console.log(error);
+      console.log('พบข้อผิดพลาด:' + error);
       return [];
     });
 };
+//==============================================================================================================================================================================================================
+type Category = {
+  id: string;
+  name: string;
+};
 
-
-
-
+export const fetchCategories = async (): Promise<Category[]> => {
+  const apiUrl = `http://localhost:${port}/listCategoryProduct`;
+  return axios.get(apiUrl)
+  .then((response) => {      
+    return response.data;
+  })
+  .catch((error) => {
+    console.log('พบข้อผิดพลาด:' + error);
+    return [];
+  });
+};
+//==============================================================================================================================================================================================================
+export const fillter_product = async (filterData:any) => {
+  const apiUrl = `http://localhost:${port}/getProductByMultipleConditions`;
+  // console.log(filterData);
+  try {
+    const response = await axios.post(apiUrl, filterData);
+    return response.data;
+  } catch (error) {
+    console.log('พบข้อผิดพลาด:' + error);
+    return [];
+  }
+};
 
 
 
