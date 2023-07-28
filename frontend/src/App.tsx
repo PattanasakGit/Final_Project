@@ -18,7 +18,7 @@ function App() {
           <Route path="/CreateUser" element={<CreateUser />}/>
         </Routes>
       </BrowserRouter>
-      {/* <Footer/> */}
+      <Footer/>
     </>
   )
 }

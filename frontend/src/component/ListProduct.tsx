@@ -1,145 +1,394 @@
-import { useState, useEffect } from 'react';
-import { Grid, Card, CardContent, Typography, Pagination, colors } from '@mui/material';
-import { width } from '@mui/system';
-import { Button } from 'antd';
-import { listProduct } from './HTTP_Request ';
+import { useState, useEffect, SetStateAction } from 'react';
+import { Grid, Card, CardContent, Typography, Pagination } from '@mui/material';
+import '../css/Background.css';
+import { listProduct, fetchCategories, fillter_product } from './HTTP_Request ';
+import { Button, Drawer, Radio, Collapse } from 'antd'
+import { Select, MenuItem } from '@mui/material';
+import { margin, padding } from '@mui/system';
+const { Panel } = Collapse;
 
-// const generateDataProducts = () => {
-//   const products = [];
-//   for (let i = 1; i <= 800; i++) {
-//     const product = {
-//       id: i,
-//       name: `Product ${i}`,
-//       img: "https://www.bestsmartphoneunder10000.in/wp-content/uploads/2022/12/mi-12pro-8gb-ram-256gb-internal.jpg",
-//       price: Math.floor(Math.random() * 100) + 1, // สุ่มราคาสินค้าในช่วง 1-100
-//     };
-//     products.push(product);
-//   }
-//   return products;
-// };
-
-const DataProducts = listProduct('listProduct');
+const colors = ["FF8C32", "D7A86E", "A64B2A", "8E3200"];
 
 
-// const BackendAPI = {
-//   getProducts: async (page: number, pageSize: number) => {
-//     const startIndex = (page - 1) * pageSize;
-//     const endIndex = startIndex + pageSize;
-//     const data = DataProducts.slice(startIndex, endIndex);
-//     return new Promise((resolve) => {
-//       setTimeout(() => {
-//         resolve(data);
-//       }, 500);
-//     });
-//   },
-// };
 
 const ProductsGrid = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [showMore, setShowMore] = useState(false);
-  const [previousPage, setPreviousPage] = useState(0);
   const [TotalProducts, setTotalProducts] = useState(0);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const pageSize = 16;
-      const data = await listProduct('listProduct');
-      const totalProducts = data.length;
-      const startIndex = (currentPage - 1) * pageSize;
-      const endIndex = startIndex + pageSize;
-      const productsData = data.slice(startIndex, endIndex);
-      setProducts(productsData);
-      setTotalProducts(totalProducts);
-    };
+  const [type, settype] = useState("");
+  const [category, setcategory] = useState("");
+  const [minPrice, setminPrice] = useState(0);
+  const [maxPrice, setmaxPrice] = useState(0);
+  const [nameProduct, setnameProduct] = useState("");
 
-    fetchProducts();
-  }, [currentPage, showMore]);
-
-  const Check_Data = () => {
-    console.log(TotalProducts);
-    
+  const [categories, setCategories] = useState([]);
+  // const [selectedValue, setSelectedValue] = useState("");
+  // const type_new = () => { settype('new') };
+  // const type_old = () => { settype('old') };
+  const handleTypeChange = (event: any) => {
+    settype(event.target.value);
   };
-  
-
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     const pageSize = 16;
-  //     const data = await BackendAPI.getProducts(currentPage, pageSize);
-  //     setProducts(data);
-  //   };
-
-  //   fetchProducts();
-  // }, [currentPage, showMore]);
-
-  // const handleShowMore = () => {
-  //   if (currentPage < Math.ceil(DataProducts.length / 16)) {
-  //     setShowMore(true);
-  //     setPreviousPage(currentPage);
-  //     setCurrentPage((prevPage) => prevPage + 1);
-  //   }
-  // };
 
 
-  // const handleGoBack = () => {
-  //   if (previousPage > 1) {
-  //     setCurrentPage(previousPage);
-  //     setPreviousPage(previousPage - 1);
-  //     setShowMore(true);
-  //   } else if (previousPage === 1) {
-  //     setCurrentPage(1);
-  //     setPreviousPage(0);
-  //     setShowMore(false);
-  //   }
-  // };
+  let data_fiter = {
+    "nameProduct": nameProduct,
+    "category": category,
+    "type": type,
+    "minPrice": minPrice,
+    "maxPrice": maxPrice
+  }
 
 
-  const handlePageChange = (event, newPage) => {
+
+
+
+  //================== สำหรับ Drawer ==============================
+  const [open, setOpen] = useState(false);
+  const showDrawer = () => { setOpen(true); };
+  const onClose = () => { setOpen(false); };
+  //==============================================================
+
+  useEffect(() => {
+    const fetchCategoriesData = async () => {
+      const fetchedCategories: any = await fetchCategories(); // ดึงรายการหมวดหมู่จาก backend
+      setCategories(fetchedCategories);
+    };
+    fetchCategoriesData();
+    filter_searchProducts();
+
+  }, [currentPage, category]);
+
+  const filter_searchProducts = async () => {
+    const pageSize = 24;
+    const data = await fillter_product(data_fiter);
+    const totalProducts = data.length;
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const productsData = data.slice(startIndex, endIndex);
+    setProducts(productsData);
+    setTotalProducts(totalProducts);
+
+  };
+
+  //============================================================================
+  const Search = () => { //เมื่อกดปุ่มค้นหา
+    filter_searchProducts();
+    onClose(); //เมื่อกดยืนยัให้ปิด drawer
+
+  };
+
+  const handleKeyPress = (event: any) => {
+    if (event.key === 'Enter') {
+      Search();
+    }
+  };
+
+  const Check_Data = (link: string | URL | undefined) => {
+    window.open(link, '_blank', 'noopener noreferrer');
+  };
+
+  const handlePageChange = (event: any, newPage: SetStateAction<number>) => {
     setCurrentPage(newPage);
     window.scrollTo(0, 515); // เมื่อกดเปลี่ยนหน้าให้เลื่อนขึ้นด้านบนของหน้าเพจ
   };
 
+  const handleSetTextParam = (value: string) => {
+    // setParam_for_search('getProductByCATEGORY/' + value);
+    // setSelectedValue(value);
+    setcategory(value);
+    setCurrentPage(1);
+    setnameProduct("");
+  }
+
+  const btn_for_filter = () => {
+    // console.log(checkFilter(data_for_filter));
+
+  };
+
+  const clear_all_filter = () => {
+    settype('');
+    setcategory('');
+    setminPrice(0);
+    setmaxPrice(0);
+    setnameProduct('');
+    filter_searchProducts();
+  };
+
+  const check_price = (price: number) => {
+    if (price === 0) {
+      return "";
+    } else {
+      return price;
+    }
+  }
+
+  // const [selectedCategory, setSelectedCategory] = useState('');
+  // const handleCategoryClick = (categoryName:any) => {
+  //   setSelectedCategory(categoryName);
+  //   handleSetTextParam(categoryName);
+  // };
+
+
+
+  const [showAllItems, setShowAllItems] = useState(false);
+  const itemsPerPage_CP = 10;
+
+  const handleCategoryClick = (categoryName: any) => {
+    handleSetTextParam(categoryName);
+    window.scrollTo(0, 515);
+  };
+
+  const handleToggleShowAll = () => {
+    setShowAllItems((prev) => !prev);
+  };
+
+  const getVisibleCategories = () => {
+    return showAllItems ? categories : categories.slice(0, itemsPerPage_CP);
+  };
+
+
+
+  //============================================================================
+
   return (
-    <div style={{ alignContent: 'center' }}>
+    <div>
 
-      <Button onClick={Check_Data}> ตรวจสอบข้อมูล </Button>
 
-      <Grid container spacing={1} >
-        {products.map((product) => (
-          <Grid item xs={6} sm={6} md={5} lg={3} key={product.ID}>
-            <Card sx={{ width: '100%' }}>
-              <CardContent>
-                <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
-                  <img src={product.P_IMG} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+
+      {/* <Button onClick={Drawer_for_search}> ตรวจสอบข้อมูล </Button> */}
+      {/* <Button type="primary" onClick={showDrawer}>
+        Open
+      </Button> */}
+
+      <Drawer title="Filter การค้นหา" placement="left" onClose={onClose} visible={open} style={{ backgroundColor: 'rgba(255, 255, 255, 0.425)', backdropFilter: 'blur(70px)' }} className='TP_header_drawer'>
+        {/* <center><Button onClick={clear_all_filter} > ล้าง filter ค้นหา </Button></center> */}
+
+
+        <h2 className='TP_Text_in_Drawer'> เลือกหมวดหมู่สินค้า </h2>
+
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Select value={category} onChange={(event) => handleSetTextParam(event.target.value as string)} className='TP_combobox_search'>
+            <MenuItem key="all" value="">
+              <img src={'https://img.icons8.com/?size=512&id=IJNt9jGwqy9N&format=png'} style={{ height: '30px', width: '30px', marginRight: '1rem' }} /> ทั้งหมด
+            </MenuItem>
+            {categories.map((category: any) => (
+              <MenuItem key={category.ID} value={category.CP_NAME}>
+                <img src={category.CP_ICON} style={{ height: '30px', width: '30px', marginRight: '1rem' }} />
+                {category.CP_NAME}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
+
+
+
+
+
+
+
+
+        <div style={{ display: 'flex', justifyContent: 'center' }} className='TP_Box_radio'>
+          <label className="TP_label"> <input type="radio" value="new" checked={type === 'new'} onChange={handleTypeChange} />
+            <span className="TP_span">มือ1</span>
+
+          </label>
+          <label className="TP_label"> <input type="radio" value="old" checked={type === 'old'} onChange={handleTypeChange} />
+            <span className="TP_span">มือ2</span>
+
+          </label>
+        </div>
+
+
+
+
+
+
+        <div>
+          <label style={{ fontSize: '18px', marginBottom: '6px', color: '#333' }}> เงินขั้นต่ำ : </label>
+          <input type="number" id="minAmount" placeholder="กรอกเงินขั้นต่ำ" className='ThepatforInput'
+            style={{ width: '50%', height: '60%', backgroundColor: 'rgb(255, 255, 255, 0.5)', margin: '1rem', }}
+            value={check_price(minPrice)} onChange={(event) => setminPrice(parseInt(event.target.value))}
+          />
+        </div>
+
+        <div>
+          <label style={{ fontSize: '18px', marginBottom: '6px', color: '#333' }}> เงินสูงสุด : </label>
+          <input type="number" id="maxAmount" placeholder="กรอกเงินขั้นสูงสุด" className='ThepatforInput'
+            style={{ width: '50%', height: '60%', backgroundColor: 'rgb(255, 255, 255, 0.5)', margin: '1rem', marginTop: 0 }}
+            value={check_price(maxPrice)} onChange={(event) => setmaxPrice(parseInt(event.target.value))}
+          />
+        </div>
+
+
+
+
+        <center>
+          {Object.values(data_fiter).every((value) => !value) ? (<h1></h1>) : (
+            <>
+              <h3 style={{ backgroundColor: 'rgba(255, 255, 255, 0.425)', padding: '5px', borderRadius: '5px', color: '#333', fontSize: '18px' }}
+              >คุณกำลังใช้งาน Filter เหล่านี้</h3>
+              {checkFilter(data_fiter).map((item, index) => (
+                <div key={index}>
+                  {Object.keys(item).map((key) => (
+                    <p key={key} style={{ fontSize: '16px', padding: '6px', margin: '0', backgroundColor: `#${colors[index % colors.length]}`, color: "#FFF", border: "1px solid #fff" }}>
+                      {key === "category" ? "หมวดหมู่สินค้า" : key === "type" ? "ชนิดสินค้า" : key === "minPrice" ? "เงินเริ่มต้น" : key === "maxPrice" ? "เงินสูงสุด" : key}
+                      : {item[key]}
+                    </p>
+                  ))}
                 </div>
-                <Typography variant="h6" component="div">
-                  {product.P_NAME}
-                </Typography>
-                <Typography variant="body1" component="div">
-                  ราคา: {product.P_PRICE} บาท
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
-        <Pagination
-          count={Math.ceil(TotalProducts / 16)}
-          page={currentPage}
-          onChange={handlePageChange}
-          color="primary"
-          showFirstButton
-          showLastButton
-          siblingCount={1}
-          boundaryCount={1}
-          shape="rounded"
-          variant="outlined"
-          sx={{}}
-        />
+              ))}
+            </>
+          )}
+        </center>
+
+
+
+        {/* <center><Button onClick={clear_all_filter} > ล้าง filter ค้นหา </Button></center> */}
+        <button onClick={clear_all_filter} className="button-clear-filter">
+          🗑️ ล้าง filter ค้นหา
+        </button>
+        <button onClick={Search} className="button-filter-search">
+          ✨ ยืนยัน
+        </button>
+
+
+      </Drawer>
+
+
+      <center>
+        {Object.keys(data_fiter).every((key) => key === "nameProduct" || !data_fiter[key as keyof unknown]) ? (<h1></h1>) : (
+          <>
+            <h3 className='text_alert_on_search_box'>
+              <img src="https://img.icons8.com/?size=512&id=1Zt4ZM9tGGrG&format=png" style={{ height: '25px', marginRight: '5px' }} />
+              คุณกำลังค้นหาโดยใช้ Filter
+              <button onClick={clear_all_filter} className='button-clear-filter_text_alert'> 🗑️ ล้าง Filter </button>
+            </h3>
+          </>
+        )}
+      </center>
+
+
+
+
+
+
+
+
+      <div className="TP_Box_for_search">
+        <div style={{width:"15%", marginRight:'2%', marginLeft:'1%'}}>
+          <button className="TP_btn_sell" onClick={showDrawer}> Test </button>
+        </div>
+        <div style={{width:"60%"}}>
+          <input className="ThepatforInput" value={nameProduct} onChange={(event) => setnameProduct(event.target.value)}
+            style={{borderRadius: '15px', backgroundColor: '#ffffff',paddingLeft:'5%'}} onKeyPress={handleKeyPress}
+          />
+        </div>
+        <div style={{width:"15%",marginLeft:'4%'}}>
+          <button className="TP_btn_s" onClick={Search}> ค้นหา </button>
+        </div>
       </div>
+
+
+
+
+
+
+
+
+      <div className="table_show_products">
+        <Grid container spacing={2} >
+          {products.map((product: any) => (
+            <Grid item xs={6} sm={6} md={5} lg={2} key={product.ID}>
+              <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
+                <CardContent sx={{ padding: 0 }} onClick={() => Check_Data(product.P_IMG)} >
+                  <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
+                    <img src={product.P_IMG} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }} />
+                  </div>
+                  <Typography variant="h6" component="div">
+                    {product.P_NAME}
+                  </Typography>
+                  <Typography variant="body1" component="div">
+                    ราคา: {product.P_PRICE} บาท
+                  </Typography>
+                  <Typography variant="body1" component="div" fontSize={'13px'}>
+                    สินค้ามือ 1
+                  </Typography>
+
+                  {/* <Button style={{marginRight:'1rem'}}>ดูสินค้า</Button>
+                <Button>ดูสินค้า</Button> */}
+
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
+          <Pagination
+            count={Math.ceil(TotalProducts / 24)}
+            page={currentPage}
+            onChange={handlePageChange}
+            color="primary"
+            showFirstButton
+            showLastButton
+            siblingCount={1}
+            boundaryCount={1}
+            shape="rounded"
+            variant="outlined"
+          />
+        </div>
+      </div>
+
+      <div className="table_show_products" >
+        <div style={{ fontSize: '25px', color: '#333', marginBottom: '1rem' }}>หมวดหมู่สินค้า</div>
+        <div className="tp-category-container">
+          <Card className={`tp-category-card`} onClick={() => handleCategoryClick('')}>
+            <img src={'https://img.icons8.com/?size=512&id=IJNt9jGwqy9N&format=png'} className="tp-category-card-image" />
+            <div className="tp-category-name">ทั้งหมด</div>
+          </Card>
+          {getVisibleCategories().map((category: any) => (
+            <Card key={category.ID} className={`tp-category-card`} onClick={() => handleCategoryClick(category.CP_NAME)} >
+              <img src={category.CP_ICON} className="tp-category-card-image" />
+              <div className="tp-category-name">{category.CP_NAME}</div>
+            </Card>
+          ))}
+        </div>
+        {categories.length > itemsPerPage_CP && (
+          <div style={{ display: 'flex', justifyContent: 'center', margin: '20px' }}>
+            <Card className={`tp-category-card`} onClick={handleToggleShowAll}>
+              {/* <img src={'https://img.icons8.com/?size=512&id=IJNt9jGwqy9N&format=png'} className="tp-category-card-image" /> */}
+              {showAllItems ? 'แสดงน้อยลง' : 'แสดงทั้งหมด'}
+            </Card>
+          </div>
+        )}
+      </div>
+
+
     </div>
   );
 };
 
 export default ProductsGrid;
+
+
+
+
+//====================================  ส่วนของการเลือกหมวดหมู่ ===================================================
+
+//ถ้ามีใช้ filter จะ return ค่าออกมา
+const checkFilter = (data: any) => {
+  const data_for_filter_check = { nameProduct: "", type: "", category: "", minPrice: 0, maxPrice: 0, };
+  const result: any[] = [];
+  Object.keys(data).forEach((key) => {
+    if (data[key] !== data_for_filter_check[key as keyof typeof data_for_filter_check]) {
+      result.push({ [key]: data[key] });
+    }
+  });
+  // console.log('================================');
+  // console.log('================================');
+  // console.log(result);
+  // console.log('================================');
+  // console.log('================================');
+  return result;
+};
+

@@ -6,13 +6,13 @@ const { Login } = require('./controllers/LoginController');
 const { connectDatabase, closeDatabase } = require('./database/Database.js');
 const { TP_VerifyEmail_Check_Pass } = require('./controllers/TP_VerifyEmail');
 const { addAdvert, listAdverts, updateAdvert, deleteAdvert, getAdvertById } = require('./controllers/AdvertController');
-const { addProduct, listProducts, updateProduct, deleteProduct, getProductById } = require('./controllers/productController');
 const { addDataWeb, listDataWebs, updateDataWeb, deleteDataWeb, getDataWebById } = require('./controllers/datawebController');
 const { addUser, listUsers, updateUser, deleteUser, getUserById, User_Verify_Email } = require('./controllers/userController');
 const { addTopBanner, listTopBanners, updateTopBanner, deleteTopBanner, getTopBannerById } = require('./controllers/TopBannerController');
 const { addSideBanner, listSideBanners, updateSideBanner, deleteSideBanner, getSideBannerById } = require('./controllers/SideBannerController');
 const { addStatusProduct, listStatusProducts, updateStatusProduct, deleteStatusProduct, getStatusProductById } = require('./controllers/StatusProductController');
 const { addCategoryProduct, listCategoryProducts, updateCategoryProduct, deleteCategoryProduct, getCategoryProductById } = require('./controllers/CategoryProductController');
+const { addProduct, listProducts, updateProduct, deleteProduct, getProductById,  getProductByName, getProductByCATEGORY, getProductTYPE ,getProductByMultipleConditions} = require('./controllers/productController');
 
 app.use(express.json());
 app.use(cors());
@@ -32,6 +32,12 @@ app.put('/updateProduct/:id', updateProduct);
 app.delete('/deleteProduct/:id', deleteProduct);
 app.get('/getProduct/:id', getProductById);
 app.get('/listProduct', listProducts)
+// For Search Product
+app.get('/getProductName/:Name', getProductByName);
+app.get('/getProductByCATEGORY/:C', getProductByCATEGORY);
+app.get('/getProductTYPE/:T', getProductTYPE);
+app.post('/getProductByMultipleConditions',getProductByMultipleConditions);
+
 //Dataweb API
 app.post('/createDataWeb', addDataWeb);
 app.put('/updateDataWeb/:id', updateDataWeb);

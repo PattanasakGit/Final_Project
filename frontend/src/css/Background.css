@@ -26,7 +26,7 @@
     padding-bottom: 3rem;
     width: 70%;
     height: auto;
-    background-color: rgba(255, 255, 255, 0.18);
+    background-color: #ffffff2e;
     /* background-image: url('https://images.unsplash.com/photo-1557682260-96773eb01377?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1429&q=80'); */
     background-size: cover;
     background-position: center;
@@ -111,15 +111,15 @@
     font-family: 'Noto Sans Thai', sans-serif !important;
     background-color: #F86F03 !important;
     color: #ffffff;
-    font-size: 20px  !important;
-    border-radius: 10px  !important;
+    font-size: 20px !important;
+    border-radius: 10px !important;
     padding: 10px 20px;
     width: 80%;
     height: 50px;
 }
 
 
-/* ================================================== home Page ======================================================== */ 
+/* ================================================== home Page ======================================================== */
 .content_Home_Page {
     font-family: 'Noto Sans Thai', sans-serif;
     /* position: absolute; */
@@ -137,26 +137,59 @@
     /* border-radius: 10px;
     border: 1px solid rgba(15, 1, 1, 0.5); */
 }
+
 .pigture_Carousel {
     width: 100%;
     height: 500px;
     position: relative;
+    border: 10px;
+    margin-bottom: 6.5rem;
+
+
     /* overflow: hidden; */
 }
 
 .pigture_Carousel img {
-    width: 100%;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+    width: 95%;
     height: 500px;
     object-fit: cover;
     object-position: center;
+    border-radius: 20px;
+    box-shadow: 7px 7px 2px rgba(0, 0, 0, 0.199);
 }
-.table_show_products{
+
+.BannerSide {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    height: auto;
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 20px;
+    /* justify-content: flex-start; */
+
+}
+
+.BannerSide img {
+    margin-left: 8%;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+
+}
+
+/* ======================================== ส่วนของการแสดง สินค้า ====================================================== */
+/* .TP_Frame_for_show_products{
+    font-family: 'Noto Sans Thai', sans-serif;
+} */
+
+.table_show_products {
     font-family: 'Noto Sans Thai', sans-serif;
     /* position: absolute; */
-    margin-top: 1rem;
+    margin-top: 2rem;
     margin-bottom: 2rem;
     padding: 1rem;
-    width: 90%;
+    width: 92%;
     height: auto;
     background-color: rgba(255, 255, 255, 0.425);
     /* background-image: url('https://images.unsplash.com/photo-1557682260-96773eb01377?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1429&q=80');
@@ -167,31 +200,284 @@
     /* border-radius: 10px;
     border: 1px solid rgba(15, 1, 1, 0.5); */
     justify-content: flex-start;
-    
+
 }
-.TP_btn_s{
+
+.product_cardContainer {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.product_cardContainer:hover {
+    box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.589);
+}
+
+.TP_Box_for_search {
+    display: flex;
+  align-items: center;
+    border: 3;
+    padding: 0.5rem;
+    width: 55%;
+    height: 100%;
+    background: #ffffff9f;
+    align-content: center;
+    /* margin-top: 7rem; */
+    border-radius: 15px;
+    box-shadow: 7px 7px 2px rgba(0, 0, 0, 0.199);
+
+}
+@media (max-width: 768px) {
+    .TP_Box_for_search {
+      width: 95%;
+    }
+  }
+
+.TP_btn_s {
     border: 2.5px solid #ffc802 !important;
     font-family: 'Noto Sans Thai', sans-serif !important;
     background-color: #F86F03 !important;
     color: #ffffff;
-    font-size: 20px  !important;
-    border-radius: 10px  !important;
-    padding: 10px 20px;
-    width: 10% !important;
+    font-size: 20px !important;
+    border-radius: 10px !important;
+    /* padding: 10px 20px; */
+    width: 100% !important;
     height: 50px;
     margin-left: 1rem;
 
 }
-.TP_btn_sell{
-    border: 2.5px solid #ffc802 !important;
+
+.TP_btn_sell {
+    border: 2.5px solid #ffffff !important;
     font-family: 'Noto Sans Thai', sans-serif !important;
-    background-color: #048000 !important;
+    background-color: #00b3ff !important;
     color: #ffffff;
-    font-size: 20px  !important;
-    border-radius: 10px  !important;
-    padding: 10px 20px;
-    width: 10% !important;
+    font-size: 20px !important;
+    border-radius: 10px !important;
+    /* padding: 10px 20px; */
+    width: 100% !important;
     height: 50px;
     margin-right: 1rem;
 
 }
+
+.TP_combobox_search {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    width: 90%;
+    border: 5px;
+    background-color: rgba(255, 255, 255, 0.425);
+    border-radius: 10px !important;
+    backdrop-filter: blur(70px);
+    color: #F86F03;
+
+
+}
+
+.TP_combobox_search MenuItem {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    width: 90%;
+    border: 5px;
+    background-color: rgba(255, 255, 255, 0.425) !important;
+    border-radius: 10px !important;
+    backdrop-filter: blur(70px);
+
+}
+
+.TP_Text_in_Drawer {
+    font-family: 'Noto Sans Thai', sans-serif;
+    text-align: center !important;
+    color: #ffffff;
+}
+
+
+
+/* =============================== drawer ================================================== */
+.TP_Box_radio {
+    margin: 1rem;
+}
+
+.TP_label {
+    display: flex;
+    cursor: pointer;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0.375em;
+    font-family: 'Noto Sans Thai', sans-serif;
+}
+
+.TP_label input {
+    position: absolute;
+    left: -9999px;
+}
+
+.TP_label input:checked+.TP_span {
+    background-color: #ffffff36;
+    width: 50px;
+    margin: 0 10px;
+}
+
+.TP_label input:checked+.TP_span::before {
+    box-shadow: inset 0 0 0 0.425em #ff7308;
+    /* กำหนดเงาสีแดง */
+}
+
+.TP_label .TP_span {
+    display: flex;
+    align-items: center;
+    padding: 0.375em 0.75em 0.375em 0.375em;
+    border-radius: 10px;
+    transition: 0.25s ease;
+}
+
+.TP_label .TP_span:hover {
+    background-color: #ffffff36;
+}
+
+.TP_label .TP_span::before {
+    display: flex;
+    /* flex-shrink: 0; */
+    content: "";
+    background-color: #ffffff;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 40%;
+    margin-right: 0.375em;
+    transition: 0.25s ease;
+    /* box-shadow: inset 0 0 0 0.125em #a44d01; */
+}
+
+.TP_label .TP_span:hover::before {
+    box-shadow: inset 0 0 0 0.125em #df8200;
+    /* กำหนดเงาสีแดงเมื่อชี้ pointer ไปที่ span */
+}
+
+/* ================================ */
+.TP_header_drawer {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+}
+
+.TP_header_drawer .ant-drawer-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.TP_header_drawer .ant-drawer-close {
+    margin-left: auto;
+    order: 1;
+}
+
+.button-clear-filter,
+.button-filter-search {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    font-size: 16px;
+    display: block;
+    margin: auto 0;
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    height: 50px;
+    border: 0;
+    cursor: pointer;
+    transition: background-color 5s;
+    /* Add a transition for smooth effect */
+}
+
+.button-clear-filter {
+    background-image: linear-gradient(to right, #555555, #7a7a7a);
+}
+
+.button-filter-search {
+    bottom: 0;
+    background-image: linear-gradient(to left, #555555, #7a7a7a);
+}
+
+.button-clear-filter:active {
+    background-image: linear-gradient(to left, #555555, #7a7a7a);
+}
+
+.button-filter-search:active {
+    background-image: linear-gradient(to right, #555555, #7a7a7a);
+}
+
+.text_alert_on_search_box {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    background-color: rgba(255, 255, 255, 0.425);
+    border-radius: 5px;
+    color: #F55353;
+    font-size: 20px;
+    margin-top: 100px;
+    margin-bottom: 5px;
+    width: 400px;
+}
+
+/* ปุ่มเคียร์ filter บนช่องเตือน */
+.text_alert_on_search_box {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 390px;
+}
+
+.button-clear-filter_text_alert {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    height: auto;
+    margin-left: 10px;
+    padding: 3px;
+    background-color: rgba(0, 0, 0, 0.114);
+    border: .5px solid #787878;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 2rem;
+}
+
+.button-clear-filter_text_alert:hover {
+    background-color: #d20000;
+    color: white;
+}
+
+/* ====================================================== */
+.tp-category-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    font-size: 16px;
+}
+
+.tp-category-card {
+    width: auto;
+    height: auto;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    border-radius: 20px !important;
+    background-color: #ffffff5d !important;
+}
+
+.tp-category-card-image {
+    height: 75px;
+    width: 75px;
+    margin-bottom: 5px;
+}
+
+.tp-category-card:hover {
+    transform: scale(1.1);
+    /* ขยายขนาดเมื่อนำเมาส์ไปชี้ที่ card */
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+    /* เพิ่มเงาให้กับ card เมื่อนำเมาส์ไปชี้ที่ card */
+}
+
+/* @media (max-width: 767px) {
+    .tp-category-container {
+        justify-content: flex-start;
+    }
+
+    .tp-category-container {
+        display: none;
+    }
+} */
