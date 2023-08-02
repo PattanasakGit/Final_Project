@@ -15,11 +15,11 @@ const productSchema = new Schema({
   P_CATEGORY: { type: String, required: true },
   P_PRICE: { type: Number, required: true },
   P_TEXT: { type: String },
-  P_IMG: { type: String },
+  P_IMG: [{ type: String }],
   P_PHONE: { type: String, required: true },
   P_POST: { type: String },
   P_TYPE: { type: String, required: true },
-  P_STATUS: { type: Number },
+  P_STATUS: { type: String, required: true },
   U_ID: { type: Number }
 }, { versionKey: false });
 
@@ -47,6 +47,7 @@ async function addProduct(req, res) {
     const Product = req.body;
     Product.ID = await getNextDataId(DataModel);
     Product.P_POST = formatDate(new Date());
+    Product.P_STATUS = 'รอตรวจสอบ'; //ทุกการบันทึกจะมีสถานะ 1 --> รอการตรวจสอบ
 
     await insertData(Product, DataModel); // เพิ่มผู้ใช้ในฐานข้อมูล
 

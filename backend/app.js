@@ -10,7 +10,7 @@ const { addDataWeb, listDataWebs, updateDataWeb, deleteDataWeb, getDataWebById }
 const { addUser, listUsers, updateUser, deleteUser, getUserById, User_Verify_Email } = require('./controllers/userController');
 const { addTopBanner, listTopBanners, updateTopBanner, deleteTopBanner, getTopBannerById } = require('./controllers/TopBannerController');
 const { addSideBanner, listSideBanners, updateSideBanner, deleteSideBanner, getSideBannerById } = require('./controllers/SideBannerController');
-const { addStatusProduct, listStatusProducts, updateStatusProduct, deleteStatusProduct, getStatusProductById } = require('./controllers/StatusProductController');
+// const { addStatusProduct, listStatusProducts, updateStatusProduct, deleteStatusProduct, getStatusProductById } = require('./controllers/StatusProductController');
 const { addCategoryProduct, listCategoryProducts, updateCategoryProduct, deleteCategoryProduct, getCategoryProductById } = require('./controllers/CategoryProductController');
 const { addProduct, listProducts, updateProduct, deleteProduct, getProductById,  getProductByName, getProductByCATEGORY, getProductTYPE ,getProductByMultipleConditions} = require('./controllers/productController');
 
@@ -69,12 +69,13 @@ app.delete('/deleteTopBanner/:id', deleteTopBanner);
 app.get('/getTopBanner/:id', getTopBannerById);
 app.get('/listTopBanner', listTopBanners)
 app.get('/listSideBanner', listSideBanners)
+
 //StatusProduct
-app.post('/createStatusProduct', addStatusProduct);
-app.put('/updateStatusProduct/:id', updateStatusProduct);
-app.delete('/deleteStatusProduct/:id', deleteStatusProduct);
-app.get('/getStatusProduct/:id', getStatusProductById);
-app.get('/listStatusProduct', listStatusProducts)
+// app.post('/createStatusProduct', addStatusProduct);
+// app.put('/updateStatusProduct/:id', updateStatusProduct);
+// app.delete('/deleteStatusProduct/:id', deleteStatusProduct);
+// app.get('/getStatusProduct/:id', getStatusProductById);
+// app.get('/listStatusProduct', listStatusProducts)
 
 
 // Middleware สำหรับจัดการข้อผิดพลาดในรูปแบบ JSON response

@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 function sendEmail(Code_verify_Email, To) {
 
-    const from = 'thepat145@gmail.com';
+    const from = 'Yakkai.th@gmail.com';
     const to = To ;
     const subject = 'รหัสยืนยันบัญชี: '+Code_verify_Email;
 
@@ -10,8 +10,8 @@ function sendEmail(Code_verify_Email, To) {
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'thepat145@gmail.com',
-            pass: 'qxbkerhkwnyazoda'
+            user: 'Yakkai.th@gmail.com',
+            pass: 'zqbswfzjdfaykmxa'
         }
     });
 

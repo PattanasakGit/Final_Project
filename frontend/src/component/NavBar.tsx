@@ -36,18 +36,19 @@ const NavBar = () => {
           <Button color="inherit">About</Button>
           <Button color="inherit">Services</Button>
           <Button color="inherit">Pricing</Button>
-          <button className='Nav_button' onClick={handleLogout} >LOGOUT</button>
         </Box>
 
 
         {/* sx={{ display: { xs: 'block', md: 'none' } }} */}
         <Box>
+        <button  className='Btn_sell' >ประกาศขาย</button>
           <IconButton
             color="inherit"
             aria-label="open menu"
             edge="end"
             onClick={handleMenuOpen}
             size="large"
+  
           >
             {/* <MenuIcon /> */}
             <Avatar alt="user photo" src='frontend\src\component\1.jpg' />
@@ -72,6 +73,9 @@ const NavBar = () => {
             </MenuItem>
             <MenuItem>
               <Typography variant="body1">Contact</Typography>
+            </MenuItem>
+            <MenuItem>
+            <button className='Nav_button' onClick={handleLogout} >LOGOUT</button>
             </MenuItem>
           </Menu>
         </Box>

@@ -195,16 +195,16 @@ type Category = {
 export const fetchCategories = async (): Promise<Category[]> => {
   const apiUrl = `http://localhost:${port}/listCategoryProduct`;
   return axios.get(apiUrl)
-  .then((response) => {      
-    return response.data;
-  })
-  .catch((error) => {
-    console.log('พบข้อผิดพลาด:' + error);
-    return [];
-  });
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.log('พบข้อผิดพลาด:' + error);
+      return [];
+    });
 };
 //==============================================================================================================================================================================================================
-export const fillter_product = async (filterData:any) => {
+export const fillter_product = async (filterData: any) => {
   const apiUrl = `http://localhost:${port}/getProductByMultipleConditions`;
   // console.log(filterData);
   try {
@@ -216,6 +216,30 @@ export const fillter_product = async (filterData:any) => {
   }
 };
 
+//============================ product  ======================================
+export const getProductByID = async (ID: any) => {
+  const apiUrl = `http://localhost:${port}/getProduct/${ID}`;
+  try {
+    const response = await axios.get(apiUrl, ID);
+    return response.data;
+  } catch (error) {
+    console.log('พบข้อผิดพลาดในการดึงข้อมูลสินค้า:' + error);
+    return [];
+  }
+};
+
+
+//============================ user  ======================================
+export const getUserByID = async (ID: any) => {
+  const apiUrl = `http://localhost:${port}/getUser/${ID}`;
+  try {
+    const response = await axios.get(apiUrl, ID);
+    return response.data;
+  } catch (error) {
+    console.log('พบข้อผิดพลาดในการดึงข้อมูลขาย:' + error);
+    return [];
+  }
+};
 
 
 
