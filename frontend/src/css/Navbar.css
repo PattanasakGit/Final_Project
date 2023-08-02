@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Krub&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap');
 
 
 .NavBar {
@@ -23,6 +23,7 @@
 }
 
 .band {
+  font-family: 'Noto Sans Thai', sans-serif !important;
   color: rgb(255, 255, 255);
   font-family: 'Krub', sans-serif;
   font-size: 30px;
@@ -33,6 +34,7 @@
 }
 
 p.band {
+  font-family: 'Noto Sans Thai', sans-serif !important;
   margin: 0;
 }
 
@@ -45,6 +47,7 @@ p.band {
 }
 
 .Nav_button {
+  font-family: 'Noto Sans Thai', sans-serif !important;
   color: #fff;
   background-color: #000000e6;
   border: none;
@@ -54,7 +57,26 @@ p.band {
   cursor: pointer;
   transition: background-color 0.3s;
 
-  .Nav_button:hover {
-    background-color: #00000063;
-  }
+}
+.Nav_button:hover {
+  background-color: #00000063;
+}
+
+.Btn_sell {
+  font-family: 'Noto Sans Thai', sans-serif !important;
+  margin: 0px 5px;
+  color: #fff;
+  /* background-color: #ff0000; */
+  background: linear-gradient(90deg, #025821 0%, #2eb700 100%);
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 2s;
+  
+}
+.Btn_sell:hover {
+  background: linear-gradient(90deg, #007db7 0%, #55cadf 100%);
+  box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.361);
 }

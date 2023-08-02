@@ -2,10 +2,11 @@ import { useState, useEffect, SetStateAction } from 'react';
 import { Grid, Card, CardContent, Typography, Pagination } from '@mui/material';
 import '../css/Background.css';
 import { listProduct, fetchCategories, fillter_product } from './HTTP_Request ';
-import { Button, Drawer, Radio, Collapse } from 'antd'
+import { Button, Drawer, Radio, Collapse, Tag } from 'antd'
 import { Select, MenuItem } from '@mui/material';
 import { margin, padding } from '@mui/system';
 const { Panel } = Collapse;
+import Product from "./Product"
 
 const colors = ["FF8C32", "D7A86E", "A64B2A", "8E3200"];
 
@@ -56,7 +57,6 @@ const ProductsGrid = () => {
     };
     fetchCategoriesData();
     filter_searchProducts();
-
   }, [currentPage, category]);
 
   const filter_searchProducts = async () => {
@@ -68,7 +68,6 @@ const ProductsGrid = () => {
     const productsData = data.slice(startIndex, endIndex);
     setProducts(productsData);
     setTotalProducts(totalProducts);
-
   };
 
   //============================================================================
@@ -84,8 +83,9 @@ const ProductsGrid = () => {
     }
   };
 
-  const Check_Data = (link: string | URL | undefined) => {
-    window.open(link, '_blank', 'noopener noreferrer');
+  const send_data_to_Product = (data: any) => {
+    // localStorage.setItem("Product", JSON.stringify(data));
+    window.location.href = '/Product/'+data.ID;
   };
 
   const handlePageChange = (event: any, newPage: SetStateAction<number>) => {
@@ -147,6 +147,10 @@ const ProductsGrid = () => {
     return showAllItems ? categories : categories.slice(0, itemsPerPage_CP);
   };
 
+  function format_Price(number: number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
 
 
   //============================================================================
@@ -189,11 +193,11 @@ const ProductsGrid = () => {
 
 
         <div style={{ display: 'flex', justifyContent: 'center' }} className='TP_Box_radio'>
-          <label className="TP_label"> <input type="radio" value="new" checked={type === 'new'} onChange={handleTypeChange} />
+          <label className="TP_label"> <input type="radio" value="สินค้ามือ 1" checked={type === 'สินค้ามือ 1'} onChange={handleTypeChange} />
             <span className="TP_span">มือ1</span>
 
           </label>
-          <label className="TP_label"> <input type="radio" value="old" checked={type === 'old'} onChange={handleTypeChange} />
+          <label className="TP_label"> <input type="radio" value="สินค้ามือ 2" checked={type === 'สินค้ามือ 2'} onChange={handleTypeChange} />
             <span className="TP_span">มือ2</span>
 
           </label>
@@ -242,8 +246,6 @@ const ProductsGrid = () => {
           )}
         </center>
 
-
-
         {/* <center><Button onClick={clear_all_filter} > ล้าง filter ค้นหา </Button></center> */}
         <button onClick={clear_all_filter} className="button-clear-filter">
           🗑️ ล้าง filter ค้นหา
@@ -251,10 +253,7 @@ const ProductsGrid = () => {
         <button onClick={Search} className="button-filter-search">
           ✨ ยืนยัน
         </button>
-
-
       </Drawer>
-
 
       <center>
         {Object.keys(data_fiter).every((key) => key === "nameProduct" || !data_fiter[key as keyof unknown]) ? (<h1></h1>) : (
@@ -268,23 +267,16 @@ const ProductsGrid = () => {
         )}
       </center>
 
-
-
-
-
-
-
-
       <div className="TP_Box_for_search">
-        <div style={{width:"15%", marginRight:'2%', marginLeft:'1%'}}>
+        <div style={{ width: "15%", marginRight: '2%', marginLeft: '1%' }}>
           <button className="TP_btn_sell" onClick={showDrawer}> Test </button>
         </div>
-        <div style={{width:"60%"}}>
+        <div style={{ width: "60%" }}>
           <input className="ThepatforInput" value={nameProduct} onChange={(event) => setnameProduct(event.target.value)}
-            style={{borderRadius: '15px', backgroundColor: '#ffffff',paddingLeft:'5%'}} onKeyPress={handleKeyPress}
+            style={{ borderRadius: '15px', backgroundColor: '#ffffff', paddingLeft: '5%' }} onKeyPress={handleKeyPress}
           />
         </div>
-        <div style={{width:"15%",marginLeft:'4%'}}>
+        <div style={{ width: "15%", marginLeft: '4%' }}>
           <button className="TP_btn_s" onClick={Search}> ค้นหา </button>
         </div>
       </div>
@@ -301,18 +293,22 @@ const ProductsGrid = () => {
           {products.map((product: any) => (
             <Grid item xs={6} sm={6} md={5} lg={2} key={product.ID}>
               <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
-                <CardContent sx={{ padding: 0 }} onClick={() => Check_Data(product.P_IMG)} >
+                <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
                   <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
-                    <img src={product.P_IMG} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }} />
+                    <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }} />
                   </div>
-                  <Typography variant="h6" component="div">
+                  <Typography variant="h6" component="div" className='TP_font'>
                     {product.P_NAME}
                   </Typography>
-                  <Typography variant="body1" component="div">
-                    ราคา: {product.P_PRICE} บาท
+                  <Typography variant="body1" component="div" className='TP_font'>
+                    ราคา: {format_Price(product.P_PRICE)} บาท
                   </Typography>
-                  <Typography variant="body1" component="div" fontSize={'13px'}>
-                    สินค้ามือ 1
+                  <Typography variant="body1" component="div" fontSize={'13px'} marginTop={1}>
+                    {product.P_TYPE === "สินค้ามือ 1" ? ( 
+                      <Tag color="green" className='TP_font'> {product.P_TYPE} </Tag>
+                    ) : (
+                      <Tag color="gold" className='TP_font'> {product.P_TYPE} </Tag>
+                    )}
                   </Typography>
 
                   {/* <Button style={{marginRight:'1rem'}}>ดูสินค้า</Button>
