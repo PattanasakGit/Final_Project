@@ -3,7 +3,7 @@ import React, { useEffect, useState, } from 'react';
 import '../css/Background.css';
 import '../css/Product.css';
 import { Image, Tag } from 'antd';
-import { submit, fetchCategories, fillter_product, getProductByID } from './HTTP_Request ';
+import { submit, fetchCategories, fillter_product, getProductByID, Check_Token } from './system/HTTP_Request ';
 import moment from 'moment';
 import { Button, Card, CardContent, Grid, MenuItem, Select, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
@@ -13,12 +13,14 @@ import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
 
 import { ChangeEvent, useRef } from 'react';
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
-import { storage } from './firebase';
+import { storage } from './system/firebase';
 import { fontSize } from '@mui/system';
 
 
 
 function CreateProduct() {
+    Check_Token();
+    
     const [categories, setCategories] = useState([]);
     const [type, settype] = useState("");
     const [category, setcategory] = useState("");

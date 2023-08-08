@@ -61,8 +61,3 @@ function Home() {
 }
 
 export default Home;
-
-
-
-
-function listpuduct() { }

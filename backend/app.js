@@ -2,12 +2,14 @@ const express = require('express');
 var cors = require('cors');
 const app = express();
 const port = 8000;
-const { Login } = require('./controllers/LoginController');
+const { changePassword } = require('./controllers/MailController');
+const { Token } = require('./controllers/Token');
+const { Login, resetPass } = require('./controllers/LoginController');
 const { connectDatabase, closeDatabase } = require('./database/Database.js');
 const { TP_VerifyEmail_Check_Pass } = require('./controllers/TP_VerifyEmail');
 const { addAdvert, listAdverts, updateAdvert, deleteAdvert, getAdvertById } = require('./controllers/AdvertController');
 const { addDataWeb, listDataWebs, updateDataWeb, deleteDataWeb, getDataWebById } = require('./controllers/datawebController');
-const { addUser, listUsers, updateUser, deleteUser, getUserById, User_Verify_Email } = require('./controllers/userController');
+const { addUser, listUsers, updateUser, deleteUser, getUserById, getUserByEmail, User_Verify_Email } = require('./controllers/userController');
 const { addTopBanner, listTopBanners, updateTopBanner, deleteTopBanner, getTopBannerById } = require('./controllers/TopBannerController');
 const { addSideBanner, listSideBanners, updateSideBanner, deleteSideBanner, getSideBannerById } = require('./controllers/SideBannerController');
 // const { addStatusProduct, listStatusProducts, updateStatusProduct, deleteStatusProduct, getStatusProductById } = require('./controllers/StatusProductController');
@@ -17,11 +19,15 @@ const { addProduct, listProducts, updateProduct, deleteProduct, getProductById, 
 app.use(express.json());
 app.use(cors());
 
-app.post('/Login', Login);
-app.post('/TP_VerifyEmail', TP_VerifyEmail_Check_Pass);
+app.post('/sendEmaiChangePassword/:email', changePassword); //เมื่อใช้จะทำการส่ง email เพิ่มขอเปลี่ยนรหัสผ่าน
+app.put('/resetPass', resetPass); //เอาข้อมูลใหม่มา อัพเดต
+app.get('/Check_Token', Token); //ตรวจสอบ Token ว่าใช้ได้อยู่ไหม
+app.post('/Login', Login); 
+app.post('/TP_VerifyEmail', TP_VerifyEmail_Check_Pass); //ตรวจสอบรหัส Verify ที่ส่งไปยัง mail
 app.post('/User_Verify_Email', User_Verify_Email);
 // User API
 app.post('/createUser', addUser);
+app.post('/getUserByEmail', getUserByEmail);
 app.put('/updateUser/:id', updateUser);
 app.delete('/deleteUser/:id', deleteUser);
 app.get('/getUser/:id', getUserById);

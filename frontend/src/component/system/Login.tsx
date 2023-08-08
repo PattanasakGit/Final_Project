@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import '../css/login.css';
-import '../css/checkbox.css';
+import '../../css/Login.css';
+import '../../css/checkbox.css';
 // import submit from '../component/FetchData';
 import { submitLogin } from "./HTTP_Request ";
 const Path = 'Login';
 
 function Login() {
+  localStorage.clear();
+  
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [emailInput, setEmail] = useState('');
@@ -72,7 +74,7 @@ function Login() {
               </div>
               <div className="text-containercheckbox">แสดงรหัสผ่าน</div>
               <div className="link-containercheckbox">
-                <a href="www.google.co.th" className="forgetpass">
+                <a href="http://localhost:3000/forget_password" className="forgetpass">
                   Forget Password?
                 </a>
               </div>

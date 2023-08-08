@@ -1,0 +1,192 @@
+.Profile_text_space {
+    background: #0000005e;
+    padding: 10px 60px 10px 40px;
+    width: 60%;
+    border-radius: 20px;
+}
+
+.Profile_label {
+    display: block !important;
+    text-align: left !important;
+    margin: 0px !important;
+}
+
+
+.ThepatforInput_Profile {
+    border: 2px solid #5e5e5e53;
+    border-radius: 7px;
+    width: 100%;
+    height: 50px;
+    background-color: #ffffffb6;
+    color: black;
+    font-size: 20px;
+    /* font-family: 'Krub', sans-serif; */
+    font-family: 'Noto Sans Thai', sans-serif;
+    text-align: left;
+    padding-left: 15px;
+
+}
+
+.ThepatforInput_Profile:focus {
+    border-color: #ffcc00;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+    outline: none;
+}
+
+.btn_edit,
+.btn_change_pass {
+    font-family: 'Noto Sans Thai', sans-serif;
+    width: 40%;
+    height: 50px;
+    margin: 0px 5px;
+    font-size: 20px;
+    border-radius: 15px;
+    border: 2px solid #ffd8d853;
+    background-color: #00000028;
+    transition: all 0.3s ease;
+    margin: 1rem;
+}
+
+.btn_edit {
+    background-color: #007bd2;
+}
+
+.btn_change_pass:hover {
+    background-color: #b31e00;
+}
+
+.btn_edit:hover {
+    background-color: #2b00ff !important;
+}
+
+
+/* ================================================================ */
+/*                 resetPassword เปลี่ยนรหัสผ่าน                        */
+/* ================================================================ */
+.reset_page{
+    width: 100%;
+    height: 80vh;
+    margin: 0 !important;
+    /* background-color: #000000b7; */
+    padding:200px 0px 0px 0px ;
+    /* background-image: url("https://images.unsplash.com/photo-1633265486064-086b219458ec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"); */
+    background-size: cover; /* ปรับขนาดภาพให้พอดีกับพื้นที่ */
+    background-position: center; /* จัดภาพให้อยู่ตรงกลาง */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+}
+.reset-password-container {
+    width: 60%;
+    /* margin: 200px 20px 20px 20px; */
+    padding: 50px 0px 70px 0px ;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: #ffffff;
+    background-image: "https://images.unsplash.com/photo-1633265486064-086b219458ec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80";
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .reset-password-title {
+    font-family: 'Noto Sans Thai', sans-serif;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .reset-password-info {
+    font-family: 'Noto Sans Thai', sans-serif;
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .input_resetpass_container {
+    margin-bottom: 15px;
+    width: 50%;
+  }
+  
+  .input_resetpass_container label {
+    font-family: 'Noto Sans Thai', sans-serif;
+    color: #333;
+    text-align: left;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  .input_resetpass_container input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .button-container {
+    text-align: center;
+  }
+  
+  .reset-password-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .reset-password-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .info-text {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #888;
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* CSS สำหรับ mobile */
+@media (max-width: 768px) {
+    .Profile_text_space {
+        background: #0000005e;
+        padding: 10px 60px 10px 40px;
+    }
+    .contentPage{
+        padding: 0px !important;
+        width: auto !important;
+    }
+
+    .btn_change_pass {
+        font-family: 'Noto Sans Thai', sans-serif;
+        width: 80%;
+        height: 50px;
+        margin: 0px 5px;
+        font-size: 20px;
+        border-radius: 15px;
+        border: 2px solid #ffd8d853;
+        background-color: #00000028;
+        transition: all 0.3s ease;
+        margin: 1rem;
+    }
+
+}
