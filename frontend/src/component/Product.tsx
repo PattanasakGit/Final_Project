@@ -3,12 +3,12 @@ import React, { useEffect, useState, } from 'react';
 import '../css/Background.css';
 import '../css/Product.css';
 import { Image, Tag } from 'antd';
-import { getUserByID, fetchCategories, fillter_product, getProductByID } from './HTTP_Request ';
+import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token } from './system/HTTP_Request ';
 import moment from 'moment';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
-let Data_seller_out:any = {}
+let Data_seller_out: any = {}
 
 function Product() {
     // const data_str: any = localStorage.getItem('Product');
@@ -135,7 +135,7 @@ function Product() {
 
 
 
-            <center> <h2 className='TP_font' style={{color:'#2d1400'}}>สินค้าเพิ่มเติมที่คุณอาจสนใจ</h2> </center>
+            <center> <h2 className='TP_font' style={{ color: '#2d1400' }}>สินค้าเพิ่มเติมที่คุณอาจสนใจ</h2> </center>
             <div style={{ height: '100%', width: '88%' }} className="table_show_products">
                 <Grid container spacing={2} >
                     {products.map((product: any) => (
@@ -174,30 +174,40 @@ function Product() {
 export default Product;
 
 
-function need_to_buy() {
+async function need_to_buy() {
+    const Checked_token = await Check_Token()
+    console.log(Checked_token);
+
+
+    if (Checked_token !== false) {
+        Swal.fire({
+            html:
+                '<center><h2>เราได้แจ้งผู้ขายว่าท่านสนใจสินค้าชิ้นนี้ <br/>โปรดรอการติดต่อกลับในไม่ช้า</h2><center>',
+            //   showCloseButton: true,
+            icon: 'success',
+            showConfirmButton: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+            } else if (result.isDenied) {
+            }
+        });
+    }else{
+        window.location.href ="http://localhost:3000/Login";
+    }
+}
+
+
+function Tell() {
     Swal.fire({
-      html:
-        '<center><h2>เราได้แจ้งผู้ขายว่าท่านสนใจสินค้าชิ้นนี้ <br/>โปรดรอการติดต่อกลับในไม่ช้า</h2><center>',
-    //   showCloseButton: true,
-    icon: 'success',
-    showConfirmButton: false,
+        title: 'คุณสนใจสินค้าใช่ไหม',
+        text: 'โปรดโทร : ' + Data_seller_out.U_PHONE,
+        showConfirmButton: true,
+        confirmButtonText: 'Tell',
+        confirmButtonColor: '#7A9D54',
+        confirmButtonAriaLabel: 'โทร',
     }).then((result) => {
-      if (result.isConfirmed) {
-      } else if (result.isDenied) {
-      }
+        if (result.isConfirmed) {
+            window.open('tel://' + Data_seller_out.U_PHONE);
+        }
     });
-  }
-  function Tell() {
-    Swal.fire({
-      title: 'คุณสนใจสินค้าใช่ไหม',
-      text: 'โปรดโทร : '+Data_seller_out.U_PHONE,
-      showConfirmButton: true,
-      confirmButtonText: 'Tell',
-      confirmButtonColor: '#7A9D54',
-      confirmButtonAriaLabel: 'โทร',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.open('tel://'+Data_seller_out.U_PHONE);
-      }
-    });
-  }
+}

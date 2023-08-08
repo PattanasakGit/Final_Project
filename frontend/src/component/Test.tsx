@@ -70,7 +70,7 @@
 // FileUpload.tsx
 import React, { useState, ChangeEvent, useRef } from 'react';
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
-import { storage } from './firebase';
+import { storage } from './system/firebase';
 import { Image } from 'antd';
 
 

@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap');
 
+.TP_font {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+}
 
 .NavBar {
   position: fixed;
@@ -20,6 +23,22 @@
   /* background-color: rgba(255, 255, 255, 0.5); */
   z-index: 999;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.avatar_container{
+  /* color: linear-gradient(90deg, rgba(0, 0, 0, 0.479) 0%, rgb(255, 255, 255, 0.9) 100%); */
+  /* background-color: rgba(255, 255, 255, 0.233); */
+  backdrop-filter: blur(10px);
+}
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  align-items: center !important;
+  /* list-style: none; */
+  margin: 0;
+  padding: 20px !important;
+  position: relative;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  outline: 0;
 }
 
 .band {

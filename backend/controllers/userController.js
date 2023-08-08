@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 const { Schema } = mongoose;
-const { insertData, getData, updateData, deleteData, getDataById, getNextDataId } = require('../database/Database.js');
+const { insertData, getData, updateData, deleteData, getDataById, getNextDataId ,getUserBy_Email } = require('../database/Database.js');
 const { addLogin, getLoginSchema } = require('./LoginController');
 const { sendEmail } = require('./MailController');
 const { TP_VerifyEmail, getVerifySchema } = require('./TP_VerifyEmail.js');
-
 
 const str_collection = "User"; // collection ใน mongo db
 
@@ -99,31 +98,6 @@ async function addUser(req, res) {
   }
 }
 
-
-// async function User_Verify_Email(req, res) {
-
-//   try {
-//     const Code_verify_Email = generateRandomNumber();
-//     const Email_Checked = await DataModel.findOne({ U_EMAIL: req.body.U_EMAIL }); //ถ้าพบอีเมลซ้ำจะไม่บันทึก
-
-//     if (Email_Checked !== null) {
-//       console.log('พบอีเมลซ้ำ --> ' + req.body.U_EMAIL);
-//       throw new Error('ขออภัย ' + req.body.U_EMAIL + ' ถูกใช้งานแล้ว');
-//     } 
-//     else {
-//       await TP_VerifyEmail(req.body.U_EMAIL, Code_verify_Email) //เพิ่มข้อมูลเข้าตาราง
-//       await sendEmail(Code_verify_Email, req.body.U_EMAIL); // ส่งอีเมลย์
-//       res.status(200).json({ status: true, message: '*-*-*-*-*-*-*-*-*' });
-
-//     }
-//   } catch (error) {
-//     console.error('Failed to insert user:', error);
-//     // res.status(500).json({ error: 'Failed to insert user' });
-//     res.status(500).json({ error: error.message });
-//   }
-
-// }
-
 async function User_Verify_Email(req, res) {
   try {
     const Code_verify_Email = generateRandomNumber();
@@ -147,63 +121,6 @@ async function User_Verify_Email(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 async function listUsers(req, res) {
@@ -261,107 +178,28 @@ async function getUserById(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
+async function getUserByEmail(req, res) {
+  try {
+    const { email } = req.body;
 
-module.exports = { addUser, listUsers, updateUser, deleteUser, getUserById ,User_Verify_Email, getUserModel};
+    const user = await getUserBy_Email(email, DataModel);
 
+    if (!user) {
+      return res.status(404).json({ error: 'User not found ' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Failed to retrieve user:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
 
-
-
-
-
-
-
-// async function addUser(req, res) {
-//   let TP_createUser = false;
-
-//   async function verify_status_for_check() {
-//     let check = false;
-//     //ค้นสถานะการ verify โดย การส่ง email เข้าไปค้น
-//     try {
-//       const data = await getVerifySchema()
-//         .findOne({ EMAIL: req.body.U_EMAIL })
-//         .sort({ ID: -1 }) // เรียงลำดับโดยใช้ ล่าสุด // ID แปรผันตรงกับเวลา
-//         .exec();
-//       if (data) {// ถ้าเจอ
-//         // return data.IS_VERIFY; // เก็บค่ารหัสผ่าน
-//         check = data.IS_VERIFY;
-//         // console.log('Password:', IS_VERIFY);
-//       } else {
-//         console.log('เกิดข้อผิดพลาดกับการค้นหาสถานะ verify เพื่อบันทึก User');
-//         // return false;
-//         check = false
-//       }
-//     } catch (error) {
-//       // กรณีเกิดข้อผิดพลาดในการค้นหา
-//       // return false;
-//       check = false
-//       console.error('เกิดข้อผิดพลาดกับการค้นหาสถานะ verify เพื่อบันทึก User', error);
-//     }
-//     return check;
-//   }
-
-//   try {
-//     const Code_verify_Email = generateRandomNumber();
-//     const Email_Checked = await DataModel.findOne({ U_EMAIL: req.body.U_EMAIL }); //ถ้าพบอีเมลซ้ำจะไม่บันทึก
-
-//     if (Email_Checked !== null) {
-//       console.log('พบอีเมลซ้ำ --> ' + req.body.U_EMAIL);
-//       throw new Error('ขออภัย ' + req.body.U_EMAIL + ' ถูกใช้งานแล้ว');
-//     } else {
-//       TP_VerifyEmail(req.body.U_EMAIL, Code_verify_Email) //เพิ่มข้อมูลเข้าตาราง
-//       sendEmail(Code_verify_Email, req.body.U_EMAIL); // ส่งอีเมลย์
-
-//       // const verrify = getVerifySchema().findOne({ EMAIL: req.body.email }).exec();
-//       const VERIFY_Check = await verify_status_for_check();
-
-//       res.status(200).json({ status: true, message: '*-*-*-*-*-*-*-*-*' });
-//       TP_createUser = VERIFY_Check;
-
-//       // if (VERIFY_Check) { // ยืนยันอีเมลย์แล้วค่อยบันทึก
-        
-//         // const user = req.body;
-//         // user.ID = await getNextDataId(DataModel);
-//         // user.U_REGISTER = formatDate(new Date());
-//         // await addLogin(req.body.U_EMAIL, req.body.U_PASSWORD, 'User') // เพิ่ม email และ รหัสผ่านเข้าฐานข้อมูล Login
-//         // await insertData(user, DataModel);
-
-//         // console.log('User added successfully');
-//         // return res.status(200).json({ status: true, message: 'สมัครสมาชิกเสร็จสิ้น' });
-//       // }
-//       // else{
-//       //   throw new Error('สมัครสมาชิกไม่สำเร็จ');
-//       // }
+module.exports = { addUser, listUsers, updateUser, deleteUser, getUserById ,User_Verify_Email, getUserByEmail, getUserModel};
 
 
 
 
-//     }
-//   } catch (error) {
-//     console.error('Failed to insert user:', error);
-//     // res.status(500).json({ error: 'Failed to insert user' });
-//     res.status(500).json({ error: error.message });
-//   }
-
-//   console.log('================================================================');
-//   console.log('================================================================');
-//   console.log(TP_createUser);
-//   console.log('================================================================');
-//   console.log('================================================================');
 
 
-// if (TP_createUser) {
 
-//   try {
-//     const user = req.body;
-//     user.ID = await getNextDataId(DataModel);
-//     user.U_REGISTER = formatDate(new Date());
-//     await addLogin(req.body.U_EMAIL, req.body.U_PASSWORD, 'User') // เพิ่ม email และ รหัสผ่านเข้าฐานข้อมูล Login
-//     await insertData(user, DataModel);
 
-//     console.log('User added successfully');
-//   res.status(200).json({ status: true, message: 'สมัครสมาชิกเสร็จสิ้น' });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-  
-// }

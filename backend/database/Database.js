@@ -2,30 +2,30 @@ const mongoose = require('mongoose');
 const uri = 'mongodb://127.0.0.1:27017/Final_Project';
 
 async function connectDatabase() {
-    try {
-      await mongoose.connect(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-  
-      console.log('Connected to database');
-    } catch (error) {
-      console.error('Failed to connect to database:', error);
-      throw error;
-    }
-  }
-  
-  async function closeDatabase() {
-    try {
-      await mongoose.disconnect();
-      console.log('Disconnected from database');
-    } catch (error) {
-      console.error('Failed to close database connection:', error);
-      throw error;
-    }
-  }
+  try {
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
-async function insertData(data , DataModel) {
+    console.log('Connected to database');
+  } catch (error) {
+    console.error('Failed to connect to database:', error);
+    throw error;
+  }
+}
+
+async function closeDatabase() {
+  try {
+    await mongoose.disconnect();
+    console.log('Disconnected from database');
+  } catch (error) {
+    console.error('Failed to close database connection:', error);
+    throw error;
+  }
+}
+
+async function insertData(data, DataModel) {
   try {
     const user = new DataModel(data);
     const result = await user.save();
@@ -47,7 +47,7 @@ async function getData(DataModel) {
   }
 }
 
-async function updateData(id, newData ,DataModel) {
+async function updateData(id, newData, DataModel) {
   try {
     const result = await DataModel.updateOne({ ID: id }, { $set: newData }).exec();
     console.log('Data updated successfully:', result);
@@ -57,7 +57,7 @@ async function updateData(id, newData ,DataModel) {
   }
 }
 
-async function deleteData(id , DataModel) {
+async function deleteData(id, DataModel) {
   try {
     const result = await DataModel.deleteOne({ ID: id }).exec();
     console.log('Data deleted successfully:', result);
@@ -67,12 +67,22 @@ async function deleteData(id , DataModel) {
   }
 }
 
-async function getDataById(id , DataModel) {
+async function getDataById(id, DataModel) {
   try {
     const data = await DataModel.findOne({ ID: id }).exec();
     return data;
   } catch (error) {
     console.error('Failed to retrieve Data:', error);
+    throw error;
+  }
+}
+
+async function getUserBy_Email(email, DataModel) {
+  try {
+    const data = await DataModel.findOne({ U_EMAIL: email }).exec();
+    return data;
+  } catch (error) {
+    console.error('เกิดข้อผิดพลาดในการ Get User By Email', error);
     throw error;
   }
 }
@@ -87,6 +97,18 @@ async function getNextDataId(DataModel) {
     throw error;
   }
 }
+//-------------------------------------------------------------------------------------
+async function getToken_check(Token, DataModel) {
+  try {
+    const data = await DataModel.findOne({ Token: Token }).exec();
+    return data;
+  } catch (error) {
+    console.error('Failed to retrieve Data:', error);
+    throw error;
+  }
+}
+
+
 
 module.exports = {
   connectDatabase,
@@ -97,4 +119,6 @@ module.exports = {
   deleteData,
   getDataById,
   getNextDataId,
+  getToken_check,
+  getUserBy_Email,
 };

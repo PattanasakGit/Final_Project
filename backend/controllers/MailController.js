@@ -1,10 +1,15 @@
 const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
+const url = 'http://localhost:8000'
 
+//====================================================================================================
+//                      Email for verification (ส่งโค๊ดไปยัง user)
+//====================================================================================================
 function sendEmail(Code_verify_Email, To) {
 
     const from = 'Yakkai.th@gmail.com';
-    const to = To ;
-    const subject = 'รหัสยืนยันบัญชี: '+Code_verify_Email;
+    const to = To;
+    const subject = 'รหัสยืนยันบัญชี: ' + Code_verify_Email;
 
     // สร้าง transporter
     let transporter = nodemailer.createTransport({
@@ -33,8 +38,6 @@ function sendEmail(Code_verify_Email, To) {
     });
 
 }
-module.exports = { sendEmail };
-
 
 function html_in_mail(Code_verify_Email) {
     let html_code = `
@@ -47,44 +50,12 @@ function html_in_mail(Code_verify_Email) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify Your Email Address</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fff;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        h1 {
-            color: #ff6800;
-            font-size: 38px;
-            font-weight: 700;
-        }
-
-        p {
-            color: #ff6800;
-            font-size: 16px;
-            font-weight: 400;
-        }
-
-        .verification-code {
-            color: #000;
-            font-size: 65px;
-            font-weight: 700;
-        }
-
-        .image-block {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 20px auto;
-        }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #fff; text-align: center; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px;}
+        h1 { color: #ff6800; font-size: 38px; font-weight: 700; }
+        p { color: #ff6800; font-size: 16px; font-weight: 400; }
+        .verification-code { color: #000; font-size: 65px; font-weight: 700; }
+        .image-block { max-width: 100%; height: auto; display: block; margin: 20px auto; }
     </style>
 </head>
 
@@ -107,3 +78,119 @@ function html_in_mail(Code_verify_Email) {
 `
     return html_code;
 }
+
+
+//======================================================================================================================
+//                      Email forget & change Password
+//======================================================================================================================
+async function changePassword(req, res) {
+
+    
+
+
+    const User_Email = req.params.email;
+    console.log('********************');
+    console.log(User_Email);
+    console.log('********************');
+
+    const from = 'Yakkai.th@gmail.com';
+    const subject = 'เปลี่ยรหัสผ่านบัญชี YAKKAI';
+
+
+    const token = jwt.sign( { User_Email } , 'TP_KEY_login', { expiresIn: '1h' });
+    const resetLink = `http://localhost:3000/resetPassword?token=${token}`;
+
+
+
+    // สร้าง transporter
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'Yakkai.th@gmail.com',
+            pass: 'zqbswfzjdfaykmxa'
+        }
+    });
+
+    // สร้างข้อความอีเมล์
+    const Email = {
+        from: from,
+        to: User_Email,
+        subject: subject,
+        html:
+
+            `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Reset Password</title>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap">
+      <style>
+        body { margin: 0; padding: 0; background-color: #fafafa; font-family: 'Noto Sans Thai', sans-serif; }
+        .container {width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; }
+        .logo { text-align: center; }
+        .logo img { max-width: 150px; border-radius: 100px; height: auto; }
+        .content {text-align: center; padding: 40px; }
+        .button { background-color: #f3560b; color: #ffffff; text-decoration: none; padding: 10px 30px; border-radius: 5px; font-family: 'Krub', sans-serif; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="logo">
+          <a href="https://www.example.com">
+            <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FLOGO_YaKKAI.png?alt=media&token=1410c18c-d307-4612-a1e4-30f21b6ee705" alt="Yakkai Logo">
+          </a>
+        </div>
+        <div class="content">
+          <h1 style="color: #333333;"><b>NEW</b> <strong>PASSWORD</strong></h1>
+          <p>สวัสดีครับ เนื่องจากคุณได้ทำการร้องขอเปลี่ยนรหัสผ่านบัญชี Yakkai</p>
+          <p>เราจึงส่ง Email ฉบับนี้เพื่อทำการเปลี่ยนแปลงรหัสผ่านของคุณ</p>
+          <p>ลิ้งค์สำหรับรีเซ็ตรหัสผ่านจะหมดอายุใน 1 ชั่วโมง</p><br/>
+          <p>คลิก <a href="${resetLink}">ที่นี่</a> เพื่อรีเซ็ตรหัสผ่านของคุณ</p>
+        </div>
+      </div>
+    </body>
+    </html>
+    
+    `
+    };
+
+    // ส่งอีเมล์
+    transporter.sendMail(Email, (error, info) => {
+        if (error) {
+            console.error('Error sending email:', error);
+            res.status(500).json({ error: error.message });
+        } else {
+            console.log('Email sent:', info.response);
+            res.status(200).json({ status : true  });
+        }
+    });
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports = { sendEmail, changePassword };

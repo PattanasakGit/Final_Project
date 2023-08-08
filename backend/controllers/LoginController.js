@@ -3,6 +3,10 @@ const moment = require('moment');
 const { Schema } = mongoose;
 const { insertData, getData, updateData, deleteData, getDataById, getNextDataId } = require('../database/Database.js');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const { addToken } = require('./Token.js');
+
 
 var str_collection = "Login";
 
@@ -113,11 +117,47 @@ async function getLoginById(req, res) {
   }
 }
 
+async function resetPass(req, res) {
+  const { email, new_password, token } = req.body;
 
 
+  // ตรวจสอบและแยก payload จาก JWT เพื่อดึงค่าเวลาหมดอายุของ token
+  let decodedToken = "";
+  try {
+    decodedToken = jwt.decode(token);
+  } catch (error) {
+    decodedToken = "";
+  }
+  console.log(decodedToken);
+
+  // ตรวจสอบว่า token ยังคงใช้งานได้หรือไม่
+  if (!decodedToken || Date.now() >= decodedToken.exp * 1000) {
+    return res.status(401).json({ status: false, message: 'Token has expired' });
+  }
+
+  try {
+    // ค้นหาผู้ใช้ด้วยอีเมลล์
+    const user = await DataModel.findOne({ EMAIL: email });
+    if (!user) {
+      return res.status(404).json({ message: 'ไม่พบผู้ใช้งาน' });
+    }
+    const new_password_encode = await hashPassword(new_password);
+    await DataModel.findByIdAndUpdate(user._id, { PASSWORD: new_password_encode });
+
+    console.log('Password updated successfully');
+    res.status(200).json({ status: true, message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('Failed to update password:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
+
+
+// fn สำหรับเข้าสู่ระบบ และ token
 async function Login(req, res) {
   const { email, password } = req.body;
-
   try {
     const user = await DataModel.findOne({ EMAIL: email });
     if (!user) {
@@ -129,49 +169,26 @@ async function Login(req, res) {
       return res.status(401).json({ status: false, message: 'รหัสผ่านไม่ถูกต้อง' });
     }
 
+    //===========================  สำหรับ Token ======================================
+    const payload = {
+      user_id: user._id,
+      email: user.EMAIL,
+      role: user.ROLE
+    };
+    // const jwtSecretKey = process.env.JWT_SECRET_KEY || 'TP_KEY';
+    const jwtSecretKey = 'TP_KEY_login';
+    const token = jwt.sign(payload, jwtSecretKey, {
+      expiresIn: '1h', // กำหนดเวลาหมดอายุของ token
+    });
+    //===============================================================================
+
     // สร้าง JWT (หากต้องการ) และส่งคืนข้อมูลให้กับ frontend
-    return res.status(200).json({ status: true, message: 'เข้าสู่ระบบสำเร็จ' });
+    addToken(token, email, user.ROLE);
+    return res.status(200).json({ status: true, message: 'เข้าสู่ระบบสำเร็จ', token });
 
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Server error' });
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports = { addLogin, listLogins, updateLogin, deleteLogin, getLoginById, getLoginSchema, Login };
+module.exports = { addLogin, listLogins, updateLogin, deleteLogin, getLoginById, getLoginSchema, Login, resetPass };
