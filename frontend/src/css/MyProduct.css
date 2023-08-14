@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap');
+
+.tp_tab {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    height: 50px !important;
+    align-items: center !important;
+    background: rgb(255, 235, 196);
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 2px solid #ffffff;
+}
+
+.tp_tab .ant-segmented-item-label {
+    display: grid;
+    place-items: center;
+    height: 40px !important;
+}
+
+.TP_pagination_table {
+    background-color: rgb(239, 239, 239);
+    padding: 10px;
+    border-radius: 0px 0px 10px 10px;
+    margin: 0 !important;
+}
+
+.topics_table {
+    margin: 0 0 20px 0;
+    text-shadow: -1px -1px 0 rgb(114, 114, 114), 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+  }
+  

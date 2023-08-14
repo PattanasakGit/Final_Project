@@ -7,6 +7,7 @@ import { submit, fetchCategories, fillter_product, getProductByID, Check_Token }
 import moment from 'moment';
 import { Button, Card, CardContent, Grid, MenuItem, Select, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { validateCreateProduct } from "./Validateinput";
 import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
 
 
@@ -14,13 +15,14 @@ import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
 import { ChangeEvent, useRef } from 'react';
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
 import { storage } from './system/firebase';
-import { fontSize } from '@mui/system';
+
 
 
 
 function CreateProduct() {
     Check_Token();
-    
+
+    const Email_User = localStorage.getItem('email');
     const [categories, setCategories] = useState([]);
     const [type, settype] = useState("");
     const [category, setcategory] = useState("");
@@ -46,7 +48,7 @@ function CreateProduct() {
         'P_IMG': URL_IMG,
         'P_PHONE': PhoneNumber,
         'P_TYPE': type,
-        'U_ID': 1
+        'U_EMAIL': localStorage.getItem('email')
     }
 
     useEffect(() => {
@@ -65,14 +67,41 @@ function CreateProduct() {
     };
 
     const submit_btn = async () => {
-        console.log(data);
-        await submit(data, 'createProduct');
-        settype('')
-        setcategory('')
-        setPrice('')
-        setnameProduct('')
-        setText('')
-        setPhoneNumber('')
+
+        if (validateCreateProduct(data).isValid) {  //ผ่าน ไม่มี errors
+            // submit(data,Path) //ส่งข้อมูลไป fetch  เพื่อส่งข้อมูลผ่าน api ไป backend 
+            if (URL_IMG.length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'คุณยังไม่อัพโหลดรูปภาพนะ',
+                    text: 'หากดำเนินการต่อ รายการของคุณจะไม่มีรูปภาพแสดง',
+                    showCancelButton: true,
+                    confirmButtonColor: 'green',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'OK'
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        await submit(data, 'createProduct');
+                    }
+                })
+            } else {
+                await submit(data, 'createProduct');
+                // settype('')
+                // setcategory('')
+                // setPrice('')
+                // setnameProduct('')
+                // setText('')
+                // setPhoneNumber('')
+                // URL_IMG([])
+                // window.location.reload();
+            }
+
+        } else { //ตรวจพบ errors
+            Swal.fire({
+                titleText: validateCreateProduct(data).messageErrors[0],
+                icon: 'warning',
+            })
+        }
     }
 
 
@@ -101,7 +130,7 @@ function CreateProduct() {
         const uploadedImageUrls: string[] = [];
 
         for (const selectedImage of selectedImages) {
-            const storageRef = ref(storage, `/images/products/${Date.now()}`);
+            const storageRef = ref(storage, `/images/Users/${Email_User}/products/${Date.now()}`);
             const uploadTask = uploadBytesResumable(storageRef, selectedImage);
 
             await new Promise<void>((resolve, reject) => {

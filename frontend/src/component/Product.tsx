@@ -1,14 +1,17 @@
-
 import React, { useEffect, useState, } from 'react';
 import '../css/Background.css';
 import '../css/Product.css';
-import { Image, Tag } from 'antd';
-import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token } from './system/HTTP_Request ';
+import { Image, Tag, Empty } from 'antd';
+import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, getUserByEmail } from './system/HTTP_Request ';
 import moment from 'moment';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
-let Data_seller_out: any = {}
+import Shop from './Shop';
+
+let Data_seller_out: any = {};
+let PhoneNumber_in_product: any = '';
+const url_backend = 'http://localhost:3000'
 
 function Product() {
     // const data_str: any = localStorage.getItem('Product');
@@ -32,15 +35,17 @@ function Product() {
             try {
                 const product = await getProductByID(id);
                 setData(product);
+                PhoneNumber_in_product = product.P_PHONE;
             } catch (error) {
                 console.error('พบบข้อผิดพลาดไม่สามารถดึงข้อมูลสินค้าได้ ', error);
             }
         }
         async function fetchSellerData() {
             try {
-                const seller = await getUserByID(data.U_ID);
+                const seller = await getUserByEmail({ email: data.U_EMAIL });
                 setDataSeller(seller);
                 Data_seller_out = seller;
+
             } catch (error) {
                 console.error('พบบข้อผิดพลาดไม่สามารถดึงข้อมูลผู้ขายได้ ', error);
             }
@@ -48,7 +53,7 @@ function Product() {
         fetchSProductData();
         fetchSellerData();
         filter_searchProducts();
-    }, [id, data.U_ID]);
+    }, [id, data.U_EMAIL]);
 
     const filter_searchProducts = async () => {
         const data = await fillter_product(data_fiter);
@@ -63,14 +68,21 @@ function Product() {
 
     function formatNumber(number: number) {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
+    };
+
+    function go_to_shop_page() {
+        localStorage.setItem("UserEmail_for_Shop", Data_seller.U_EMAIL);
+        window.location.href = url_backend+'/Shop';
+    };
 
     const dateString = Data_seller.U_REGISTER;
     const dateObject = moment(dateString, 'DD-MM-YYYY').toDate();
     const currentDate = new Date();
     const new_d = moment(currentDate).diff(dateObject, 'days');
-    const new_m = moment(currentDate).diff(dateObject, 'months');
-    const new_y = moment(currentDate).diff(dateObject, 'years');
+    const Y = Math.floor(new_d / 365);
+    const remainingDays = new_d % 365;
+    const M = Math.floor(remainingDays / 30);
+    const D = remainingDays % 30;
 
     // แสดงข้อขัดข้องแ่ผู้ใช้งาน
     if (!data.P_NAME || !data.P_IMG || !data.P_TYPE) {
@@ -80,10 +92,7 @@ function Product() {
     return (
         <center>
             <div style={{ height: '100%', width: '90%' }} className='contentPage'>
-
                 <div className='product_container'>
-
-
                     <div className='product_images' style={{ marginTop: '10px' }}>
                         {data.P_IMG.slice(1).map((image: string) => (
                             <Image src={image} alt='Product Image' key={image} className='TP_IMG' />
@@ -91,8 +100,19 @@ function Product() {
                     </div>
 
                     <div className='product_container_img'>
-                        <Image src={data.P_IMG[0]} className='TP_main_img_product' />
+                        {data.P_IMG.length > 0 ? (
+                            <Image src={data.P_IMG[0]} className='TP_main_img_product' />
+                        ) : (
+                            <div className='TP_text_product_seller'>
+                                <h2>ขออภัย</h2>
+                                <p>ผู้ขายไม่ได้อัพโหลดภาพสินค้า</p>
+                                <Empty />
+                            </div>
+
+
+                        )}
                     </div>
+
 
                     <div className='product_container_text'>
                         <h1 style={{ margin: 0 }}> {data.P_NAME}</h1>
@@ -118,14 +138,14 @@ function Product() {
                         <div className='TP_text_product_seller'>
                             <h2 style={{ margin: '5px' }}> ขายโดย </h2>
                             {Data_seller.U_NAME}<br />
-                            เป็นสมาชิกมาแล้ว : {new_d} วัน {new_m} เดือน {new_y} ปี <br />
+                            เป็นสมาชิกมาแล้ว : {D} วัน {M} เดือน {Y} ปี <br />
                             รหัสประกาศขาย : P000#{data.ID}
                         </div>
 
                         <div style={{ marginTop: '100px', textAlign: 'center' }} >
                             <button className='btn_product2' onClick={Tell}>โทรหาผู้ขาย</button>
                             <button className='btn_product1' onClick={need_to_buy}>ให้ผู้ขายติดต่อหาคุณ</button>
-                            <button className='btn_product2'>ดูสินค้าจากร้านนี้</button>
+                            <button className='btn_product2' onClick={go_to_shop_page}>ดูสินค้าจากร้านนี้</button>
                         </div>
 
                     </div>
@@ -191,8 +211,8 @@ async function need_to_buy() {
             } else if (result.isDenied) {
             }
         });
-    }else{
-        window.location.href ="http://localhost:3000/Login";
+    } else {
+        window.location.href = "http://localhost:3000/Login";
     }
 }
 
@@ -200,14 +220,14 @@ async function need_to_buy() {
 function Tell() {
     Swal.fire({
         title: 'คุณสนใจสินค้าใช่ไหม',
-        text: 'โปรดโทร : ' + Data_seller_out.U_PHONE,
+        text: 'โปรดโทร : ' + PhoneNumber_in_product,
         showConfirmButton: true,
         confirmButtonText: 'Tell',
         confirmButtonColor: '#7A9D54',
         confirmButtonAriaLabel: 'โทร',
     }).then((result) => {
         if (result.isConfirmed) {
-            window.open('tel://' + Data_seller_out.U_PHONE);
+            window.open('tel://' + PhoneNumber_in_product);
         }
     });
 }

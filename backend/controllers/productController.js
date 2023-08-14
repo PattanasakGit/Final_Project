@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 const { Schema } = mongoose;
-const { insertData, getData, updateData, deleteData, getDataById, getNextDataId } = require('../database/Database.js');
+const { insertData, getData, updateData, deleteData, getDataById, getNextDataId, getUserBy_Email} = require('../database/Database.js');
+const { getUserModel } = require('../controllers/userController.js');
+
 var str_collection = "Product";
 
 function formatDate(date) {
@@ -20,7 +22,7 @@ const productSchema = new Schema({
   P_POST: { type: String },
   P_TYPE: { type: String, required: true },
   P_STATUS: { type: String, required: true },
-  U_ID: { type: Number }
+  U_EMAIL: { type: String, required: true },
 }, { versionKey: false });
 
 const DataModel = mongoose.model(str_collection, productSchema);
@@ -160,6 +162,23 @@ async function getProductTYPE(req, res) {
   }
 }
 
+async function ListProduct_for_one_user(req, res,) {
+  try {
+    const { email } = req.body;
+
+    const user = await getUserBy_Email(email, getUserModel());  //getUserModel() ต้องเรียกใช้แบบใช้งาน fn เพราะประกาศไว้แบบ fn() 
+    if (!user) {
+      return res.status(404).json({ error: 'ไม่พบบัญชีผู้ใช้นี้ในระบบ' });
+    }
+    const Products = await DataModel.find({U_EMAIL: user.U_EMAIL }).exec();
+    res.status(200).json(Products);
+  } catch (error) {
+    console.error('พบข้อผิดพลาด:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
 
 
 
@@ -201,7 +220,7 @@ async function getProductByMultipleConditions(req, res) {
     console.log('================================');
     console.log(conditions);
     console.log('================================');
-    
+
     if (Product.length === 0) {
       return res.status(404).json({ error: 'ไม่พบรายการที่ตรงกับเงื่อนไขการค้นหา' });
     }
@@ -238,6 +257,7 @@ module.exports = {
   getProductByName,
   getProductByCATEGORY,
   getProductTYPE,
-  getProductByMultipleConditions
+  getProductByMultipleConditions,
+  ListProduct_for_one_user
 
 };

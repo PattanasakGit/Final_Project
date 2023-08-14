@@ -41,8 +41,8 @@ const CreateUser = () => {
 
     if (validateForm(data).isValid) {  //ผ่าน ไม่มี errors
       // submit(data,Path) //ส่งข้อมูลไป fetch  เพื่อส่งข้อมูลผ่าน api ไป backend 
-      TP_VerifyEmail(data,'User_Verify_Email'); 
-      
+      TP_VerifyEmail(data, 'User_Verify_Email');
+
     } else { //ตรวจพบ errors
       Swal.fire({
         titleText: validateForm(data).messageErrors[0],
@@ -61,15 +61,15 @@ const CreateUser = () => {
           <Grid item xs={12} sm={6} >
             <Box>
               <img
-                src="https://img.freepik.com/free-vector/storm-concept-illustration_114360-6905.jpg"
+                src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2F2p%20shop.svg?alt=media&token=fcd17918-265d-4656-9ad4-2f3b16af938b"
                 alt="green iguana"
-                style={{ maxWidth: '100%', height: '250px', marginTop: '1rem', borderRadius: '70px' }}
+                style={{ maxWidth: '100%', height: '600px', marginTop: '1rem', borderRadius: '70px' }}
               />
             </Box>
             <Box>
-              <Button variant="contained" color="primary" onClick={handleSubmit} size="large">
+              {/* <Button variant="contained" color="primary" onClick={handleSubmit} size="large">
                 upload
-              </Button>
+              </Button> */}
             </Box>
           </Grid>
 
@@ -98,7 +98,19 @@ const CreateUser = () => {
                 </FormControl>
               </Box>
               <Box mb={2} marginLeft={5} marginRight={3}>
-                <RadioGroup value={gender} onChange={handleChange} >
+                <div style={{ display: 'flex', justifyContent: 'center' }} className='TP_Box_radio_create_user'>
+                  <label className="TP_label_create_user"> <input type="radio" value="ชาย" checked={gender === 'ชาย'} onChange={handleChange} />
+                    <span className="TP_span_create_user" style={{ width: '90px'}}> ชาย </span>
+                  </label>
+                  <label className="TP_label_create_user"> <input type="radio" value="หญิง" checked={gender === 'หญิง'} onChange={handleChange} />
+                    <span className="TP_span_create_user" style={{ width: '90px' }}> หญิง </span>
+                  </label>
+                  <label className="TP_label_create_user"> <input type="radio" value="อื่น ๆ" checked={gender === 'อื่น ๆ'} onChange={handleChange} />
+                    <span className="TP_span_create_user" style={{ width: '90px' }}> อื่นๆ </span>
+                  </label>
+                </div>
+
+                {/* <RadioGroup value={gender} onChange={handleChange} >
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={4}>
                       <FormControlLabel value="ชาย" control={<Radio />} label="ชาย" className="Thepatradio" />
@@ -110,7 +122,7 @@ const CreateUser = () => {
                       <FormControlLabel value="อื่น ๆ" control={<Radio />} label="อื่น ๆ" className="Thepatradio" />
                     </Grid>
                   </Grid>
-                </RadioGroup>
+                </RadioGroup> */}
               </Box>
               <Box mb={2} marginLeft={-2.5}>
                 <FormControl sx={{ width: '90%' }}>
@@ -128,10 +140,11 @@ const CreateUser = () => {
                 <FormControl sx={{ width: '90%' }}>
                   <textarea
                     className="ThepatforInput"
-                    placeholder="อธิบายเพิ่มเติมเกี่ยวกับคุณ"
+                    placeholder="อธิบายเพิ่มเติมเกี่ยวกับคุณ สามารถเพิ่มเติม/แก้ไขข้อมูลส่วนนี้ภายหลังได้"
                     rows={2}
                     value={about}
-                    maxLength={200}
+                    maxLength={20000}
+                    style={{ minHeight: '100px',  resize: 'none', width: '100%' }}
                     onChange={(event) => setAbout(event.target.value)}
                   />
                 </FormControl>

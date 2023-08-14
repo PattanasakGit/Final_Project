@@ -17,10 +17,21 @@ export const submit = (data: any, part: string) => {
       console.log(res);
 
       if (res.status === true) {
-        Swal.fire({
-          title: 'บันทึกสำเร็จ',
-          icon: 'success',
-        });
+        if (part === 'createProduct') {
+          Swal.fire({
+            title: 'บันทึกสำเร็จ',
+            icon: 'success',
+            willClose: () => {
+              window.location.reload();
+            }
+          });
+        } else {
+          Swal.fire({
+            title: 'บันทึกสำเร็จ',
+            icon: 'success',
+          });
+        }
+
       } else {
         Swal.fire({
           title: 'บันทึกไม่สำเร็จ',
@@ -124,7 +135,7 @@ export const update = (data: any, part: string) => {
             },
             willClose: () => {
               clearInterval(timerInterval)
-              window.location.href = 'http://localhost:3000/Login'; 
+              window.location.href = 'http://localhost:3000/Login';
             }
           })
         } else {
@@ -390,6 +401,16 @@ export const getProductByID = async (ID: any) => {
     return [];
   }
 };
+export const getProductBy_EmailUser = async (data: any) => {
+  const apiUrl = `http://localhost:${port}/ListProductByUser`;
+  try {
+    const response = await axios.post(apiUrl, data);
+    return response.data;
+  } catch (error) {
+    console.log('พบข้อผิดพลาดในการดึงข้อมูลสินค้า:' + error);
+    return [];
+  }
+};
 
 //============================ user  ======================================
 export const getUserByID = async (ID: any) => {
@@ -398,7 +419,7 @@ export const getUserByID = async (ID: any) => {
     const response = await axios.get(apiUrl, ID);
     return response.data;
   } catch (error) {
-    console.log('พบข้อผิดพลาดในการดึงข้อมูลขาย:' + error);
+    console.log('พบข้อผิดพลาดในการดึงข้อมูล User: ' + error);
     return [];
   }
 };
@@ -414,4 +435,42 @@ export const getUserByEmail = async (email: any) => {
 };
 
 
+
+//============================ user  ======================================
+export const addReview = async (data: any) => {
+  const apiUrl = `http://localhost:${port}/addReview`;
+  try {
+    const response = await axios.post(apiUrl, data);
+    Swal.fire({
+      title: 'รีวิวสำเร็จ',
+      text: 'ขอบคุณที่ร่วมแสดงความคิดเห็นต่อผู้ขาย',
+      icon: 'success',
+      showConfirmButton: true, // ไม่แสดงปุ่ม OK
+      willClose: () => {
+        window.location.reload();
+      }
+    })
+    return response.data;
+  } catch (error:any) {
+    if (error.message === 'Request failed with status code 400') {
+      Swal.fire({
+        title: 'ขออภัย',
+        text: 'คุณได้ทำการรีวิวผู้ใช้รายนี้แล้ว',
+        icon: 'error',
+        showConfirmButton: true,
+        willClose: () => {
+          window.location.reload();
+        }
+      })
+    } else {
+      Swal.fire({
+        title: 'เกิดข้อผิดพลาด',
+        text: error.message,
+        icon: 'error'
+      })
+    };
+    console.log('พบข้อผิดพลาดในการบันทึกรายการรีวิว:' + error);
+    return [];
+  }
+};
 

@@ -10,6 +10,9 @@ import FileUpload from './component/Test2.tsx'
 import MyProfile from "./component/MyProfile.tsx";
 import ResetPasswordPage from "./component/system/NewPassword.tsx";
 import ForgetPassword from "./component/system/foget_password.tsx"
+import MyProduct from "./component/MyProduct.tsx";
+import EditProduct from "./component/EditProduct.tsx";
+import Shop from "./component/Shop.tsx";
 // import { Check_Token } from './component/HTTP_Request .tsx';
 
 import './App.css'
@@ -32,8 +35,10 @@ function App() {
           <Route path="/test" element={<FileUpload />} />
           {role === 'User' && (
             <>
-              <Route path="/CreateProduct" element={<CreateProduct />} />
+             
               <Route path="/MyProfile" element={<MyProfile />} />
+              <Route path="/EditProduct/:id" element={<EditProduct />} />
+              {/* <Route path="/MyProduct" element={<MyProduct />} /> */}
             </>
           )}
           {role === 'Admin' && (
@@ -42,12 +47,13 @@ function App() {
             </>
           )}
           <Route path="/" element={<Home />} />
-
+          <Route path="/Shop" element={<Shop />} />
+          <Route path="/CreateProduct" element={<CreateProduct />} />
           <Route path="/resetPassword" element={<ResetPasswordPage />} />
-
           <Route path="/CreateUser" element={<CreateUser />} />
           <Route path="/Product/:id" element={<Product />} />
           <Route path="/forget_password" element={<ForgetPassword />} />
+          <Route path="/MyProduct" element={<MyProduct />} />
 
 
         </Routes>
