@@ -42,7 +42,7 @@
     font-size: 16px;
 }
 
-.text_space{
+.text_space {
     background: #00000033;
     padding: 2%;
     border-radius: 15px;
@@ -119,8 +119,9 @@
 }
 
 
-
+.btn_select_file,
 .Btn_upload {
+    font-family: 'Noto Sans Thai', sans-serif;
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -135,6 +136,14 @@
 
 .Btn_upload:hover {
     background-color: #0056b3;
+}
+
+.btn_select_file {
+    background: #ff7a05;
+}
+
+.btn_select_file:hover {
+    background-color: #ff4d00;
 }
 
 .Btn_cancle_upload {
@@ -222,6 +231,176 @@
     height: 120px !important;
 }
 
+/* ========================== shop =================================== */
+.content_splace_shop {
+    display: flex;
+}
+
+.container_product_in_shop {
+    width: 60%;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+
+}
+
+.container_shop {
+    width: 40%;
+    background-color: #00000038;
+    border-radius: 20px;
+    margin-right: 1rem;
+    padding-top: 1rem;
+
+}
+
+.card_review_in_shop {
+    background-color: #ffffffb8;
+    /* box-shadow: 8px 5px 8px rgba(0, 0, 0, 0.477) ; */
+    color: #333;
+
+    width: 90%;
+
+    padding: 10px;
+    margin: 0rem 0.5rem 0.5rem 0.5rem;
+    border-radius: 20px;
+
+    max-height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+
+.card_review_in_shop:hover {
+    /* background-color:#00000038; */
+    /* width: 60%; */
+    /* height: 100%; */
+    padding: 10px;
+    border-radius: 20px;
+
+}
+
+/* ***********************  show reviews  ************************* */
+.content_reviews {
+    width: 90%;
+    height: 500px;
+    padding: 20px;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.reviews {
+    overflow-y: auto;
+    max-height: 90%;
+}
+
+.reviews::-webkit-scrollbar {
+    width: 10px;
+}
+
+.reviews::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.386);
+    border-radius: 5px;
+}
+
+.reviews::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.067);
+}
+
+.btn_need_review,.btn_need_report,.btn_submit_review{
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    margin: 1rem 0.5rem 0.5rem 0rem;
+    height: 50px;
+    border: 2px solid rgba(0, 0, 0, 0.325);
+    /* border: 2px solid rgb(252, 156, 2); */
+    border-radius: 15px;
+    font-size: 16px;
+ }
+
+.btn_need_review {
+    background-color: #008736;  
+    width: 200px; 
+}
+.btn_need_report {
+    background-color: #ff0000;
+    width: 120px;
+}
+.btn_submit_review {
+    background-color: #008736;
+    width: 200px;
+}
+
+.btn_need_review:hover,.btn_need_report:hover,.btn_submit_review:hover{
+      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.477) ;
+}
+
+/* ***********************  popup for reviews  ************************* */
+.popup_comment {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: translateY(-50%);
+    /* background-color: rgba(0, 0, 0, 0); */
+    backdrop-filter: blur(40px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup_reviews {
+    overflow-y: auto;
+    max-height: 90%;
+}
+
+.popup_content_comment {
+    background-color: rgba(0, 0, 0, 0.338);
+    /* backdrop-filter: blur(500px); */
+    width: 60%;
+    height: 700px;
+    padding: 20px;
+    border-radius: 20px;
+    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); */
+
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between;  */
+}
+
+.close_button_popup_comment {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-end;
+} 
+
+.star_review_comment {
+    font-size: 4rem !important;
+    margin-top: 2rem;
+    background: #ffffff42;
+    padding: 1rem 2rem;
+    border-radius: 20px;
+}
+.textarea_comment {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    resize: none;
+    height: 300px;
+    width: 60%;
+    margin-top: 2rem;
+    background-color: #ffffff6b;
+    border-radius: 20px;
+    font-size:18px;
+    color: #333;
+    padding: 1rem;
+}
+
+/* ================================================================ */
 
 
 /* ================================================================ */
@@ -264,21 +443,71 @@
         width: 50px !important;
         height: 50px !important;
     }
+
     .text_space {
         width: 100% !important;
         /* margin: 0px !important; */
         padding: 0px !important;
     }
-    .text_space input,Textarea{
+
+    .text_space input,
+    Textarea {
         /* width: 70% !important; */
         margin: 2px !important;
         padding: 2px !important;
         margin-right: 20px !important;
     }
-    .text_space label{
+
+    .text_space label {
         /* display: none; */
     }
 
-  
+    /* ========================== shop =================================== */
+    .content_splace_shop {
+        display: block;
+    }
+
+    .container_product_in_shop {
+        width: 100%;
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+
+
+
+    }
+
+    .container_shop {
+        width: 100%;
+
+    }
+
+    .star_review_comment {
+        font-size: 2rem !important;
+        margin-top: 2rem;
+        background: #ffffff55;
+        padding: 1rem 2rem;
+        border-radius: 20px;
+    }
+    .textarea_comment {
+        font-family: 'Noto Sans Thai', sans-serif !important;
+        resize: none;
+        height: 300px;
+        width: 95%;
+        margin-top: 2rem !important;
+        background-color: #ffffff6b;
+        border-radius: 15px;
+        font-size:18px;
+        color: #333;
+        padding: 1.5rem;
+    }
+    .popup_content_comment {
+        width: 90%;
+    }
+
+
+
+    /* ================================================================ */
+
+
 
 }

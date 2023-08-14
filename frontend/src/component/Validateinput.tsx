@@ -3,7 +3,6 @@
 export const validateForm = (data:any) => {
   let  messageErrors = [];
   const fuullname = data.U_NAME.split(' ');
-
   var name = fuullname[0];
   var surname = fuullname[1];
   var gender = data.U_GENDER;
@@ -46,8 +45,8 @@ export const validateForm = (data:any) => {
   }
 
   // ตรวจสอบความถูกต้องของข้อมูลเพิ่มเติม
-  else if (about.length > 200) {
-    messageErrors.push('เพิ่มเติมความยามเกิน 200 ตัวอักษร');
+  else if (about.length > 20000) {
+    messageErrors.push('เพิ่มเติมความยามเกิน 20000 ตัวอักษร');
     
   }
 
@@ -65,6 +64,44 @@ export const validateForm = (data:any) => {
   // ตรวจสอบความถูกต้องของรหัสผ่าน
   else if (password1!==password2) {
     messageErrors.push('รหัสผ่านไม่ตรงกัน');
+    
+  }
+  else{
+    isValid = true;
+  }
+
+  return { isValid, messageErrors};
+};
+
+
+
+
+export const validateCreateProduct = (data:any) => {
+  let  messageErrors = [];
+  var ProductName = data.P_NAME;
+  var category = data.P_CATEGORY;
+  var Price = data.P_PRICE;
+  var phone = data.P_PHONE;
+  var type = data.P_TYPE;
+  let isValid = false;
+
+  if (ProductName.trim() === '') {
+    messageErrors.push('โปรดระบุชื่อสินค้า');
+  }
+  else if (category.trim() === '') {
+    messageErrors.push('โปรดระบุหมวดหมู่สินค้า');
+    
+  }
+  else if (type.trim() === '') {
+    messageErrors.push('โปรดระบุประเภทสินค้า');
+    
+  }
+  else if (Price === '' || Price ===null) {
+    messageErrors.push('โปรดระบุจำนวนเงิน');
+    
+  }
+  else if (phone.trim() === '' || phone.length != 10 || (!/^[0-9]{10}$/.test(phone)) ) {
+    messageErrors.push('คุณระบุเบอร์โทรศัพท์ไม่ถูกต้อง');
     
   }
   else{

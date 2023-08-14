@@ -12,7 +12,7 @@ const products = [
         P_PHONE: "021234567",
         P_TYPE: "สินค้ามือ 2",
         P_STATUS: "กำลังประกาศขาย",
-        U_ID: 1
+        U_EMAIL: "putjat145@gmail.com"
     },
     {
         P_NAME: "ipad",
@@ -23,7 +23,7 @@ const products = [
         P_PHONE: "021234567",
         P_TYPE: "สินค้ามือ 1",
         P_STATUS: "กำลังประกาศขาย",
-        U_ID: 1
+        U_EMAIL: "putjat145@gmail.com"
     },
     {
         P_NAME: "ลำโพง",
@@ -34,7 +34,7 @@ const products = [
         P_PHONE: "021234567",
         P_TYPE: "สินค้ามือ 2",
         P_STATUS: "กำลังประกาศขาย",
-        U_ID: 1
+        U_EMAIL: "putjat145@gmail.com"
     },
     {
         P_NAME: "ปากกา",
@@ -45,7 +45,7 @@ const products = [
         P_PHONE: "021234567",
         P_TYPE: "สินค้ามือ 1",
         P_STATUS: "กำลังประกาศขาย",
-        U_ID: 1
+        U_EMAIL: "putjat145@gmail.com"
     },
     {
         P_NAME: "คอนโด 1 ",
@@ -56,7 +56,7 @@ const products = [
         P_PHONE: "021234567",
         P_TYPE: "สินค้ามือ 1",
         P_STATUS: "กำลังประกาศขาย",
-        U_ID: 1
+        U_EMAIL: "putjat145@gmail.com"
     },
     {
         P_NAME: "คอนโด 2 ",
@@ -67,7 +67,7 @@ const products = [
         P_PHONE: "021234567",
         P_TYPE: "สินค้ามือ 1",
         P_STATUS: "รอตรวจสอบ",
-        U_ID: 1
+        U_EMAIL: "putjat145@gmail.com"
     },
     {
         P_NAME: "คอนโด 3 ",
@@ -78,7 +78,7 @@ const products = [
         P_PHONE: "021234567",
         P_TYPE: "สินค้ามือ 2",
         P_STATUS: "ยกเลิกประกาศขาย",
-        U_ID: 1
+        U_EMAIL: "putjat145@gmail.com"
     },
 
 ];

@@ -2,7 +2,7 @@ import { useState, useEffect, SetStateAction } from 'react';
 import { Grid, Card, CardContent, Typography, Pagination } from '@mui/material';
 import '../css/Background.css';
 import { listProduct, fetchCategories, fillter_product } from './system/HTTP_Request ';
-import { Button, Drawer, Radio, Collapse, Tag } from 'antd'
+import { Button, Drawer, Radio, Collapse, Tag, Empty } from 'antd'
 import { Select, MenuItem } from '@mui/material';
 import { margin, padding } from '@mui/system';
 const { Panel } = Collapse;
@@ -85,7 +85,7 @@ const ProductsGrid = () => {
 
   const send_data_to_Product = (data: any) => {
     // localStorage.setItem("Product", JSON.stringify(data));
-    window.location.href = '/Product/'+data.ID;
+    window.location.href = '/Product/' + data.ID;
   };
 
   const handlePageChange = (event: any, newPage: SetStateAction<number>) => {
@@ -236,7 +236,7 @@ const ProductsGrid = () => {
                 <div key={index}>
                   {Object.keys(item).map((key) => (
                     <p key={key} style={{ fontSize: '16px', padding: '6px', margin: '0', backgroundColor: `#${colors[index % colors.length]}`, color: "#FFF", border: "1px solid #fff" }}>
-                      {key === "category" ? "หมวดหมู่สินค้า" : key === "type" ? "ชนิดสินค้า" : key === "minPrice" ? "เงินเริ่มต้น" : key === "maxPrice" ? "เงินสูงสุด" : key}
+                      {key === "category" ? "หมวดหมู่สินค้า" : key === "type" ? "ประเภทสินค้า" : key === "minPrice" ? "เงินเริ่มต้น" : key === "maxPrice" ? "เงินสูงสุด" : key}
                       : {item[key]}
                     </p>
                   ))}
@@ -285,55 +285,81 @@ const ProductsGrid = () => {
 
 
 
-
-
-
       <div className="table_show_products">
-        <Grid container spacing={2} >
-          {products.map((product: any) => (
-            <Grid item xs={6} sm={6} md={5} lg={2} key={product.ID}>
-              <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
-                <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
-                  <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
-                    <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }} />
-                  </div>
-                  <Typography variant="h6" component="div" className='TP_font'>
-                    {product.P_NAME}
-                  </Typography>
-                  <Typography variant="body1" component="div" className='TP_font'>
-                    ราคา: {format_Price(product.P_PRICE)} บาท
-                  </Typography>
-                  <Typography variant="body1" component="div" fontSize={'13px'} marginTop={1}>
-                    {product.P_TYPE === "สินค้ามือ 1" ? ( 
-                      <Tag color="green" className='TP_font'> {product.P_TYPE} </Tag>
-                    ) : (
-                      <Tag color="gold" className='TP_font'> {product.P_TYPE} </Tag>
-                    )}
-                  </Typography>
+        {/* ถ้าค้นแล้วมีสินค้าให้แสดง */}
+        {products.length > 0 ? (
+          <div >
+            <Grid container spacing={2} >
+              {products.map((product: any) => (
+                <Grid item xs={6} sm={6} md={5} lg={2} key={product.ID}>
+                  <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
+                    <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
+                      <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
+                        {product.P_IMG.length > 0 ? (
+                          <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }} />
+                        ) : (
+                          <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
+                            <p>ผู้ขายไม่ได้อัพโหลด<br />ภาพสินค้า</p>
+                            <Empty />
+                          </div>
+                        )}
+                      </div>
+                      <Typography variant="h6" component="div" className='TP_font'>
+                        {product.P_NAME}
+                      </Typography>
+                      <Typography variant="body1" component="div" className='TP_font'>
+                        ราคา: {format_Price(product.P_PRICE)} บาท
+                      </Typography>
+                      <Typography variant="body1" component="div" fontSize={'13px'} marginTop={1}>
+                        {product.P_TYPE === "สินค้ามือ 1" ? (
+                          <Tag color="green" className='TP_font'> {product.P_TYPE} </Tag>
+                        ) : (
+                          <Tag color="gold" className='TP_font'> {product.P_TYPE} </Tag>
+                        )}
+                      </Typography>
 
-                  {/* <Button style={{marginRight:'1rem'}}>ดูสินค้า</Button>
+                      {/* <Button style={{marginRight:'1rem'}}>ดูสินค้า</Button>
                 <Button>ดูสินค้า</Button> */}
 
-                </CardContent>
-              </Card>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
-          <Pagination
-            count={Math.ceil(TotalProducts / 24)}
-            page={currentPage}
-            onChange={handlePageChange}
-            color="primary"
-            showFirstButton
-            showLastButton
-            siblingCount={1}
-            boundaryCount={1}
-            shape="rounded"
-            variant="outlined"
-          />
-        </div>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
+              <Pagination
+                count={Math.ceil(TotalProducts / 24)}
+                page={currentPage}
+                onChange={handlePageChange}
+                color="primary"
+                showFirstButton
+                showLastButton
+                siblingCount={1}
+                boundaryCount={1}
+                shape="rounded"
+                variant="outlined"
+              />
+            </div>
+          </div>
+          
+        // ถ้าไม่มีสินค้าแสดง เพื่อแจ้ลูกค้าว่าไม่พบรายการ
+        ) : (
+          <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
+            <Empty description={false} />
+            {/* <img src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2Fno%20data.svg?alt=media&token=86f4f77a-4b0c-4a72-9bd6-177665c66bbd'  style={{height:'300px'}}/> */}
+            <h2 style={{color:'#454545'}}>ไม่พบรายการที่ค้นหา</h2>
+
+          </div>
+        )}
       </div>
+
+
+
+
+
+
+
+
 
       <div className="table_show_products" >
         <div style={{ fontSize: '25px', color: '#333', marginBottom: '1rem' }}>หมวดหมู่สินค้า</div>

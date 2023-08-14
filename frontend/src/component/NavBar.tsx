@@ -3,9 +3,18 @@ import { AppBar, Box, Toolbar, IconButton, Typography, Button, Menu, MenuItem, A
 import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, getUserByEmail } from './system/HTTP_Request ';
 import MenuIcon from '@mui/icons-material/Menu';
 import '../css/Navbar.css';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+
+
+
+
+
 const psh = 'https://img.freepik.com/free-vector/profitable-partnership-business-partners-cowork-affiliate-marketing-cost-effective-marketing-solution-affiliate-marketing-management-concept_335657-27.jpg?w=1480&t=st=1689624990~exp=1689625590~hmac=b002ed34d43e6cb8cb18dcae2f3fe38a3375caf9726c4fdcc8a372a54d0a8521'
 
 const NavBar = () => {
+
   const URL_backend = 'http://localhost:3000';
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [user, setUser] = React.useState<any>([]);
@@ -17,9 +26,6 @@ const NavBar = () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
-
-
 
   async function fetchUser() {
     try {
@@ -64,7 +70,8 @@ const NavBar = () => {
           <Button color="inherit">About</Button>
           <Button color="inherit">Services</Button>
           <Button color="inherit">Pricing</Button>
-          {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => window.location.href = URL_backend+"/MyProfile"}>{user.U_NAME}</Button>}
+          {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => (window.location.href = URL_backend + '/MyProduct')}>ประกาศขายของฉัน</Button>}
+          {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => window.location.href = URL_backend+"/MyProfile"}>  {user.U_NAME}</Button>}
           {user.length === 0 && <Button color="inherit" onClick={handleLogout}>Login</Button>}
         </Box>
 
@@ -99,12 +106,15 @@ const NavBar = () => {
               <Typography variant="body1">Services</Typography>
             </MenuItem>
             <MenuItem onClick={() => (window.location.href = URL_backend + '/CreateProduct')}>
-              <Typography variant="body1">ประกาศขาย</Typography>
+              <Typography variant="body1"><AddShoppingCartIcon/> ประกาศขาย</Typography>
+            </MenuItem>
+            <MenuItem onClick={() => (window.location.href = URL_backend + '/MyProduct')}>
+              <Typography variant="body1"><StorefrontIcon/> ประกาศขายของฉัน</Typography>
             </MenuItem>
 
             {user.length !== 0 &&
               <MenuItem onClick={() => (window.location.href = URL_backend + '/MyProfile')}>
-                <Typography variant="body1">My Profile</Typography>
+                <Typography variant="body1"><ManageAccountsIcon/> โปรไฟล์ของฉัน</Typography>
               </MenuItem>
             }<center>
               {user.length !== 0 && <button style={{ margin: '10px' }} className='Nav_button' onClick={handleLogout} >LOGOUT</button>}

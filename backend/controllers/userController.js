@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 const { Schema } = mongoose;
-const { insertData, getData, updateData, deleteData, getDataById, getNextDataId ,getUserBy_Email } = require('../database/Database.js');
+const { insertData, getData, updateData, deleteData, getDataById, getNextDataId, getUserBy_Email } = require('../database/Database.js');
 const { addLogin, getLoginSchema } = require('./LoginController');
 const { sendEmail } = require('./MailController');
 const { TP_VerifyEmail, getVerifySchema } = require('./TP_VerifyEmail.js');
@@ -28,11 +28,18 @@ const userSchema = new Schema({
   ABOUT_ME: { type: String },
   U_IMG: { type: String },
   U_REGISTER: { type: String },
+  U_REVIEWS: [
+    {
+      EMAIL_RW: { type: String },
+      RATE: { type: Number },
+      COMMENT: { type: String }
+    }
+  ]
 }, { versionKey: false });
 
 const DataModel = mongoose.model(str_collection, userSchema);
-function getUserModel(){
-  return DataModel ;
+function getUserModel() {
+  return DataModel;
 }
 
 //=========================== เพิ่ม validator ใน Schema===================================
@@ -74,22 +81,22 @@ async function addUser(req, res) {
     }
   }
   try {
-      if (await verify_status_for_check()) { // ยืนยันอีเมลย์แล้วค่อยบันทึก
-        const user = req.body;
-        user.ID = await getNextDataId(DataModel);
-        user.U_REGISTER = formatDate(new Date());
-        await addLogin(req.body.U_EMAIL, req.body.U_PASSWORD, 'User') // เพิ่ม email และ รหัสผ่านเข้าฐานข้อมูล Login
-        await insertData(user, DataModel);
+    if (await verify_status_for_check()) { // ยืนยันอีเมลย์แล้วค่อยบันทึก
+      const user = req.body;
+      user.ID = await getNextDataId(DataModel);
+      user.U_REGISTER = formatDate(new Date());
+      await addLogin(req.body.U_EMAIL, req.body.U_PASSWORD, 'User') // เพิ่ม email และ รหัสผ่านเข้าฐานข้อมูล Login
+      await insertData(user, DataModel);
 
-        console.log('การบันทึก User สำเร็จ');
-        return res.status(200).json({ status: true, message: 'สมัครสมาชิกเสร็จสิ้น' });
-      }
-      else if (!await verify_status_for_check()){
-        res.status(500).json({ error: 'การบันทึก User ไม่สำเร็จ'});
-      }
-      else{
-        throw new Error("ระบบขัดข้อง:can't check status verify การบันทึก User ไม่สำเร็จ");
-      }
+      console.log('การบันทึก User สำเร็จ');
+      return res.status(200).json({ status: true, message: 'สมัครสมาชิกเสร็จสิ้น' });
+    }
+    else if (!await verify_status_for_check()) {
+      res.status(500).json({ error: 'การบันทึก User ไม่สำเร็จ' });
+    }
+    else {
+      throw new Error("ระบบขัดข้อง:can't check status verify การบันทึก User ไม่สำเร็จ");
+    }
 
   } catch (error) {
     console.error('Failed to insert user:', error);
@@ -194,7 +201,44 @@ async function getUserByEmail(req, res) {
   }
 }
 
-module.exports = { addUser, listUsers, updateUser, deleteUser, getUserById ,User_Verify_Email, getUserByEmail, getUserModel};
+async function addReview(req, res) {
+  const data = req.body;
+  const userEmail = data.U_EMAIL;
+
+  try {
+    const user = await DataModel.findOne({ U_EMAIL: userEmail });
+
+    if (user) {
+      // ตรวจสอบว่าเคยรีวิวหรือยัง
+      const reviewedByEmail = user.U_REVIEWS.some(review => review.EMAIL_RW === data.EMAIL_RW);
+
+      if (reviewedByEmail) {
+        res.status(400).json({ status: false, message: 'คุณได้รีวิวบุคคนนี้ไปแล้ว' });
+      } else {
+
+        const newReview = {
+          EMAIL_RW: data.EMAIL_RW,
+          RATE: data.RATE,
+          COMMENT: data.COMMENT
+        }
+        user.U_REVIEWS.push(newReview);
+        await user.save();
+
+        // console.log('เพิ่มรีวิวเรียบร้อยแล้ว');
+        res.status(200).json({ status: true, message: 'เพิ่มรีวิวเรียบร้อยแล้ว' });
+      }
+    } else {
+      console.log('ไม่พบผู้ใช้');
+      res.status(500).json({ status: false, message: 'ไม่พบผู้ใช้' });
+    }
+  } catch (error) {
+    console.error('Failed to update user:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
+module.exports = { addUser, listUsers, updateUser, deleteUser, getUserById, User_Verify_Email, getUserByEmail, getUserModel, addReview };
 
 
 

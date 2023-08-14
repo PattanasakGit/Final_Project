@@ -10,7 +10,7 @@ const App: React.FC = () => {
 
   return (
     <div style={{margin:'10rem'}}>
-      {/* <h1>Upload an Image</h1> */}
+      <h1>Upload an Image</h1>
       <FileUpload onUploadSuccess={handleUploadSuccess} />
     </div>
   );

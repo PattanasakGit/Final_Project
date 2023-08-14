@@ -9,12 +9,12 @@ const { connectDatabase, closeDatabase } = require('./database/Database.js');
 const { TP_VerifyEmail_Check_Pass } = require('./controllers/TP_VerifyEmail');
 const { addAdvert, listAdverts, updateAdvert, deleteAdvert, getAdvertById } = require('./controllers/AdvertController');
 const { addDataWeb, listDataWebs, updateDataWeb, deleteDataWeb, getDataWebById } = require('./controllers/datawebController');
-const { addUser, listUsers, updateUser, deleteUser, getUserById, getUserByEmail, User_Verify_Email } = require('./controllers/userController');
+const { addUser, listUsers, updateUser, deleteUser, getUserById, getUserByEmail, User_Verify_Email, addReview } = require('./controllers/userController');
 const { addTopBanner, listTopBanners, updateTopBanner, deleteTopBanner, getTopBannerById } = require('./controllers/TopBannerController');
 const { addSideBanner, listSideBanners, updateSideBanner, deleteSideBanner, getSideBannerById } = require('./controllers/SideBannerController');
 // const { addStatusProduct, listStatusProducts, updateStatusProduct, deleteStatusProduct, getStatusProductById } = require('./controllers/StatusProductController');
 const { addCategoryProduct, listCategoryProducts, updateCategoryProduct, deleteCategoryProduct, getCategoryProductById } = require('./controllers/CategoryProductController');
-const { addProduct, listProducts, updateProduct, deleteProduct, getProductById,  getProductByName, getProductByCATEGORY, getProductTYPE ,getProductByMultipleConditions} = require('./controllers/productController');
+const { addProduct, listProducts, updateProduct, deleteProduct, getProductById,  getProductByName, getProductByCATEGORY, getProductTYPE ,getProductByMultipleConditions, ListProduct_for_one_user} = require('./controllers/productController');
 
 app.use(express.json());
 app.use(cors());
@@ -26,6 +26,7 @@ app.post('/Login', Login);
 app.post('/TP_VerifyEmail', TP_VerifyEmail_Check_Pass); //ตรวจสอบรหัส Verify ที่ส่งไปยัง mail
 app.post('/User_Verify_Email', User_Verify_Email);
 // User API
+app.post('/addReview', addReview);
 app.post('/createUser', addUser);
 app.post('/getUserByEmail', getUserByEmail);
 app.put('/updateUser/:id', updateUser);
@@ -33,6 +34,7 @@ app.delete('/deleteUser/:id', deleteUser);
 app.get('/getUser/:id', getUserById);
 app.get('/listUsers', listUsers)
 //Product API
+app.post('/ListProductByUser', ListProduct_for_one_user);
 app.post('/createProduct', addProduct);
 app.put('/updateProduct/:id', updateProduct);
 app.delete('/deleteProduct/:id', deleteProduct);
