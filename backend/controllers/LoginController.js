@@ -118,24 +118,26 @@ async function getLoginById(req, res) {
 }
 
 async function resetPass(req, res) {
-  const { email, new_password, token } = req.body;
-
-
-  // ตรวจสอบและแยก payload จาก JWT เพื่อดึงค่าเวลาหมดอายุของ token
-  let decodedToken = "";
+  const { email, new_password, token, usetoken } = req.body;
   try {
-    decodedToken = jwt.decode(token);
-  } catch (error) {
-    decodedToken = "";
-  }
-  console.log(decodedToken);
 
-  // ตรวจสอบว่า token ยังคงใช้งานได้หรือไม่
-  if (!decodedToken || Date.now() >= decodedToken.exp * 1000) {
-    return res.status(401).json({ status: false, message: 'Token has expired' });
-  }
+    if (usetoken) {
+      // ตรวจสอบและแยก payload จาก JWT เพื่อดึงค่าเวลาหมดอายุของ token
+      let decodedToken = "";
+      try {
+        decodedToken = jwt.decode(token);
+      } catch (error) {
+        decodedToken = "";
+      }
+      console.log(decodedToken);
 
-  try {
+      // ตรวจสอบว่า token ยังคงใช้งานได้หรือไม่
+      if (!decodedToken || Date.now() >= decodedToken.exp * 1000) {
+        return res.status(401).json({ status: false, message: 'Token has expired' });
+      }
+    }
+
+
     // ค้นหาผู้ใช้ด้วยอีเมลล์
     const user = await DataModel.findOne({ EMAIL: email });
     if (!user) {

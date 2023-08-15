@@ -20,6 +20,7 @@ const productSchema = new Schema({
   P_IMG: [{ type: String }],
   P_PHONE: { type: String, required: true },
   P_POST: { type: String },
+  P_UPDATE: { type: String },
   P_TYPE: { type: String, required: true },
   P_STATUS: { type: String, required: true },
   U_EMAIL: { type: String, required: true },
@@ -49,6 +50,7 @@ async function addProduct(req, res) {
     const Product = req.body;
     Product.ID = await getNextDataId(DataModel);
     Product.P_POST = formatDate(new Date());
+    Product.P_UPDATE = Product.P_POST;
     Product.P_STATUS = 'รอตรวจสอบ'; //ทุกการบันทึกจะมีสถานะ 1 --> รอการตรวจสอบ
 
     await insertData(Product, DataModel); // เพิ่มผู้ใช้ในฐานข้อมูล
@@ -77,6 +79,7 @@ async function updateProduct(req, res) {
   try {
     const { id } = req.params;
     const newData = req.body;
+    newData.P_UPDATE = formatDate(new Date());
 
     await updateData(id, newData, DataModel); // อัปเดตข้อมูลผู้ใช้ในฐานข้อมูล
 
@@ -170,7 +173,7 @@ async function ListProduct_for_one_user(req, res,) {
     if (!user) {
       return res.status(404).json({ error: 'ไม่พบบัญชีผู้ใช้นี้ในระบบ' });
     }
-    const Products = await DataModel.find({U_EMAIL: user.U_EMAIL }).exec();
+    const Products = await DataModel.find({U_EMAIL: user.U_EMAIL }).sort({ ID: -1 }).exec();
     res.status(200).json(Products);
   } catch (error) {
     console.error('พบข้อผิดพลาด:', error);
@@ -179,13 +182,10 @@ async function ListProduct_for_one_user(req, res,) {
 }
 
 
-
-
-
 async function getProductByMultipleConditions(req, res) {
   try {
     const { nameProduct, category, type, minPrice, maxPrice } = req.body;
-    let conditions = {};
+    let conditions = {P_STATUS: "กำลังประกาศขาย"};
 
     // ตรวจสอบเงื่อนไขการค้น ชื่อ
     if (nameProduct) {
@@ -216,7 +216,9 @@ async function getProductByMultipleConditions(req, res) {
       }
     }
 
-    const Product = await DataModel.find(conditions).exec();
+    // const Product = await DataModel.find(conditions).exec();
+    const Product = await DataModel.find(conditions).sort({ ID: -1 }).exec();
+
     console.log('================================');
     console.log(conditions);
     console.log('================================');

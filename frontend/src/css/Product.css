@@ -247,7 +247,7 @@
     width: 40%;
     background-color: #00000038;
     border-radius: 20px;
-    margin-right: 1rem;
+    margin-left: 1rem;
     padding-top: 1rem;
 
 }
@@ -477,6 +477,7 @@
     }
 
     .container_shop {
+        margin: 0;
         width: 100%;
 
     }

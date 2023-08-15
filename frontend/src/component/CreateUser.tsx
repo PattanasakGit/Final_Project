@@ -1,5 +1,5 @@
 
-import NavBar from "./NavBar";
+import NavBar from "./system/NavBar";
 import '../css/Background.css'
 import Swal from 'sweetalert2'
 import { bgcolor, border, color, height, margin } from "@mui/system";

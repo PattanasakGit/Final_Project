@@ -1,4 +1,4 @@
-import NavBar from "./NavBar";
+import NavBar from "./system/NavBar";
 import React from 'react';
 import { Carousel } from 'antd';
 import '../css/Background.css';
