@@ -10,8 +10,6 @@ import Product from "./Product"
 
 const colors = ["FF8C32", "D7A86E", "A64B2A", "8E3200"];
 
-
-
 const ProductsGrid = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,7 +29,6 @@ const ProductsGrid = () => {
     settype(event.target.value);
   };
 
-
   let data_fiter = {
     "nameProduct": nameProduct,
     "category": category,
@@ -40,16 +37,11 @@ const ProductsGrid = () => {
     "maxPrice": maxPrice
   }
 
-
-
-
-
   //================== สำหรับ Drawer ==============================
   const [open, setOpen] = useState(false);
   const showDrawer = () => { setOpen(true); };
   const onClose = () => { setOpen(false); };
   //==============================================================
-
   useEffect(() => {
     const fetchCategoriesData = async () => {
       const fetchedCategories: any = await fetchCategories(); // ดึงรายการหมวดหมู่จาก backend
@@ -102,17 +94,33 @@ const ProductsGrid = () => {
   }
 
   const btn_for_filter = () => {
-    // console.log(checkFilter(data_for_filter));
+
 
   };
 
-  const clear_all_filter = () => {
+  const clear_all_filter = async () => {
     settype('');
     setcategory('');
     setminPrice(0);
     setmaxPrice(0);
     setnameProduct('');
-    filter_searchProducts();
+
+    let blank_data_fiter = {
+      "nameProduct": "",
+      "category": "",
+      "type": "",
+      "minPrice": 0,
+      "maxPrice": 0
+    }
+
+    const pageSize = 24;
+    const data = await fillter_product(blank_data_fiter);
+    const totalProducts = data.length;
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const productsData = data.slice(startIndex, endIndex);
+    setProducts(productsData);
+    setTotalProducts(totalProducts);
   };
 
   const check_price = (price: number) => {
@@ -129,13 +137,47 @@ const ProductsGrid = () => {
   //   handleSetTextParam(categoryName);
   // };
 
-
-
+  //------------------------ สำหรับแสดงหมวดหมู่ --------------------------
   const [showAllItems, setShowAllItems] = useState(false);
-  const itemsPerPage_CP = 10;
+  const [itemsPerPage_CP, setItemsPerPage_CP] = useState(15);
+  // const itemsPerPage_CP = 13;
+  useEffect(() => {
+    const handleResize = () => {
+      const windowWidth = window.innerWidth;
+
+      if (windowWidth < 576) { // หน้าจอมือถือ (mobile)
+        setItemsPerPage_CP(4);
+      } else if (windowWidth >= 576 && windowWidth < 992) { // หน้าจอ iPad
+        setItemsPerPage_CP(7);
+      } else { // หน้าจอ desktop
+        setItemsPerPage_CP(15);
+      }
+    };
+
+
+    // ตอนที่โหลดหน้าหรือปรับขนาดหน้าจอ
+    window.addEventListener('load', handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('load', handleResize);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  //----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 
   const handleCategoryClick = (categoryName: any) => {
     handleSetTextParam(categoryName);
+    setShowAllItems(false);
     window.scrollTo(0, 515);
   };
 
@@ -152,25 +194,17 @@ const ProductsGrid = () => {
   }
 
 
-
   //============================================================================
 
   return (
     <div>
-
-
-
       {/* <Button onClick={Drawer_for_search}> ตรวจสอบข้อมูล </Button> */}
       {/* <Button type="primary" onClick={showDrawer}>
         Open
       </Button> */}
-
       <Drawer title="Filter การค้นหา" placement="left" onClose={onClose} visible={open} style={{ backgroundColor: 'rgba(255, 255, 255, 0.425)', backdropFilter: 'blur(70px)' }} className='TP_header_drawer'>
         {/* <center><Button onClick={clear_all_filter} > ล้าง filter ค้นหา </Button></center> */}
-
-
         <h2 className='TP_Text_in_Drawer'> เลือกหมวดหมู่สินค้า </h2>
-
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Select value={category} onChange={(event) => handleSetTextParam(event.target.value as string)} className='TP_combobox_search'>
             <MenuItem key="all" value="">
@@ -184,14 +218,6 @@ const ProductsGrid = () => {
             ))}
           </Select>
         </div>
-
-
-
-
-
-
-
-
         <div style={{ display: 'flex', justifyContent: 'center' }} className='TP_Box_radio'>
           <label className="TP_label"> <input type="radio" value="สินค้ามือ 1" checked={type === 'สินค้ามือ 1'} onChange={handleTypeChange} />
             <span className="TP_span">มือ1</span>
@@ -202,12 +228,6 @@ const ProductsGrid = () => {
 
           </label>
         </div>
-
-
-
-
-
-
         <div>
           <label style={{ fontSize: '18px', marginBottom: '6px', color: '#333' }}> เงินขั้นต่ำ : </label>
           <input type="number" id="minAmount" placeholder="กรอกเงินขั้นต่ำ" className='ThepatforInput'
@@ -223,10 +243,6 @@ const ProductsGrid = () => {
             value={check_price(maxPrice)} onChange={(event) => setmaxPrice(parseInt(event.target.value))}
           />
         </div>
-
-
-
-
         <center>
           {Object.values(data_fiter).every((value) => !value) ? (<h1></h1>) : (
             <>
@@ -245,7 +261,6 @@ const ProductsGrid = () => {
             </>
           )}
         </center>
-
         {/* <center><Button onClick={clear_all_filter} > ล้าง filter ค้นหา </Button></center> */}
         <button onClick={clear_all_filter} className="button-clear-filter">
           🗑️ ล้าง filter ค้นหา
@@ -254,6 +269,35 @@ const ProductsGrid = () => {
           ✨ ยืนยัน
         </button>
       </Drawer>
+
+
+      {/* --------------------------------------- หมวดหมู่ --------------------------------------------------------- */}
+      <div className="table_show_products" >
+        {/* <div style={{ fontSize: '25px', color: '#333', marginBottom: '1rem' }}>หมวดหมู่สินค้า</div> */}
+        <div className="tp-category-container">
+          <Card className={`tp-category-card`} onClick={() => handleCategoryClick('')}>
+            <img src={'https://img.icons8.com/?size=512&id=IJNt9jGwqy9N&format=png'} className="tp-category-card-image" />
+            <div className="tp-category-name">ทุกหมวด</div>
+          </Card>
+          {getVisibleCategories().map((category: any) => (
+            <Card key={category.ID} className={`tp-category-card`} onClick={() => handleCategoryClick(category.CP_NAME)} >
+              <img src={category.CP_ICON} className="tp-category-card-image" />
+              <div className="tp-category-name">{category.CP_NAME}</div>
+            </Card>
+          ))}
+
+        </div>
+
+        {categories.length > itemsPerPage_CP && (
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+            <button onClick={handleToggleShowAll} className='show_more_category'>
+              {showAllItems ? 'แสดงน้อยลง' : 'แสดงทั้งหมด'}
+            </button>
+          </div>
+        )}
+      </div>
+      {/* -------------------------------------------------------------------------------------------------------- */}
+
 
       <center>
         {Object.keys(data_fiter).every((key) => key === "nameProduct" || !data_fiter[key as keyof unknown]) ? (<h1></h1>) : (
@@ -269,7 +313,7 @@ const ProductsGrid = () => {
 
       <div className="TP_Box_for_search">
         <div style={{ width: "15%", marginRight: '2%', marginLeft: '1%' }}>
-          <button className="TP_btn_sell" onClick={showDrawer}> Test </button>
+          <button className="TP_btn_sell" onClick={showDrawer}> ตัวกรอง </button>
         </div>
         <div style={{ width: "60%" }}>
           <input className="ThepatforInput" value={nameProduct} onChange={(event) => setnameProduct(event.target.value)}
@@ -281,17 +325,14 @@ const ProductsGrid = () => {
         </div>
       </div>
 
-
-
-
-
       <div className="table_show_products">
         {/* ถ้าค้นแล้วมีสินค้าให้แสดง */}
         {products.length > 0 ? (
           <div >
             <Grid container spacing={2} >
               {products.map((product: any) => (
-                <Grid item xs={6} sm={6} md={5} lg={2} key={product.ID}>
+                // <Grid item xs={6} sm={6} md={5} lg={2} key={product.ID}>
+                <Grid item xs={6} sm={6} md={3} lg={2} key={product.ID}>
                   <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
                     <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
                       <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
@@ -341,46 +382,14 @@ const ProductsGrid = () => {
               />
             </div>
           </div>
-          
-        // ถ้าไม่มีสินค้าแสดง เพื่อแจ้ลูกค้าว่าไม่พบรายการ
+
+          // ถ้าไม่มีสินค้าแสดง เพื่อแจ้ลูกค้าว่าไม่พบรายการ
         ) : (
           <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
             <Empty description={false} />
             {/* <img src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2Fno%20data.svg?alt=media&token=86f4f77a-4b0c-4a72-9bd6-177665c66bbd'  style={{height:'300px'}}/> */}
-            <h2 style={{color:'#454545'}}>ไม่พบรายการที่ค้นหา</h2>
+            <h2 style={{ color: '#454545' }}>ไม่พบรายการที่ค้นหา</h2>
 
-          </div>
-        )}
-      </div>
-
-
-
-
-
-
-
-
-
-      <div className="table_show_products" >
-        <div style={{ fontSize: '25px', color: '#333', marginBottom: '1rem' }}>หมวดหมู่สินค้า</div>
-        <div className="tp-category-container">
-          <Card className={`tp-category-card`} onClick={() => handleCategoryClick('')}>
-            <img src={'https://img.icons8.com/?size=512&id=IJNt9jGwqy9N&format=png'} className="tp-category-card-image" />
-            <div className="tp-category-name">ทั้งหมด</div>
-          </Card>
-          {getVisibleCategories().map((category: any) => (
-            <Card key={category.ID} className={`tp-category-card`} onClick={() => handleCategoryClick(category.CP_NAME)} >
-              <img src={category.CP_ICON} className="tp-category-card-image" />
-              <div className="tp-category-name">{category.CP_NAME}</div>
-            </Card>
-          ))}
-        </div>
-        {categories.length > itemsPerPage_CP && (
-          <div style={{ display: 'flex', justifyContent: 'center', margin: '20px' }}>
-            <Card className={`tp-category-card`} onClick={handleToggleShowAll}>
-              {/* <img src={'https://img.icons8.com/?size=512&id=IJNt9jGwqy9N&format=png'} className="tp-category-card-image" /> */}
-              {showAllItems ? 'แสดงน้อยลง' : 'แสดงทั้งหมด'}
-            </Card>
           </div>
         )}
       </div>
@@ -391,9 +400,6 @@ const ProductsGrid = () => {
 };
 
 export default ProductsGrid;
-
-
-
 
 //====================================  ส่วนของการเลือกหมวดหมู่ ===================================================
 

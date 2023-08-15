@@ -10,12 +10,12 @@ import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
 import '../css/Profile.css';
 import { height, margin } from '@mui/system';
-
 import TransgenderIcon from '@mui/icons-material/Transgender';
 
 
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
 import { storage } from './system/firebase';
+const URL_backend = 'http://localhost:3000';
 
 
 
@@ -116,7 +116,9 @@ function MyProfile() {
     }
 
     const sendmail_for_resetPassword = () => {
-        sendEmaiChangePassword(email);
+        // sendEmaiChangePassword(email);
+        // ResetPasswordPage_canLogin;
+        window.open(URL_backend+'/ChangePassword');
 
     }
 
@@ -298,6 +300,7 @@ function MyProfile() {
                             <input type='string' className='ThepatforInput_Profile' placeholder='Email'
                                 value={email} onChange={(event) => setEmail(event.target.value)}
                                 disabled
+                                style={{backgroundColor:'#00000045',color:'#fff',textAlign:'center'}}
                             />
                         </div>
 

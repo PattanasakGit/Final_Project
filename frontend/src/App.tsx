@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from './component/system/Login.tsx'
 import CreateUser from './component/CreateUser.tsx'
-import NavBar from "./component/NavBar.tsx";
+import NavBar from "./component/system/NavBar.tsx";
 import Footer from "./component/Footer.tsx";
 import Home from "./component/Home.tsx";
 import Product from "./component/Product.tsx";
 import CreateProduct from "./component/CreateProduct.tsx";
 import FileUpload from './component/Test2.tsx'
 import MyProfile from "./component/MyProfile.tsx";
-import ResetPasswordPage from "./component/system/NewPassword.tsx";
+import {ResetPasswordPage,ResetPasswordPage_canLogin} from "./component/system/NewPassword.tsx";
 import ForgetPassword from "./component/system/foget_password.tsx"
 import MyProduct from "./component/MyProduct.tsx";
 import EditProduct from "./component/EditProduct.tsx";
@@ -50,6 +50,7 @@ function App() {
           <Route path="/Shop" element={<Shop />} />
           <Route path="/CreateProduct" element={<CreateProduct />} />
           <Route path="/resetPassword" element={<ResetPasswordPage />} />
+          <Route path="/ChangePassword" element={<ResetPasswordPage_canLogin />} />
           <Route path="/CreateUser" element={<CreateUser />} />
           <Route path="/Product/:id" element={<Product />} />
           <Route path="/forget_password" element={<ForgetPassword />} />

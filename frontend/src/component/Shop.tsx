@@ -102,13 +102,15 @@ function Shop() {
     const filter_searchProducts = async (page: number) => {
         const pageSize = 9;
         const data = await getProductBy_EmailUser({ email: userEmail });
-        const totalProducts = data.length;
+        const filteredProducts = data.filter((product: any) => product.P_STATUS === "กำลังประกาศขาย");
+        const totalProducts = filteredProducts.length;
         const startIndex = (page - 1) * pageSize;
         const endIndex = startIndex + pageSize;
-        const productsData = data.slice(startIndex, endIndex);
+        const productsData = filteredProducts.slice(startIndex, endIndex);
         setProducts(productsData);
         setTotalProducts(totalProducts);
     };
+
 
     const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
         setCurrentPage(page);
@@ -144,6 +146,10 @@ function Shop() {
     const togglePopup = () => {
         setShowPopup(!showPopup);
     };
+    const openPopup = async () => {
+        await Check_Token();
+        setShowPopup(true);
+    };
     const POPUP_COMMENT = () => {
         return (
             <div >
@@ -169,9 +175,51 @@ function Shop() {
 
             <div style={{ height: '100%', width: '90%' }} className='contentPage'>
                 <div id='content_splace' className='content_splace_shop'>
+
+                <div className='container_shop'>
+                        <Avatar style={{ height: '200px', width: '200px', border: '6px solid #33333367' }} src={Img} />
+                        {/* <img src={Img} style={{width:'50%', borderRadius:'20px'}} /> */}
+                        <p> {name} </p>
+                        <p> เป็นสมาชิกมาแล้ว : {D} วัน {M} เดือน {Y} ปี  </p>
+                        <p>" {about} "</p>
+                        <div style={{ backgroundColor: '#ffffff', width: '80%', borderRadius: '20px', border: '2px solid orange', padding: '5px', boxShadow: '8px 5px 10px rgba(0, 0, 0, 0.477)' }}>
+                            <Rating value={userRating} readOnly size='large' precision={0.5} />
+                            {U_REVIEWS && U_REVIEWS.length > 0 && (
+                                <p style={{ color: '#333', marginTop: '5px' }}>จากผู้รีวิวทั้งหมด {U_REVIEWS.length} รายการ</p>
+                            )}
+                        </div>
+                        <button className='btn_need_review' onClick={openPopup}>ฉันต้องการให้คะแนน</button>
+                        <button className='btn_need_report'>รายงานการโกง</button>
+
+
+                        {U_REVIEWS && U_REVIEWS.length > 0 ? (
+                            <div>
+                                <h3 style={{ margin: '15px 0px 0px 0px' }}>รีวิวร้านค้า</h3>
+                                <div className="content_reviews">
+                                    <div className="reviews">
+                                        {U_REVIEWS && U_REVIEWS.length > 0 && U_REVIEWS.slice().reverse().map((review: DataType_U_REVIEWS) => (
+                                            <div key={review.EMAIL_RW} className="card_review_in_shop">
+                                                <Avatar sx={{ bgcolor: deepOrange[500] }}>{review.EMAIL_RW[0]}</Avatar>
+                                                <div><Rating value={review.RATE} readOnly size="small" /></div>
+                                                <div className="comment">{review.COMMENT}</div>
+                                            </div>
+                                        ))}
+
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <h3>ยังไม่มีผู้รีวิวผู้ขาย/ร้านค้า</h3>
+                        )}
+                    </div>
+
+
+
+
+
                     <div id='product_splace' className='container_product_in_shop'>
                         <div style={{ height: '100%', width: '88%', marginTop: '0px', padding: 0 }} >
-                            <h2 style={{ color: '#333', backgroundColor: '#ffffff9e', padding: '20px', borderRadius: '20px' }}> สินค้าอื่น ๆ โดยผู้ขายรายนี้ </h2>
+                            <h2 style={{ color: '#333', backgroundColor: '#ffffff9e', padding: '20px', borderRadius: '20px' }}> ประกาศขายโดยผู้ขายรายนี้ </h2>
                             <Grid container spacing={2} className="table_show_products" style={{ paddingLeft: 0, paddingTop: 0, margin: 0, width: '100%' }}>
                                 {products.map((product: any) => (
                                     <Grid item xs={6} sm={6} md={5} lg={4} key={product.ID} >
@@ -220,54 +268,7 @@ function Shop() {
                     </div>
 
 
-                    <div className='container_shop'>
-                        <Avatar style={{ height: '200px', width: '200px', border: '6px solid #33333367' }} src={Img} />
-                        {/* <img src={Img} style={{width:'50%', borderRadius:'20px'}} /> */}
-                        <p> {name} </p>
-                        <p> เป็นสมาชิกมาแล้ว : {D} วัน {M} เดือน {Y} ปี  </p>
-                        <p>" {about} "</p>
-                        <div style={{ backgroundColor: '#ffffff', width: '80%', borderRadius: '20px', border: '2px solid orange', padding: '5px', boxShadow: '8px 5px 10px rgba(0, 0, 0, 0.477)' }}>
-                            <Rating value={userRating} readOnly size='large' precision={0.5} />
-                            {U_REVIEWS && U_REVIEWS.length > 0 && (
-                                <p style={{ color: '#333', marginTop: '5px' }}>จากผู้รีวิวทั้งหมด {U_REVIEWS.length} รายการ</p>
-                            )}
-                        </div>
-                        <button className='btn_need_review' onClick={() => setShowPopup(true)}>ฉันต้องการให้คะแนน</button>
-                        <button className='btn_need_report'>รายงานการโกง</button>
-
-
-                        {U_REVIEWS && U_REVIEWS.length > 0 ? (
-                            <div>
-                                <h3 style={{ margin: '15px 0px 0px 0px' }}>รีวิวร้านค้า</h3>
-                                <div className="content_reviews">
-                                    <div className="reviews">
-                                        {U_REVIEWS && U_REVIEWS.length > 0 && U_REVIEWS.map((review: DataType_U_REVIEWS) => (
-                                            <div key={review.EMAIL_RW} className="card_review_in_shop">
-                                                <Avatar sx={{ bgcolor: deepOrange[500] }}>{review.EMAIL_RW[0]}</Avatar>
-                                                <div><Rating value={review.RATE} readOnly size="small" /></div>
-                                                <div className="comment">{review.COMMENT}</div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <h3>ยังไม่มีผู้รีวิวผู้ขาย/ร้านค้า</h3>
-                        )}
-
-
-
-
-
-
-
-
-
-
-
-
-                    </div>
-
+                    
 
 
                 </div>

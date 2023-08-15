@@ -26,7 +26,7 @@ function format_Price(number: number) {
 }
 
 function MyProduct() {
-    // Check_Token(); 
+    Check_Token(); 
 
     interface DataType {
         key: number;
@@ -36,6 +36,7 @@ function MyProduct() {
         P_PRICE: number;
         P_TYPE: string;
         P_POST: string;
+        P_UPDATE: string;
         P_STATUS: string;
     }
     type DataIndex = keyof DataType;
@@ -77,7 +78,7 @@ function MyProduct() {
             width: '80px',
             // render: (text) => <a>{text}</a>,
             sorter: (a, b) => a.ID - b.ID,
-            defaultSortOrder: 'descend', // ค่าเริ่มต้นให้แสดงใหม่กว่าไว้ด้านบน
+            // defaultSortOrder: 'descend', // ค่าเริ่มต้นให้แสดงใหม่กว่าไว้ด้านบน
         },
         {
             title: 'ชื่อสินค้า',
@@ -125,8 +126,17 @@ function MyProduct() {
             className: 'TP_font',
             dataIndex: 'P_POST',
             key: 'P_POST',
-            sorter: (a, b) => a.P_NAME.localeCompare(b.P_NAME), // เปรียบเทียบ string
+            sorter: (a, b) => a.P_POST.localeCompare(b.P_POST), // เปรียบเทียบ string
             ...getColumnSearchProps('P_POST'),
+        },
+        {
+            title: 'วันที่แก้ไขล่าสุด',
+            className: 'TP_font',
+            dataIndex: 'P_UPDATE',
+            key: 'P_UPDATE',
+            defaultSortOrder: 'descend', // ค่าเริ่มต้นให้แสดงใหม่กว่าไว้ด้านบน
+            sorter: (a, b) => a.P_UPDATE.localeCompare(b.P_UPDATE), // เปรียบเทียบ string
+            ...getColumnSearchProps('P_UPDATE'),
         },
         {
             title: 'สถานะ',
