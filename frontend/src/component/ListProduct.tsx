@@ -337,7 +337,7 @@ const ProductsGrid = () => {
                     <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
                       <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
                         {product.P_IMG.length > 0 ? (
-                          <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }} />
+                          <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         ) : (
                           <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
                             <p>ผู้ขายไม่ได้อัพโหลด<br />ภาพสินค้า</p>

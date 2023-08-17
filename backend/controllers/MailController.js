@@ -2,42 +2,50 @@ const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const url = 'http://localhost:8000'
 
+
+function formatNumber(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
 //====================================================================================================
 //                      Email for verification (ส่งโค๊ดไปยัง user)
 //====================================================================================================
 function sendEmail(Code_verify_Email, To) {
+    try {
+        const from = 'Yakkai.th@gmail.com';
+        const to = To;
+        const subject = 'รหัสยืนยันบัญชี: ' + Code_verify_Email;
 
-    const from = 'Yakkai.th@gmail.com';
-    const to = To;
-    const subject = 'รหัสยืนยันบัญชี: ' + Code_verify_Email;
+        // สร้าง transporter
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'Yakkai.th@gmail.com',
+                pass: 'zqbswfzjdfaykmxa'
+            }
+        });
 
-    // สร้าง transporter
-    let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'Yakkai.th@gmail.com',
-            pass: 'zqbswfzjdfaykmxa'
-        }
-    });
+        // สร้างข้อความอีเมล์
+        const Email = {
+            from: from,
+            to: to,
+            subject: subject,
+            html: html_in_mail(Code_verify_Email)
+        };
 
-    // สร้างข้อความอีเมล์
-    const Email = {
-        from: from,
-        to: to,
-        subject: subject,
-        html: html_in_mail(Code_verify_Email)
-    };
-
-    // ส่งอีเมล์
-    transporter.sendMail(Email, (error, info) => {
-        if (error) {
-            console.error('Error sending email:', error);
-        } else {
-            console.log('Email sent:', info.response);
-        }
-    });
+        // ส่งอีเมล์
+        transporter.sendMail(Email, (error, info) => {
+            if (error) {
+                console.error('Error sending email:', error);
+            } else {
+                console.log('Email sent:', info.response);
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 
 }
+
 
 function html_in_mail(Code_verify_Email) {
     let html_code = `
@@ -80,45 +88,46 @@ function html_in_mail(Code_verify_Email) {
 }
 
 
+
 //======================================================================================================================
 //                      Email forget & change Password
 //======================================================================================================================
 async function changePassword(req, res) {
-
-    
-
-
-    const User_Email = req.params.email;
-    console.log('********************');
-    console.log(User_Email);
-    console.log('********************');
-
-    const from = 'Yakkai.th@gmail.com';
-    const subject = 'เปลี่ยรหัสผ่านบัญชี YAKKAI';
-
-
-    const token = jwt.sign( { User_Email } , 'TP_KEY_login', { expiresIn: '1h' });
-    const resetLink = `http://localhost:3000/resetPassword?token=${token}`;
+    try {
 
 
 
-    // สร้าง transporter
-    let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'Yakkai.th@gmail.com',
-            pass: 'zqbswfzjdfaykmxa'
-        }
-    });
+        const User_Email = req.params.email;
+        console.log('********************');
+        console.log(User_Email);
+        console.log('********************');
 
-    // สร้างข้อความอีเมล์
-    const Email = {
-        from: from,
-        to: User_Email,
-        subject: subject,
-        html:
+        const from = 'Yakkai.th@gmail.com';
+        const subject = 'เปลี่ยรหัสผ่านบัญชี YAKKAI';
 
-            `
+
+        const token = jwt.sign({ User_Email }, 'TP_KEY_login', { expiresIn: '1h' });
+        const resetLink = `http://localhost:3000/resetPassword?token=${token}`;
+
+
+
+        // สร้าง transporter
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'Yakkai.th@gmail.com',
+                pass: 'zqbswfzjdfaykmxa'
+            }
+        });
+
+        // สร้างข้อความอีเมล์
+        const Email = {
+            from: from,
+            to: User_Email,
+            subject: subject,
+            html:
+
+                `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -154,43 +163,112 @@ async function changePassword(req, res) {
     </html>
     
     `
-    };
+        };
 
-    // ส่งอีเมล์
-    transporter.sendMail(Email, (error, info) => {
-        if (error) {
-            console.error('Error sending email:', error);
-            res.status(500).json({ error: error.message });
-        } else {
-            console.log('Email sent:', info.response);
-            res.status(200).json({ status : true  });
-        }
-    });
+        // ส่งอีเมล์
+        transporter.sendMail(Email, (error, info) => {
+            if (error) {
+                console.error('Error sending email:', error);
+                res.status(500).json({ error: error.message });
+            } else {
+                console.log('Email sent:', info.response);
+                res.status(200).json({ status: true });
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 
 }
 
 
 
+//======================================================================================================================
+//                      อันนี้จะเป็นการรับเอาค่าต่าง ๆ เพื่อส่ง email มีขึ้นเพื่อส่งอีเมลย์ถึงใครก็ได้ เนื้อหาใดก็ได้
+//======================================================================================================================
+async function Every_Email(req, res) {
+    try {
+        const data = req.body;
+        // console.log('///////////////////////////////////////////');
+        // console.log(data);
+        // console.log('///////////////////////////////////////////');
+        // res.status(200).json({ status: true });
+        // return
 
+        const from = 'Yakkai.th@gmail.com';
+        const subject = data.SUBJECT;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports = { sendEmail, changePassword };
+        // สร้าง transporter
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'Yakkai.th@gmail.com',
+                pass: 'zqbswfzjdfaykmxa'
+            }
+        });
+        // สร้างข้อความอีเมล์
+        const Email = {
+            from: from,
+            to: data.SEND_TO,
+            subject: subject,
+            html:
+                `
+                <html lang="en">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Reset Password</title>
+                  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap">
+                  <style>
+                    body { margin: 0; padding: 0; background-color: #fafafa; font-family: 'Noto Sans Thai', sans-serif; }
+                    .container {width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; }
+                    .logo { text-align: center; }
+                    .logo img { max-width: 150px; border-radius: 100px; height: auto; }
+                    .content {text-align: center; padding: 0px 40px 40px 40px; margin-top: 0px;}
+                    .button {background-color: #f3560b;color: #ffffff;text-decoration: none;padding: 10px 30px;border-radius: 5px;font-family: 'Noto Sans Thai', sans-serif; 
+                  border: none;cursor: pointer;transition: background-color 0.3s ease-in-out;margin: 10px 0px;
+                }
+                .button:hover { background-color: #e74c3c; }
+                  </style>
+                </head>
+                <body>
+                  <div class="container">
+                    <div class="content">
+                      <h1 style="color: #333333;font-family: 'Noto Sans Thai', sans-serif;" > มีผู้กำลังสนใจสินค้าของคุณ </h1>
+                      <h2 style="color: #333333;font-family: 'Noto Sans Thai', sans-serif;" > โปรดติดต่อกลับไปยัง</h2>
+                      <h2 style="margin: 0; background-color:#F8F0E5;color: #333333;font-family: 'Noto Sans Thai', sans-serif;" > คุณ ${data.CustomerName} </h2>
+                      <h2 style="margin: 0; background-color:#EADBC8;color: #333333;font-family: 'Noto Sans Thai', sans-serif;" > เบอร์โทรศัพท์: <a href="tel://${data.CusttomerTel})">${data.CusttomerTel}</a> </h2>
+                      <div style="margin: 30px 0px 0px 5px ; background-color:#F8F6F4;color: #333333;padding: 10px; border-radius: 20px;font-family: 'Noto Sans Thai', sans-serif;">
+                        <h3 style="margin: 0;font-family: 'Noto Sans Thai', sans-serif;" >รายละเอียดเกี่ยวกับสินค้าของคุณ</h3>
+                        
+                        <p style="margin: 0;font-family: 'Noto Sans Thai', sans-serif;" >ID สินค้า: ${data.ID} </p>
+                        <p style="margin: 0;font-family: 'Noto Sans Thai', sans-serif;" >ชื่อสินค้า:   ${data.P_NAME} </p>
+                        <p style="margin: 0;font-family: 'Noto Sans Thai', sans-serif;" >ราคา ${formatNumber(data.P_PRICE)} บาท</p><br />
+                        <img style="height:200px; border-radius: 15px;" src=${data.P_IMG[0]}><br />
+                        <a href="http://localhost:3000/Product/${data.ID}">
+                          <button class="button"> 
+                            ดูรายการประกาศขายของคุณ!
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </body>
+                </html>
+                `
+        };
+        // ส่งอีเมล์
+        transporter.sendMail(Email, (error, info) => {
+            if (error) {
+                console.error('Error sending email:', error);
+                res.status(500).json({ error: error.message });
+            } else {
+                console.log('Email sent:', info.response);
+                res.status(200).json({ status: true });
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+module.exports = { sendEmail, changePassword, Every_Email };
