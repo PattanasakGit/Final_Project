@@ -216,7 +216,9 @@
 }
 
 .product_cardContainer:hover {
-    box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.589);
+    transform: scale(1.06);
+    /* box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.589); */
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.9);
 }
 
 .TP_Box_for_search {

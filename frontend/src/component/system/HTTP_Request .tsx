@@ -112,7 +112,55 @@ export const sendEmaiChangePassword = (email: any) => {
       });
     });
 };
+//==============================================================================================================================================================================================================
+export const Every_Email = (dataInput: {}) => {
+  console.log('------------>', dataInput);
 
+  const apiUrl = `http://localhost:${port}/Every_Email`;
+  axios
+    .post(apiUrl, dataInput)
+    .then((response) => {
+      const res = response.data;
+      console.log(res);
+
+      if (res.status === true) {
+        Swal.fire({
+          html:
+            `<center>
+                  <h2>ขอบคุณที่สนใจสินค้า<br/>เราได้ดำเนินการแจ้งให้ผู้ขายติดต่อคุณกลับ เรียบร้อยแล้ว</h2>
+                  <h3 style="margin: 0; background-color:#F8F0E5;">หากคุณไม่ได้รับการติดต่อกลับหรือต้องการซื้อสินค้าโดยด่วน โปรดเลือก"โทรหาผู้ขาย"</h3>
+                  <img style="height:400px; border-radius: 15px;" src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FsendMessege.jpg?alt=media&token=9cd19af8-1813-41ad-a648-1594add57ada'>
+              <center>
+              `,
+          // icon: 'success',
+          showConfirmButton: true,
+          showCancelButton: true,
+          width: '60%',
+        })
+      } else {
+        Swal.fire({
+          title: 'ส่งเมลย์ไม่สำเร็จ',
+          text: res.error,
+          icon: 'error',
+        });
+      }
+    })
+    .catch((error) => {
+      let errorMessage = '!!!';
+      if (error.message === 'Network Error') {
+        errorMessage = 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ'
+      } else if (error.response.data.error) {
+        errorMessage = error.response.data.error;
+      } else {
+        errorMessage = error;
+      }
+      Swal.fire({
+        title: 'เกิดข้อผิดพลาด',
+        text: errorMessage,
+        icon: 'error',
+      });
+    });
+};
 //======================================================== Update  Data  ==========================================================================================================================================
 export const update = (data: any, part: string) => {
   const apiUrl = `http://localhost:${port}/${part}`;
@@ -451,7 +499,7 @@ export const addReview = async (data: any) => {
       }
     })
     return response.data;
-  } catch (error:any) {
+  } catch (error: any) {
     if (error.message === 'Request failed with status code 400') {
       Swal.fire({
         title: 'ขออภัย',

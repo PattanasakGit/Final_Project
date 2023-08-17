@@ -2,7 +2,7 @@ import React, { useEffect, useState, } from 'react';
 import '../css/Background.css';
 import '../css/Product.css';
 import { Image, Tag, Empty } from 'antd';
-import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, getUserByEmail } from './system/HTTP_Request ';
+import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, getUserByEmail, Every_Email } from './system/HTTP_Request ';
 import moment from 'moment';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
@@ -12,6 +12,10 @@ import Shop from './Shop';
 let Data_seller_out: any = {};
 let PhoneNumber_in_product: any = '';
 const url_backend = 'http://localhost:3000'
+
+function formatNumber(number: number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
 
 function Product() {
     // const data_str: any = localStorage.getItem('Product');
@@ -66,13 +70,9 @@ function Product() {
         window.location.href = '/Product/' + data.ID;
     };
 
-    function formatNumber(number: number) {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    };
-
     function go_to_shop_page() {
         localStorage.setItem("UserEmail_for_Shop", Data_seller.U_EMAIL);
-        window.location.href = url_backend+'/Shop';
+        window.location.href = url_backend + '/Shop';
     };
 
     const dateString = Data_seller.U_REGISTER;
@@ -86,7 +86,7 @@ function Product() {
 
     // แสดงข้อขัดข้องแ่ผู้ใช้งาน
     if (!data.P_NAME || !data.P_IMG || !data.P_TYPE) {
-        return <div> <br /><br /><br /><br /><br />Loading...</div>;
+        return <div> <br /><br /><br /><br /><br />Loading...<br /><br /><br /><br /><br /></div>;
     }
 
     return (
@@ -144,7 +144,7 @@ function Product() {
 
                         <div style={{ marginTop: '100px', textAlign: 'center' }} >
                             <button className='btn_product2' onClick={Tell}>โทรหาผู้ขาย</button>
-                            <button className='btn_product1' onClick={need_to_buy}>ให้ผู้ขายติดต่อหาคุณ</button>
+                            <button className='btn_product1' onClick={() => need_to_buy(data)}>ให้ผู้ขายติดต่อหาคุณ</button>
                             <button className='btn_product2' onClick={go_to_shop_page}>ดูสินค้าจากร้านนี้</button>
                         </div>
 
@@ -163,7 +163,7 @@ function Product() {
                             <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
                                 <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
                                     <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
-                                        <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }} />
+                                        <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                     </div>
                                     <Typography variant="h6" component="div" className='TP_font'>
                                         {product.P_NAME}
@@ -193,22 +193,58 @@ function Product() {
 
 export default Product;
 
-
-async function need_to_buy() {
+interface interface_Product { P_NAME: string, P_IMG: string, P_PRICE: number, SEND_TO: string, SUBJECT: string, CusttomerTel:string, CustomerName:string};
+async function need_to_buy(product: interface_Product) {
     const Checked_token = await Check_Token()
-    console.log(Checked_token);
-
-
     if (Checked_token !== false) {
+        const response = await getUserByEmail({ email: localStorage.getItem('email') });
+        let data = {
+            CustomerName: response.U_NAME,
+            CustomerEmail: response.U_EMAIL,
+            CusttomerTel: response.U_PHONE
+        }
+        console.log(product);
+
         Swal.fire({
             html:
-                '<center><h2>เราได้แจ้งผู้ขายว่าท่านสนใจสินค้าชิ้นนี้ <br/>โปรดรอการติดต่อกลับในไม่ช้า</h2><center>',
-            //   showCloseButton: true,
-            icon: 'success',
-            showConfirmButton: false,
+                `<center>
+                    <h2>โปรดตรวจสอบข้อมูลในการติดต่อกลับ</h2>
+                    <h3 style="margin: 0; background-color:#F8F0E5; ">คุณ ${data.CustomerName}</h3>
+                    <h3 style="margin: 0; background-color:#EADBC8; ">เบอร์โทรศัพท์ ${data.CusttomerTel}</h3>
+                    <h4>คุณกำลังสนใจ</h4>
+                    <h4 style="margin: 0;" >ชื่อสินค้า: ${product.P_NAME}</h4>
+                    <h4 style="margin: 0;" >ราคา: ${formatNumber(product.P_PRICE)} บาท</h4>
+                    <img style="height:200px; border-radius: 15px;" src=${product.P_IMG[0]}>
+                    
+                <center>
+                `,
+            // icon: 'success',
+            showConfirmButton: true,
+            showCancelButton: true,
+            width: '60%',
         }).then((result) => {
             if (result.isConfirmed) {
-            } else if (result.isDenied) {
+                let newdata = product;
+                newdata.SEND_TO = Data_seller_out.U_EMAIL;
+                newdata.SUBJECT = 'มีผู้สนใจสินค้าของคุณโปรดติดต่อกลับ';
+                newdata.CustomerName = data.CustomerName;
+                newdata.CusttomerTel = data.CusttomerTel;
+                Every_Email(newdata);
+
+                let timerInterval: number
+                Swal.fire({
+                    title: 'ระบบกำลังแจ้งให้ผู้ขายทราบ',
+                    html: `<img style="height:400px" src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2Fwait.svg?alt=media&token=bddd3431-5408-4ea9-92e8-637ad3ec3480'>`,
+                    timer: 4000,
+                    width: '50%',
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                })
             }
         });
     } else {
@@ -225,6 +261,7 @@ function Tell() {
         confirmButtonText: 'Tell',
         confirmButtonColor: '#7A9D54',
         confirmButtonAriaLabel: 'โทร',
+        showCloseButton: true,
     }).then((result) => {
         if (result.isConfirmed) {
             window.open('tel://' + PhoneNumber_in_product);

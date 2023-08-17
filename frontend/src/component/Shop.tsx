@@ -226,7 +226,7 @@ function Shop() {
                                         <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
                                             <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
                                                 <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
-                                                    <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }} />
+                                                    <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                 </div>
                                                 <Typography variant="h6" component="div" className='TP_font'>
                                                     {product.P_NAME}

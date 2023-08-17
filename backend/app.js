@@ -2,7 +2,7 @@ const express = require('express');
 var cors = require('cors');
 const app = express();
 const port = 8000;
-const { changePassword } = require('./controllers/MailController');
+const { changePassword, Every_Email} = require('./controllers/MailController');
 const { Token } = require('./controllers/Token');
 const { Login, resetPass } = require('./controllers/LoginController');
 const { connectDatabase, closeDatabase } = require('./database/Database.js');
@@ -19,6 +19,8 @@ const { addProduct, listProducts, updateProduct, deleteProduct, getProductById, 
 app.use(express.json());
 app.use(cors());
 
+
+app.post('/Every_Email', Every_Email); //ส่ง email โดยจะรับค่าต่างผ่าน body
 app.post('/sendEmaiChangePassword/:email', changePassword); //เมื่อใช้จะทำการส่ง email เพิ่มขอเปลี่ยนรหัสผ่าน
 app.put('/resetPass', resetPass); //เอาข้อมูลใหม่มา อัพเดต
 app.get('/Check_Token', Token); //ตรวจสอบ Token ว่าใช้ได้อยู่ไหม
