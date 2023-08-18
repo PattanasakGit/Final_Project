@@ -13,6 +13,7 @@ import ForgetPassword from "./component/system/foget_password.tsx"
 import MyProduct from "./component/MyProduct.tsx";
 import EditProduct from "./component/EditProduct.tsx";
 import Shop from "./component/Shop.tsx";
+import Advert from "./component/Advert.tsx"
 // import { Check_Token } from './component/HTTP_Request .tsx';
 
 import './App.css'
@@ -48,6 +49,7 @@ function App() {
           )}
           <Route path="/" element={<Home />} />
           <Route path="/Shop" element={<Shop />} />
+          <Route path="/Advert" element={<Advert />} />
           <Route path="/CreateProduct" element={<CreateProduct />} />
           <Route path="/resetPassword" element={<ResetPasswordPage />} />
           <Route path="/ChangePassword" element={<ResetPasswordPage_canLogin />} />

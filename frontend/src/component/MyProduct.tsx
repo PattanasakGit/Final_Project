@@ -19,7 +19,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
-const url_backend = 'http://localhost:3000'
+const url = 'http://localhost:3000'
 
 function format_Price(number: number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -38,6 +38,7 @@ function MyProduct() {
         P_POST: string;
         P_UPDATE: string;
         P_STATUS: string;
+        P_IMG:string[];
     }
     type DataIndex = keyof DataType;
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -162,7 +163,7 @@ function MyProduct() {
 
                 record.P_STATUS === "กำลังประกาศขาย" ? (
                     <Space size="small" style={{ textAlign: 'center' }}>
-                        <button onClick={() => window.location.href = url_backend + '/Product/' + record.ID}><VisibilityIcon /></button>
+                        <button onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
                         <button
                             onClick={async () => {
                                 Swal.fire({
@@ -185,12 +186,12 @@ function MyProduct() {
                         >
                             <DeleteIcon />
                         </button>
-                        <button><CampaignIcon /></button>
+                        <button onClick={()=>handleAds(record)}><CampaignIcon /></button>
                     </Space>
                 ) : record.P_STATUS === "รอตรวจสอบ" ? (
                     <Space size="small">
-                        <button onClick={() => window.location.href = url_backend + '/Product/' + record.ID}><VisibilityIcon /></button>
-                        <button onClick={() => window.location.href = url_backend + '/EditProduct/' + record.ID}><EditIcon /></button>
+                        <button onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
+                        <button onClick={() => window.location.href = url + '/EditProduct/' + record.ID}><EditIcon /></button>
                         <button
                             onClick={async () => {
                                 Swal.fire({
@@ -215,7 +216,7 @@ function MyProduct() {
                     </Space >
                 ) : (
                     <Space size="small">
-                        <button onClick={() => window.location.href = url_backend + '/Product/' + record.ID}><VisibilityIcon /></button>
+                        <button onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
                     </Space>
                 )
             ),
@@ -229,7 +230,22 @@ function MyProduct() {
         // update(data, 'updateProduct/' + ID_when_click);
         // window.location.reload();
     }
-    function handleAds() { }
+
+    function handleAds(data:DataType) {
+        const newData = {
+            ID: data.ID,
+            P_IMG: data.P_IMG,
+            P_NAME: data.P_NAME,
+            P_PRICE: data.P_PRICE,
+            P_TYPE:data.P_TYPE,
+
+        }
+        localStorage.setItem('DataProduct_Ads', JSON.stringify(newData));
+        window.location.href=url+'/Advert';
+        // console.log('data in record: ' , newData);
+        
+
+    }
 
 
     const [products, setProducts] = useState<DataType[]>([]);

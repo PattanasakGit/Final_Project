@@ -328,44 +328,84 @@ const ProductsGrid = () => {
       <div className="table_show_products">
         {/* ถ้าค้นแล้วมีสินค้าให้แสดง */}
         {products.length > 0 ? (
-          <div >
-            <Grid container spacing={2} >
-              {products.map((product: any) => (
-                // <Grid item xs={6} sm={6} md={5} lg={2} key={product.ID}>
-                <Grid item xs={6} sm={6} md={3} lg={2} key={product.ID}>
-                  <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
-                    <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
-                      <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
-                        {product.P_IMG.length > 0 ? (
-                          <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        ) : (
-                          <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
-                            <p>ผู้ขายไม่ได้อัพโหลด<br />ภาพสินค้า</p>
-                            <Empty />
-                          </div>
-                        )}
+          <div>
+            <Grid container spacing={2}>
+              {/* โชว์รายการที่โฆษณาก่อน */}
+              {products
+                .filter((product: any) => product.P_ADS === true)
+                .map((product: any) => (
+                  <Grid item xs={6} sm={6} md={3} lg={2} key={product.ID}>
+                    <Card sx={{ width: '100%', borderRadius: '10px', backgroundColor: '#FFFDE8', position: 'relative',boxShadow: ' 0 0 0 4px #FFCC48' }} className='product_cardContainer' >
+                      <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'absolute', top: '0', right: '0', padding: '10px' }}>
+                        <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FICON%2FPremium%20ICON.png?alt=media&token=2da96bd0-d868-4a85-9f52-becfe26fda9b" style={{ height: '40px',width:'35px', filter: 'drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.9))'  }} />
                       </div>
-                      <Typography variant="h6" component="div" className='TP_font'>
-                        {product.P_NAME}
-                      </Typography>
-                      <Typography variant="body1" component="div" className='TP_font'>
-                        ราคา: {format_Price(product.P_PRICE)} บาท
-                      </Typography>
-                      <Typography variant="body1" component="div" fontSize={'13px'} marginTop={1}>
-                        {product.P_TYPE === "สินค้ามือ 1" ? (
-                          <Tag color="green" className='TP_font'> {product.P_TYPE} </Tag>
-                        ) : (
-                          <Tag color="gold" className='TP_font'> {product.P_TYPE} </Tag>
-                        )}
-                      </Typography>
+                      <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
+                        <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
+                          {product.P_IMG.length > 0 ? (
+                            <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          ) : (
+                            <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
+                              <p>ผู้ขายไม่ได้อัพโหลด<br />ภาพสินค้า</p>
+                              <Empty />
+                            </div>
+                          )}
+                        </div>
+                        <Typography variant="h6" component="div" className='TP_font'>
+                          {product.P_NAME}
+                        </Typography>
+                        <Typography variant="body1" component="div" className='TP_font'>
+                          ราคา: {format_Price(product.P_PRICE)} บาท
+                        </Typography>
+                        <Typography variant="body1" component="div" fontSize={'13px'} marginTop={1}>
+                          {product.P_TYPE === "สินค้ามือ 1" ? (
+                            <Tag color="green" className='TP_font'> {product.P_TYPE} </Tag>
+                          ) : (
+                            <Tag color="gold" className='TP_font'> {product.P_TYPE} </Tag>
+                          )}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
 
-                      {/* <Button style={{marginRight:'1rem'}}>ดูสินค้า</Button>
+              {/* โชว์รายการที่ไม่ได้โฆษณา หลังจากกลุ่มที่โฆษณา */}
+              {products
+                .filter((product: any) => product.P_ADS !== true)
+                .map((product: any) => (
+                  <Grid item xs={6} sm={6} md={3} lg={2} key={product.ID}>
+                    <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
+                      <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
+                        <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
+                          {product.P_IMG.length > 0 ? (
+                            <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          ) : (
+                            <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
+                              <p>ผู้ขายไม่ได้อัพโหลด<br />ภาพสินค้า</p>
+                              <Empty />
+                            </div>
+                          )}
+                        </div>
+                        <Typography variant="h6" component="div" className='TP_font'>
+                          {product.P_NAME}
+                        </Typography>
+                        <Typography variant="body1" component="div" className='TP_font'>
+                          ราคา: {format_Price(product.P_PRICE)} บาท
+                        </Typography>
+                        <Typography variant="body1" component="div" fontSize={'13px'} marginTop={1}>
+                          {product.P_TYPE === "สินค้ามือ 1" ? (
+                            <Tag color="green" className='TP_font'> {product.P_TYPE} </Tag>
+                          ) : (
+                            <Tag color="gold" className='TP_font'> {product.P_TYPE} </Tag>
+                          )}
+                        </Typography>
+
+                        {/* <Button style={{marginRight:'1rem'}}>ดูสินค้า</Button>
                 <Button>ดูสินค้า</Button> */}
 
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
             </Grid>
             <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
               <Pagination
@@ -395,7 +435,7 @@ const ProductsGrid = () => {
       </div>
 
 
-    </div>
+    </div >
   );
 };
 

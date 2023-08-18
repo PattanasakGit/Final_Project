@@ -234,7 +234,7 @@ function MyProfile() {
                         )
                         }
 
-                        <input type="file" style={{ display: 'none' }} onChange={onFileChange} ref={inputRef} />
+                        <input type="file" accept="image/*" style={{ display: 'none' }} onChange={onFileChange} ref={inputRef} />
                         {selectedImages.length === 0 && CheckEdit_btn === true && (
                             <button onClick={handleUploadButtonClick} className='btn_select_file'>เลือกภาพใหม่เพื่ออัปโหลด</button>
                         )}

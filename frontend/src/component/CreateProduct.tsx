@@ -236,7 +236,7 @@ function CreateProduct() {
                     <div style={{ width: '40%' }} className='img_space'>
                         <h1> รูปภาพของสินค้า </h1>
                         <p style={{ fontSize: '12px', color: '#333' }}>*หมายเหตุ ภาพแรกจะเป็นภาพปกเมื่อลูกค้าทำการค้นหา</p>
-                        <input type="file" style={{ display: 'none' }} onChange={onFileChange} ref={inputRef} />
+                        <input type="file" accept="image/*" style={{ display: 'none' }} onChange={onFileChange} ref={inputRef} />
                         {selectedImages.length === 0 && (
                             <button onClick={handleUploadButtonClick} className='Btn_select_file' style={{ width: 'auto' }}>
                                 เลือกภาพเพื่ออัปโหลด
