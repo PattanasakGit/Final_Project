@@ -7,7 +7,7 @@ const { Token } = require('./controllers/Token');
 const { Login, resetPass } = require('./controllers/LoginController');
 const { connectDatabase, closeDatabase } = require('./database/Database.js');
 const { TP_VerifyEmail_Check_Pass } = require('./controllers/TP_VerifyEmail');
-const { addAdvert, listAdverts, updateAdvert, deleteAdvert, getAdvertById } = require('./controllers/AdvertController');
+const { addAdvert, listAdverts, updateAdvert, deleteAdvert, getAdvertById, getAdvertByProduct } = require('./controllers/AdvertController');
 const { addDataWeb, listDataWebs, updateDataWeb, deleteDataWeb, getDataWebById } = require('./controllers/datawebController');
 const { addUser, listUsers, updateUser, deleteUser, getUserById, getUserByEmail, User_Verify_Email, addReview } = require('./controllers/userController');
 const { addTopBanner, listTopBanners, updateTopBanner, deleteTopBanner, getTopBannerById } = require('./controllers/TopBannerController');
@@ -59,6 +59,7 @@ app.post('/createAdvert', addAdvert);
 app.put('/updateAdvert/:id', updateAdvert);
 app.delete('/deleteAdvert/:id', deleteAdvert);
 app.get('/getAdvert/:id', getAdvertById);
+app.get('/getAdvertByProduct/:id', getAdvertByProduct);
 app.get('/listAdvert', listAdverts)
 //CategoryProduct
 app.post('/createCategoryProduct', addCategoryProduct);

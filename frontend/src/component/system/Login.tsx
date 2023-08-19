@@ -38,7 +38,7 @@ function Login() {
         <div className="Login_Container">
           <form name="form1" className="box_login" onSubmit={handleFormSubmit}>
             <h4>
-              Yakkkai.com
+              YakKai
             </h4>
             <h5>โปรดเข้าสู่ระบบ</h5>
             <input

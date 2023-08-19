@@ -26,7 +26,7 @@ function format_Price(number: number) {
 }
 
 function MyProduct() {
-    Check_Token(); 
+    Check_Token();
 
     interface DataType {
         key: number;
@@ -38,7 +38,8 @@ function MyProduct() {
         P_POST: string;
         P_UPDATE: string;
         P_STATUS: string;
-        P_IMG:string[];
+        P_IMG: string[];
+        P_ADS: Boolean;
     }
     type DataIndex = keyof DataType;
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -163,8 +164,9 @@ function MyProduct() {
 
                 record.P_STATUS === "กำลังประกาศขาย" ? (
                     <Space size="small" style={{ textAlign: 'center' }}>
-                        <button onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
+                        <button className='btn_show' onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
                         <button
+                            className='btn_delete'
                             onClick={async () => {
                                 Swal.fire({
                                     title: 'คุณแน่ใจหรือไม่ว่าต้องการปิดประกาศการขายนี้?',
@@ -186,13 +188,20 @@ function MyProduct() {
                         >
                             <DeleteIcon />
                         </button>
-                        <button onClick={()=>handleAds(record)}><CampaignIcon /></button>
+
+
+                        {record.P_ADS === true ? (
+                            <button className='btn_ads_true' onClick={() => handleAds(record)}><CampaignIcon /></button>
+                        ) : (<button className='btn_ads' onClick={() => handleAds(record)}><CampaignIcon /></button>)
+                        }
+
                     </Space>
                 ) : record.P_STATUS === "รอตรวจสอบ" ? (
                     <Space size="small">
-                        <button onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
-                        <button onClick={() => window.location.href = url + '/EditProduct/' + record.ID}><EditIcon /></button>
+                        <button className='btn_show' onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
+                        <button className='btn_edit' onClick={() => window.location.href = url + '/EditProduct/' + record.ID}><EditIcon /></button>
                         <button
+                            className='btn_delete'
                             onClick={async () => {
                                 Swal.fire({
                                     title: 'คุณแน่ใจหรือไม่ว่าต้องการปิดประกาศการขายนี้?',
@@ -216,7 +225,7 @@ function MyProduct() {
                     </Space >
                 ) : (
                     <Space size="small">
-                        <button onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
+                        <button className='btn_show' onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
                     </Space>
                 )
             ),
@@ -231,19 +240,21 @@ function MyProduct() {
         // window.location.reload();
     }
 
-    function handleAds(data:DataType) {
+    function handleAds(data: DataType) {
         const newData = {
             ID: data.ID,
             P_IMG: data.P_IMG,
             P_NAME: data.P_NAME,
             P_PRICE: data.P_PRICE,
-            P_TYPE:data.P_TYPE,
+            P_TYPE: data.P_TYPE,
+            P_ADS: data.P_ADS
+
 
         }
         localStorage.setItem('DataProduct_Ads', JSON.stringify(newData));
-        window.location.href=url+'/Advert';
+        window.location.href = url + '/Advert';
         // console.log('data in record: ' , newData);
-        
+
 
     }
 

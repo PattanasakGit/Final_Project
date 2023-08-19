@@ -3,8 +3,8 @@ import React, { ChangeEvent, useEffect, useRef, useState, } from 'react';
 import '../css/Background.css';
 import '../css/Product.css';
 import { Avatar, Empty, Image, Tag } from 'antd';
-import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, getUserByEmail, update, sendEmaiChangePassword } from './system/HTTP_Request ';
-import moment from 'moment';
+import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, getUserByEmail, update, Create_Ads, submit, getAdvertByProduct } from './system/HTTP_Request ';
+import moment, { now } from 'moment';
 import { Card, CardContent, Grid, ListItemTextClassKey, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
@@ -28,36 +28,36 @@ interface DataType {
     P_UPDATE: string;
     P_STATUS: string;
     P_IMG: string[];
+    P_ADS: boolean;
 }
 
 const product_Str = localStorage.getItem('DataProduct_Ads');
-let product: DataType = {
-    key: 0,
-    ID: 0,
-    P_NAME: '',
-    P_CATEGORY: '',
-    P_PRICE: 0,
-    P_TYPE: '',
-    P_POST: '',
-    P_UPDATE: '',
-    P_STATUS: '',
-    P_IMG: []
-};
-
+let product: DataType = { key: 0, ID: 0, P_NAME: '', P_CATEGORY: '', P_PRICE: 0, P_TYPE: '', P_ADS: false, P_POST: '', P_UPDATE: '', P_STATUS: '', P_IMG: [] };
 if (product_Str) {
     product = JSON.parse(product_Str);
 }
 
-console.log(product);
 
-
-
-
-
-
-
+// console.log(product);
 
 function Advert() {
+
+    //----------------------------------------- เกี่ยวกับการเช็คโฆษณา -------------------------------------------------------
+    interface dataAdsType { ID: Number; P_ID: Number; Ad_CREATE_BILL: string; Ad_IMG: string; Ad_CHECKED: boolean; }
+    const [dataAdsStatus, setDataAdsStatus] = useState<dataAdsType>({ ID: 0, P_ID: 0, Ad_CREATE_BILL: '', Ad_IMG: '', Ad_CHECKED: false, });
+    const Check_Advert = async () => {
+        try {
+            const datatTest = await getAdvertByProduct(product.ID);
+            setDataAdsStatus(datatTest);
+        } catch (error) {
+            console.error('Failed to fetch Advert:', error);
+        }
+    }
+    useEffect(() => {
+        Check_Advert();
+    }, []);
+    console.log('Is a data Ads ---> ', dataAdsStatus);
+    //-------------------------------------------------------------------------------------------------------------------
 
     const Email_User = localStorage.getItem('email');
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
@@ -67,9 +67,12 @@ function Advert() {
     const [progress, setProgress] = useState<number>(0);
 
 
+    let data_to_backend = {
+        P_ID: product.ID,
+        Ad_IMG: img,
+    }
 
-
-    //------------------------------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------
     // ฟังก์ชันเรียกเมื่อมีการเลือกไฟล์รูปภาพ
     const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -111,16 +114,9 @@ function Advert() {
                     setImg(downloadUrl); // Update the image URL after successful upload
                     setIsLoading(false);
                     setSelectedImages([]);
-                    Swal.fire({
-                                icon: 'success',
-                                title: 'แนบหลักฐานการชำระเงินเสร็จสิ้น',
-                                text: 'ระบบจะแจ้งรายละเอียดทาง Email ให้คุณทราบ หลังจากทำการตรวจสอบข้อมูลการชำระเงินของคุณ',
-                                showCancelButton: false,
-                                width:'80%'
-                                // showConfirmButton: false,
-                            })
+                    Create_Ads(data_to_backend);
                     return true;
-                } catch (error:any) {
+                } catch (error: any) {
                     console.error('Error getting download URL:', error);
                     Swal.fire({
                         icon: 'error',
@@ -160,6 +156,12 @@ function Advert() {
         //     })
         // )
     }
+
+    // function submit(){
+    //     Create_Ads(data_to_backend);
+    //     console.log(data_to_backend);
+
+    // }
 
     //------------------------------------------------------------------------------------------------------------------------------------------
     //  fn() สำรับเช็ตว่า โหลดภาพโปรไฟล์ได้ไหม
@@ -208,8 +210,6 @@ function Advert() {
                 {/* <h2 style={{ color: '#333' }}>แสดงประกาศขายสินค้าของคุณเป็นอันดับต้น ๆ <br />ให้ผู้ที่สนใจเห็นสินค้าของคุณก่อนใคร</h2> */}
                 {/* <img style={{ width: '60%', borderRadius: '20px' }} src='https://images.unsplash.com/photo-1664262283606-d4e198491656?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1712&q=80' /> */}
 
-
-
                 <div style={{ backgroundColor: '#DAC0A3', padding: '5px', marginTop: '10px' }}>
                     <hr style={{ border: 'none', height: '4px', backgroundImage: 'linear-gradient(to right, #C58940, #E5BA73, #ffd700)' }} />
 
@@ -229,34 +229,77 @@ function Advert() {
 
 
 
-                <div>
-                    <h2 style={{ color: '#333' }}>แนบหลักฐานการโอน</h2>
-                    {img && <Image src={img} alt="Selected" style={{ height: '100px' }} />}<br />
-                    <div>
-                        <input type="file" accept="image/*" style={{ display: 'none' }} onChange={onFileChange} ref={inputRef} />
-                        {selectedImages.length === 0 && (
-                            <button onClick={handleUploadButtonClick} className='btn_select_file'>เลือกภาพใหม่เพื่ออัปโหลด</button>
-                        )}
-                        {selectedImages.length !== 0 && (
-                            <div >
-                                <button onClick={handleUploadButtonClick} className='btn_select_file'>เลือกภาพใหม่เพื่ออัปโหลด</button> <br />
-                                <button onClick={alert_before_upload} className='Btn_upload'>ฉันต้องการใช้ภาพนี้</button>
-                            </div>
-                        )}
+                <div style={{ backgroundColor: '#DAC0A3', padding: '5px', }}>
 
-                        {isLoading && (
+
+
+
+
+                    {/* กรณีนี้คือยังไม่มีการโฆษราสินค้าชิ้นนี้ */}
+                    {dataAdsStatus.ID === 0 && product.P_ADS === false && (
+                        <div>
+                            <hr style={{ border: 'none', height: '4px', backgroundImage: 'linear-gradient(to right, #C58940, #E5BA73, #ffd700)' }} />
+                            <h2 style={{ color: '#333', margin: '0' }}>อัพโหลดหลักฐานการโอน</h2>
+                            {img &&
+                                <div style={{ marginTop: '20px' }}>
+                                    <Image src={img} alt="Selected" style={{ height: '150px' }} />
+                                    <p style={{ color: '#333', fontSize: '12px' }}> *กดที่รูปเพื่อดูรายละเอียด </p>
+                                </div>}<br
+                            />
                             <div>
-                                <div className="file-upload-progress">
-                                    <div className="progress-bar" style={{ width: `${progress}%` }}></div>
-                                </div>
-                                <div>
-                                    <p>กำลังอัพโหลดไฟล์: <b>{progress}%</b></p>
-                                </div>
+                                <input type="file" accept="image/*" style={{ display: 'none' }} onChange={onFileChange} ref={inputRef} />
+                                {selectedImages.length === 0 && (
+                                    <button onClick={handleUploadButtonClick} className='btn_select_file'>เลือกภาพใหม่เพื่ออัปโหลด</button>
+                                )}
+                                {selectedImages.length !== 0 && (
+                                    <div style={{ margin: 0 }}>
+                                        <button onClick={handleUploadButtonClick} className='btn_select_file'>เลือกภาพใหม่เพื่ออัปโหลด</button> <br />
+                                        <hr style={{ border: 'none', height: '4px', width: '40%', backgroundImage: 'linear-gradient(to right, #C58940, #E5BA73, #ffd700)' }} />
+                                        <button onClick={alert_before_upload} className='Btn_upload' style={{ marginTop: '0' }}>บันทึกหลักฐานการชำระเงิน</button>
+                                    </div>
+                                )}
+                                {isLoading && (
+                                    <div>
+                                        <div className="file-upload-progress">
+                                            <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+                                        </div>
+                                        <div>
+                                            <p>กำลังอัพโหลดหลักฐานการชำระเงิน: <b>{progress}%</b></p>
+                                        </div>
+                                    </div>
+                                )}
+                                <hr style={{ border: 'none', height: '4px', backgroundImage: 'linear-gradient(to right, #C58940, #E5BA73, #ffd700)' }} />
                             </div>
+                        </div>
+                    )}
+                    {/* กรณีนี้คือ รายการมีการทำเรื่องโฆษณา แต่ยังไม่ตรวจสอบความถูกต้อง = */}
+                    {dataAdsStatus.ID !== 0 && dataAdsStatus.Ad_CHECKED === false && (
+                        <div>
+                            <hr style={{ border: 'none', height: '4px', backgroundImage: 'linear-gradient(to right, #C58940, #E5BA73, #ffd700)' }} />
+                            <h2 style={{ color: '#333' }}>
+                                รายการของคุณอยู่ระหว่างการตรวจสอบ <br /> หากตรวจสอบเสร็จสิ้นระบบจะแจ้งรายละเอียดให้คุณทราบทาง Email
+                            </h2>
+                            <hr style={{ border: 'none', height: '4px', backgroundImage: 'linear-gradient(to right, #C58940, #E5BA73, #ffd700)' }} />
+                        </div>
+                    )}
+                    {((dataAdsStatus.ID !== 0 && dataAdsStatus.Ad_CHECKED === true) || (product.P_ADS === true)) && (
+                        <div>
+                            <hr style={{ border: 'none', height: '4px', backgroundImage: 'linear-gradient(to right, #C58940, #E5BA73, #ffd700)' }} />
+                            <h2 style={{ color: '#333' }}> รายการของคุณอยู่ระหว่างการโฆษณา  </h2>
+                            <p style={{ color: '#333' }}> รายละเอียดเกี่ยกับการซื้อโฆษณารวมถึงระยะเวลาในการโฆษณาระบบได้ทำการส่งให้คุณแล้วทาง Email ก่อนหน้านี้ <br /> หากคุณพบปัญหาโปรดติดต่อเรา เราพร้อมช่วยหลือและให้บริการแก่คุณ</p>
+                            <hr style={{ border: 'none', height: '4px', backgroundImage: 'linear-gradient(to right, #C58940, #E5BA73, #ffd700)' }} />
+                        </div>
+                    )}
 
-                        )}
-                    </div>
+
+
+
+
+
+
                 </div>
+
+
 
 
 
