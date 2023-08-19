@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Borel&family=Krub&family=Noto+Sans+Thai&display=swap');
 
 .backgroundLogin{
     min-height: 100vh;
@@ -8,7 +9,8 @@
     align-items: center;
     /* background: linear-gradient(90deg, rgba(250, 0, 0, 0.109) 0%, rgba(255, 255, 255, 0.056) 100%); */
     background-color: rgb(255, 255, 255);
-    background-image: url('https://img.freepik.com/free-photo/top-view-paper-bags-with-copy-space_23-2148305923.jpg?w=1800&t=st=1689949634~exp=1689950234~hmac=6032e483a502eabff6c79555d9b11ae184dcc62f2e179230ab7307799ec874e2');
+    /* background-image: url('https://img.freepik.com/free-photo/top-view-paper-bags-with-copy-space_23-2148305923.jpg?w=1800&t=st=1689949634~exp=1689950234~hmac=6032e483a502eabff6c79555d9b11ae184dcc62f2e179230ab7307799ec874e2'); */
+    background-image: url('https://images.unsplash.com/photo-1513568917837-e5be8262f18f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2566&q=80');
     background-size: cover;
     background-position: center;
     /* backdrop-filter: blur(70px); */
@@ -16,7 +18,7 @@
 }
 .Login_Container {
   margin: 0;
-  top: 100px;
+  top: 150px;
   left: 50%;
   position: absolute;
   text-align: center;
@@ -32,10 +34,12 @@
 }
 
 .box_login h4 {
-  font-family: 'Noto Sans Thai', sans-serif;
-  color: #ff6600;
-  font-size: 35px;
+  font-family: 'Borel', cursive, 'Krub', sans-serif, 'Noto Sans Thai', sans-serif;
+  color: #ff8800;
+  font-size: 50px;
   margin-top: 60px;
+  margin: 60px 0px 0px 0px;
+  text-shadow: 1px 1px 2px #000;
 }
 
 .box_login h5 {
@@ -206,4 +210,23 @@ label span.slider {
 
 .link-containercheckbox {
   flex: 1;
+}
+
+
+@media (max-width: 768px) {
+  .Login_Container {
+    margin: 0;
+    top: 100px;
+    position: absolute;
+    text-align: center;
+    transform: translateX(-50%);
+    background-color: rgba(254, 254, 254, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border-top: 10px solid #ff4304;
+    border-bottom: 10px solid #ff4304;
+    width: 100%;
+    height: 550px;
+    /* box-shadow: 1px 1px 108.8px 19.2px rgb(255, 255, 255); */
+  }
 }

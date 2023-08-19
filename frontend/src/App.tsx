@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from './component/system/Login.tsx'
 import CreateUser from './component/CreateUser.tsx'
 import NavBar from "./component/system/NavBar.tsx";
-import Footer from "./component/Footer.tsx";
+import Footer from "./component/system/Footer.tsx";
 import Home from "./component/Home.tsx";
 import Product from "./component/Product.tsx";
 import CreateProduct from "./component/CreateProduct.tsx";
@@ -13,6 +13,14 @@ import ForgetPassword from "./component/system/foget_password.tsx"
 import MyProduct from "./component/MyProduct.tsx";
 import EditProduct from "./component/EditProduct.tsx";
 import Shop from "./component/Shop.tsx";
+import Advert from "./component/Advert.tsx"
+// นำเข้า หน้าต่าง ๆ ที่เป็นของ admin
+import AdminHome from "./component/Admin/AdminHome.tsx"
+
+
+
+
+
 // import { Check_Token } from './component/HTTP_Request .tsx';
 
 import './App.css'
@@ -35,7 +43,7 @@ function App() {
           <Route path="/test" element={<FileUpload />} />
           {role === 'User' && (
             <>
-             
+              <Route path="/" element={<Home />} />             
               <Route path="/MyProfile" element={<MyProfile />} />
               <Route path="/EditProduct/:id" element={<EditProduct />} />
               {/* <Route path="/MyProduct" element={<MyProduct />} /> */}
@@ -43,11 +51,14 @@ function App() {
           )}
           {role === 'Admin' && (
             <>
+              
+              <Route path="/" element={<AdminHome />} />
               <Route path="/MyProfile" element={<MyProfile />} />
             </>
           )}
-          <Route path="/" element={<Home />} />
+          
           <Route path="/Shop" element={<Shop />} />
+          <Route path="/Advert" element={<Advert />} />
           <Route path="/CreateProduct" element={<CreateProduct />} />
           <Route path="/resetPassword" element={<ResetPasswordPage />} />
           <Route path="/ChangePassword" element={<ResetPasswordPage_canLogin />} />

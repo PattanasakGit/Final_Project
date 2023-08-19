@@ -23,6 +23,7 @@ const productSchema = new Schema({
   P_UPDATE: { type: String },
   P_TYPE: { type: String, required: true },
   P_STATUS: { type: String, required: true },
+  P_ADS: { type: Boolean},
   U_EMAIL: { type: String, required: true },
 }, { versionKey: false });
 
@@ -51,6 +52,7 @@ async function addProduct(req, res) {
     Product.ID = await getNextDataId(DataModel);
     Product.P_POST = formatDate(new Date());
     Product.P_UPDATE = Product.P_POST;
+    Product.P_ADS = false;
     Product.P_STATUS = 'รอตรวจสอบ'; //ทุกการบันทึกจะมีสถานะ 1 --> รอการตรวจสอบ
 
     await insertData(Product, DataModel); // เพิ่มผู้ใช้ในฐานข้อมูล

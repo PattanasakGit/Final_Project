@@ -27,4 +27,17 @@
     margin: 0 0 20px 0;
     text-shadow: -1px -1px 0 rgb(114, 114, 114), 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
   }
-  
+
+.btn_show,.btn_delete,.btn_ads,.btn_ads_true,.btn_edit {
+    border: 2px solid #0000004e;
+    border-radius: 4px;
+}
+.btn_show{background: #79b8fc;}
+.btn_delete{background: #fc7979;}
+.btn_ads{background: #939393;}
+.btn_ads_true{background: #DAB88B;}
+
+.btn_show:hover,.btn_delete:hover,.btn_ads:hover,.btn_ads_true:hover,.btn_edit:hover {
+    background-color: #000000;
+
+}

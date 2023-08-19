@@ -522,3 +522,38 @@ export const addReview = async (data: any) => {
   }
 };
 
+//============================ Adverts  ======================================
+export const Create_Ads = async (data: any) => {
+  const apiUrl = `http://localhost:${port}/createAdvert`;
+  try {
+    const response = await axios.post(apiUrl, data);
+    Swal.fire({
+      icon: 'success',
+      title: 'แนบหลักฐานการชำระเงินเสร็จสิ้น',
+      text: 'ระบบจะแจ้งรายละเอียดทาง Email ให้คุณทราบ หลังจากทำการตรวจสอบข้อมูลการชำระเงินของคุณ',
+      showCancelButton: false,
+      width: '80%'
+      // showConfirmButton: false,
+  })
+    return response.data;
+  } catch (error:any) {
+    Swal.fire({
+      title: 'เกิดข้อผิดพลาด',
+      text: error.message,
+      icon: 'error'
+    })
+    console.log('พบข้อผิดพลาดในการบันทึกหลักฐานการชำระเงิน:' + error);
+    return [];
+  }
+};
+
+export const getAdvertByProduct = async (ID: number|string) => {
+  const apiUrl = `http://localhost:${port}/getAdvertByProduct/${ID}`;
+  try {
+    const response = await axios.get(apiUrl);
+    return response.data;
+  } catch (error) {
+    console.log('พบข้อผิดพลาดในการดึงข้อมูลสถานะ Ads:' + error);
+    return ({ ID: 0, P_ID: 0, Ad_CREATE_BILL: '', Ad_IMG: '', Ad_CHECKED: false, });
+  }
+};
