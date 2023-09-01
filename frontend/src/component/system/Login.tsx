@@ -7,16 +7,15 @@ const Path = 'Login';
 
 function Login() {
   localStorage.clear();
-  
+
   const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
   const [emailInput, setEmail] = useState('');
   const [passwordInput, setPassword] = useState('');
 
   let data = {
-    email : emailInput,
-    password : passwordInput,
-    role:'User'
+    email: emailInput,
+    password: passwordInput,
+    role: 'User'
   };
 
   const togglePasswordVisibility = () => {
@@ -28,7 +27,7 @@ function Login() {
   };
 
   const handleClick = (): void => {
-    submitLogin(data,'Login')
+    submitLogin(data, 'Login')
     // console.log(data);
   };
   return (
@@ -79,9 +78,9 @@ function Login() {
                 </a>
               </div>
             </div>
-            <input 
-              type="submit" 
-              value="Sign in" 
+            <input
+              type="submit"
+              value="Sign in"
               onClick={handleClick}
               className="btn1" />
           </form>

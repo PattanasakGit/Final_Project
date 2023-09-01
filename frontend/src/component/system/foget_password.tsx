@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../../css/Login.css';
 import '../../css/checkbox.css';
 import { Image, Tag } from 'antd';
-import { getUserByID, fetchCategories, fillter_product, getProductByID ,sendEmaiChangePassword} from './HTTP_Request ';
+import { getUserByID, fetchCategories, fillter_product, getProductByID, sendEmaiChangePassword, getUserByEmail } from './HTTP_Request ';
 import moment from 'moment';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
@@ -11,23 +11,40 @@ import Swal from 'sweetalert2'; // Alert text --> npm install sweetalert2
 function ForgetPassword() {
     const [email, setEmail] = useState('');
 
-    const handleSubmit = () => {
-        sendEmaiChangePassword(email);
+    const handleSubmit = async () => {
+        const check_user: [] = await getUserByEmail({ email: email });
+        if (!/\S+@\S+\.\S+/.test(email)) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'ขออภัยคุณกรอก Email ไม่ถูกต้อง',
+                text: 'โปรดตรวจสอบ Email และกรอกอีกครั้ง'
+            })
+        } else {
+            if (check_user.length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'ไม่พบ Email ในระบบ',
+                    text: 'โปรดตรวจสอบ Email ของของคุณอีกครั้ง'
+                })
+            } else {
+                sendEmaiChangePassword(email);
+            };
+        }
     }
 
     return (
         <center>
-            <div style={{ height: '100%', width: '90%', display: 'flex',backgroundColor:'#fff' }} className='contentPage'>
+            <div style={{ height: '100%', width: '90%', display: 'flex', backgroundColor: '#fff' }} className='contentPage'>
                 <div style={{ width: "50%" }}>
                     <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FforgetPassword.jpg?alt=media&token=e1b3389f-09e1-4c0f-9a61-cc42464171aa"
                         height='100%x' width="80%"
                     />
                 </div>
 
-                <div style={{ width: "50%", color:'#333',paddingTop:'180px'}}>
+                <div style={{ width: "50%", color: '#333', paddingTop: '180px' }}>
                     <h1>กรุณาป้อน Email ของคุณ</h1>
                     <h4>เราจะทำการส่งลิงค์ไปยัง Email ของคุณเพื่อทำการกำหนดรหัสผ่าน</h4>
-                    <div className="input_resetpass_container" style={ { }}>
+                    <div className="input_resetpass_container" style={{}}>
                         <input
                             style={{ height: '80%' }}
                             className='ThepatforInput'

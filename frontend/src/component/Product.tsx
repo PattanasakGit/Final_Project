@@ -211,6 +211,7 @@ async function need_to_buy(product: interface_Product) {
                     <h2>โปรดตรวจสอบข้อมูลในการติดต่อกลับ</h2>
                     <h3 style="margin: 0; background-color:#F8F0E5; ">คุณ ${data.CustomerName}</h3>
                     <h3 style="margin: 0; background-color:#EADBC8; ">เบอร์โทรศัพท์ ${data.CusttomerTel}</h3>
+                    <h6 style="margin: 0;" >*หากข้อมูลส่วนตัวของคุณไม่ถูกต้อง สามารถแก้ไขได้ที่โปรไฟล์ของคุณ*<h6>
                     <h4>คุณกำลังสนใจ</h4>
                     <h4 style="margin: 0;" >ชื่อสินค้า: ${product.P_NAME}</h4>
                     <h4 style="margin: 0;" >ราคา: ${formatNumber(product.P_PRICE)} บาท</h4>

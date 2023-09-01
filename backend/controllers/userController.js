@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 const { Schema } = mongoose;
-const { insertData, getData, updateData, deleteData, getDataById, getNextDataId, getUserBy_Email } = require('../database/Database.js');
+const { insertData, getData, updateData, deleteData, getDataById, getNextDataId, getUserBy_Email, listAdmins } = require('../database/Database.js');
 const { addLogin, getLoginSchema } = require('./LoginController');
 const { sendEmail } = require('./MailController');
 const { TP_VerifyEmail, getVerifySchema } = require('./TP_VerifyEmail.js');
@@ -105,6 +105,30 @@ async function addUser(req, res) {
   }
 }
 
+async function addAdmin(req, res) {
+  // ในส่วนของ admin จะสามารถเพิ่มบัญชีได้เลย โดยไม่ต้องทำการ Validate บัญชีก่อน
+  try {
+    const email = req.body.U_EMAIL;
+    const Email_Checked = await DataModel.findOne({ U_EMAIL: email });
+    if (Email_Checked !== null) {
+      console.log('พบอีเมลซ้ำ --> ' + email);
+      throw new Error(`ขออภัย ${email} ถูกใช้งานแล้ว`);
+    } else { // ตรวจดูก่อนว่าเคยมี บัญชี Email ซ้ำไหม ไม่มีค่อยบันทึก
+      const user = req.body;
+      user.ID = await getNextDataId(DataModel);
+      user.U_REGISTER = formatDate(new Date());
+      await addLogin(req.body.U_EMAIL, req.body.U_PASSWORD, 'Admin') // เพิ่ม email และ รหัสผ่านเข้าฐานข้อมูล Login
+      await insertData(user, DataModel);
+      console.log('การบันทึก admin สำเร็จ');
+      return res.status(200).json({ status: true, message: 'การเพิ่มบัญชีผู้ดูแลระบบสำเร็จ' });
+    }
+
+  } catch (error) {
+    console.error('Failed to insert user:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
 async function User_Verify_Email(req, res) {
   try {
     const Code_verify_Email = generateRandomNumber();
@@ -134,6 +158,15 @@ async function listUsers(req, res) {
   try {
     const data = await getData(DataModel);
 
+    res.status(200).json(data);
+  } catch (error) {
+    console.error('Failed to retrieve users:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+async function List_admin(req, res) {
+  try {
+    const data = await listAdmins(DataModel);
     res.status(200).json(data);
   } catch (error) {
     console.error('Failed to retrieve users:', error);
@@ -237,8 +270,22 @@ async function addReview(req, res) {
   }
 }
 
+async function deleteUser(req, res) {
+  try {
+    const { id } = req.params;
 
-module.exports = { addUser, listUsers, updateUser, deleteUser, getUserById, User_Verify_Email, getUserByEmail, getUserModel, addReview };
+    await deleteData(id, DataModel);
+
+    console.log('User deleted successfully');
+    res.status(200).json({ status: true, message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Failed to delete user:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
+module.exports = { addUser, listUsers, updateUser, deleteUser, getUserById, User_Verify_Email, getUserByEmail, getUserModel, addReview, List_admin, addAdmin };
 
 
 

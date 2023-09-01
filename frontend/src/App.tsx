@@ -16,6 +16,9 @@ import Shop from "./component/Shop.tsx";
 import Advert from "./component/Advert.tsx"
 // นำเข้า หน้าต่าง ๆ ที่เป็นของ admin
 import AdminHome from "./component/Admin/AdminHome.tsx"
+import AdminManagement from "./component/Admin/AdminManagement.tsx"
+import AdminCheckProduct from "./component/Admin/AdminCheckProduct.tsx"
+
 
 
 
@@ -53,10 +56,13 @@ function App() {
             <>
               
               <Route path="/" element={<AdminHome />} />
+              <Route path="/AdminManagement" element={<AdminManagement />} />
+              <Route path="/AdminCheckProduct" element={<AdminCheckProduct />} />
               <Route path="/MyProfile" element={<MyProfile />} />
             </>
           )}
           
+          <Route path="/" element={<Home />} />             
           <Route path="/Shop" element={<Shop />} />
           <Route path="/Advert" element={<Advert />} />
           <Route path="/CreateProduct" element={<CreateProduct />} />

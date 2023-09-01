@@ -56,7 +56,7 @@ function Advert() {
     useEffect(() => {
         Check_Advert();
     }, []);
-    console.log('Is a data Ads ---> ', dataAdsStatus);
+    // console.log('Is a data Ads ---> ', dataAdsStatus);
     //-------------------------------------------------------------------------------------------------------------------
 
     const Email_User = localStorage.getItem('email');
@@ -114,7 +114,10 @@ function Advert() {
                     setImg(downloadUrl); // Update the image URL after successful upload
                     setIsLoading(false);
                     setSelectedImages([]);
+
+                    data_to_backend.Ad_IMG = downloadUrl;
                     Create_Ads(data_to_backend);
+                                   
                     return true;
                 } catch (error: any) {
                     console.error('Error getting download URL:', error);
