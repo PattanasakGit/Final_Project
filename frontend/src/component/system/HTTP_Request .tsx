@@ -17,7 +17,7 @@ export const submit = (data: any, part: string) => {
       console.log(res);
 
       if (res.status === true) {
-        if (part === 'createProduct') {
+        if (part === 'createProduct' || part === 'createAdmin') {
           Swal.fire({
             title: 'บันทึกสำเร็จ',
             icon: 'success',
@@ -25,11 +25,19 @@ export const submit = (data: any, part: string) => {
               window.location.reload();
             }
           });
+          return true;
+          // } else if (part === 'createAdmin') {
+          //   Swal.fire({
+          //     title: 'บันทึกสำเร็จ',
+          //     icon: 'success',
+          //   });
+          //   return true;
         } else {
           Swal.fire({
             title: 'บันทึกสำเร็จ',
             icon: 'success',
           });
+          return true;
         }
 
       } else {
@@ -38,6 +46,7 @@ export const submit = (data: any, part: string) => {
           text: res.error,
           icon: 'error',
         });
+        return false;
       }
     })
     .catch((error) => {
@@ -56,6 +65,7 @@ export const submit = (data: any, part: string) => {
         icon: 'error',
       });
     });
+  return false;
 };
 //==============================================================================================================================================================================================================
 export const sendEmaiChangePassword = (email: any) => {
@@ -255,8 +265,6 @@ export const submitLogin = (data: any, part: string) => {
 
       if (res.status === true) {
 
-
-
         localStorage.setItem('token', response.data.token);
         console.log(localStorage.getItem('token'));
         // console.log(response);
@@ -270,35 +278,36 @@ export const submitLogin = (data: any, part: string) => {
           title: 'เข้าสู่ระบบสำเร็จ',
           // text: 'เรากำลังนำท่า',
           icon: 'success',
-          showConfirmButton: false, // ไม่แสดงปุ่ม OK
-          timer: 1500, // แสดง SweetAlert เป็นเวลา 1 วินาที
+          showConfirmButton: false,
+          timer: 1500,
         }).then(() => {
           window.location.href = 'http://localhost:3000/'; // เมื่อหมดเวลา 1 วินาที จะเปลี่ยนหน้าไปที่ Home
         });
       }
-      else {
+    })
+    .catch((error) => {
+
+      if (error.message) {
         Swal.fire({
           title: 'เข้าสู่ระบบไม่สำเร็จ',
-          text: res.error,
+          text: 'รหัสผ่านหรือ email ไม่ถูกต้อง',
+          icon: 'error',
+        });
+      } else {
+        let errorMessage = '!!!';
+        if (error.message === 'Network Error') {
+          errorMessage = 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ'
+        } else if (error.response.data.error) {
+          errorMessage = error.response.data.error;
+        } else {
+          errorMessage = error;
+        }
+        Swal.fire({
+          title: 'เกิดข้อผิดพลาด',
+          text: errorMessage,
           icon: 'error',
         });
       }
-    })
-    .catch((error) => {
-      let errorMessage = '!!!';
-      if (error.message === 'Network Error') {
-        errorMessage = 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้ โปรดติดต่อผู้ดูแลระบบ'
-      } else if (error.response.data.error) {
-        errorMessage = error.response.data.error;
-      } else {
-        errorMessage = error;
-      }
-
-      Swal.fire({
-        title: 'เกิดข้อผิดพลาด',
-        text: errorMessage,
-        icon: 'error',
-      });
     });
 };
 //==============================================================================================================================================================================================================
@@ -312,7 +321,7 @@ export const TP_VerifyEmail = (data: any, part: string) => {
       if (res.status === true) {
         Swal.fire({
           title: 'กรุณาใส่รหัส',
-          text: `เราได้ส่ง รหัสยืนยันไปยัง ${data.U_EMAIL}`,
+          text: `เราทำการส่ง รหัสยืนยันไปยัง ${data.U_EMAIL}`,
           input: 'text',
           inputAttributes: {
             autocapitalize: 'off'
@@ -477,14 +486,12 @@ export const getUserByEmail = async (email: any) => {
     const response = await axios.post(apiUrl, email);
     return response.data;
   } catch (error) {
-    console.log('พบข้อผิดพลาดในการดึงข้อมูลขาย:' + error);
+    console.log('พบข้อผิดพลาดในการดึงข้อมูล User:' + error);
     return [];
   }
 };
 
-
-
-//============================ user  ======================================
+//============================ Review  ======================================
 export const addReview = async (data: any) => {
   const apiUrl = `http://localhost:${port}/addReview`;
   try {
@@ -534,9 +541,9 @@ export const Create_Ads = async (data: any) => {
       showCancelButton: false,
       width: '80%'
       // showConfirmButton: false,
-  })
+    })
     return response.data;
-  } catch (error:any) {
+  } catch (error: any) {
     Swal.fire({
       title: 'เกิดข้อผิดพลาด',
       text: error.message,
@@ -547,7 +554,7 @@ export const Create_Ads = async (data: any) => {
   }
 };
 
-export const getAdvertByProduct = async (ID: number|string) => {
+export const getAdvertByProduct = async (ID: number | string) => {
   const apiUrl = `http://localhost:${port}/getAdvertByProduct/${ID}`;
   try {
     const response = await axios.get(apiUrl);
@@ -555,5 +562,47 @@ export const getAdvertByProduct = async (ID: number|string) => {
   } catch (error) {
     console.log('พบข้อผิดพลาดในการดึงข้อมูลสถานะ Ads:' + error);
     return ({ ID: 0, P_ID: 0, Ad_CREATE_BILL: '', Ad_IMG: '', Ad_CHECKED: false, });
+  }
+};
+
+
+
+//============================ อื่น ๆ  ======================================
+export const DeleteByID = async (ID: number, path: string) => {
+  const apiUrl = `http://localhost:${port}/${path}/${ID}`;
+  try {
+    const response = await axios.delete(apiUrl);
+    const res = response.data;
+    if (res.status === true) {
+      Swal.fire({
+        title: 'ลบเสร็จสิ้น',
+        text: '',
+        icon: 'success'
+      })
+    } else {
+      throw new Error("การลบล้มเหลว");
+    }
+    return response.data;
+  } catch (error: any) {
+    console.log('พบข้อผิดพลาดในการลบข้อมูล:' + error);
+    Swal.fire({
+      title: 'เกิดข้อผิดพลาด',
+      text: error.message,
+      icon: 'error'
+    })
+    return [];
+  }
+};
+
+
+//============================ admin  ======================================
+export const listAdmins = async () => {
+  const apiUrl = `http://localhost:${port}/List_admin`;
+  try {
+    const response = await axios.get(apiUrl);
+    return response.data;
+  } catch (error) {
+    console.log('พบข้อผิดพลาดในการดึงข้อมูล Admin: ' + error);
+    return [];
   }
 };

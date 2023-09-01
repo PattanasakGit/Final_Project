@@ -1,14 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-import '../css/Login.css';
-import '../css/checkbox.css';
-import '../css/MyProduct.css';
-import { Image } from 'antd';
-import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, update, getProductBy_EmailUser } from '../component/system/HTTP_Request ';
+import '../../css/Login.css';
+import '../../css/checkbox.css';
+import '../../css/MyProduct.css';
+import '../../css/Admin_Home.css';
+import '../../css/AdminCheckProduct.css';
+
+import { Check_Token, listAdmins, DeleteByID, update, getProductBy_EmailUser } from '../system/HTTP_Request ';
+import CreateAdmin from '../Admin/CreateAdmin'
+
 import moment from 'moment';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2'; // Alert text --> npm install sweetalert2
-import { Space, Table, Tag, Segmented } from 'antd';
+import { Space, Table, Tag, Segmented, Image } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
 import { Button, Input, } from 'antd';
@@ -18,6 +22,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { fontSize } from '@mui/system';
+import { CloseOutlined } from '@mui/icons-material';
 
 const url = 'http://localhost:3000'
 
@@ -25,7 +31,7 @@ function format_Price(number: number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-function MyProduct() {
+function AdminCheckProduct() {
     Check_Token();
 
     interface DataType {
@@ -163,6 +169,7 @@ function MyProduct() {
             title: '',
             key: 'action',
             render: (_, record) => (
+                
 
                 record.P_STATUS === "กำลังประกาศขาย" ? (
                     <Space size="small" style={{ textAlign: 'center' }}>
@@ -232,6 +239,17 @@ function MyProduct() {
                 )
             ),
         },
+        {
+            title: 'Check',
+            key: 'action',
+            className: 'customCell_action',
+            render: (_, record) => (
+                <button onClick={() => hendle_btn_in_table(record)} className='btn_show' > Check Popup </button>
+
+            )
+
+
+        },
     ];
 
 
@@ -262,8 +280,11 @@ function MyProduct() {
 
 
     const [products, setProducts] = useState<DataType[]>([]);
-    const [selectedTab, setSelectedTab] = useState<string>('รายการที่กำลังประกาศขาย');
+    const [selectedTab, setSelectedTab] = useState<string>('รายการที่รออนุมัติ');
     const [filteredProducts, setFilteredProducts] = useState<DataType[]>(products);
+
+    const [Data_ShowTicketPopup, setData_ShowTicketPopup] = useState<DataType>();
+    const [OpenPopup, setOpenPopup] = useState(false);
 
 
     //----------------- ดึงสินค้าที่ตรงกับ User ----------------------------
@@ -296,18 +317,79 @@ function MyProduct() {
 
     const data: DataType[] = filteredProducts; //ขอมูลที่จะแสดงใน ตาราง
 
+
+
+
+    const hendle_btn_in_table = (data: DataType) => {
+        setData_ShowTicketPopup(data);
+        setOpenPopup(!OpenPopup)
+
+    }
+
+
+
+
+
     return (
         <center>
-            <div style={{ height: 'fit-content', width: '90%' ,paddingBottom:'7rem'}} className='contentPage'>
+            <div style={{ height: '75vh', width: '90%', paddingBottom: '7rem' }} className='contentPage'>
                 <h1 className='topics_table'>  รายการประกาศขาย </h1>
 
+
+
+
+
+
+
+
+                <div className='container_btn_select'>
+                    <button onClick={() => setSelectedTab('รายการที่รออนุมัติ')} className='btn_Yellow'>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <img className='icon_in_btn' src='ICON/Icon_Padding.png' />
+                            <div style={{ display: 'block' }}>
+                                <p className='text_in_btn'> รายการที่รออนุมัติ </p>
+                                <p className='small_text_in_btn'> จำนวน {products.length} รายการ </p>
+                            </div>
+                        </div>
+                    </button>
+                    <button onClick={() => setSelectedTab('รายการที่กำลังประกาศขาย')} className='btn_Green'>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <img className='icon_in_btn' src='ICON/Icon_Accepted.png' />
+                            <div style={{ display: 'block' }}>
+                                <p className='text_in_btn'>รายการที่กำลังประกาศขาย</p>
+                                <p className='small_text_in_btn'> จำนวน {products.length} รายการ </p>
+                            </div>
+                        </div>
+                    </button>
+                    <button onClick={() => setSelectedTab('รายการที่ยกเลิกประกาศขาย')} className='btn_Pink'>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <img className='icon_in_btn' src='ICON/Icon_Reject.png' />
+                            <div style={{ display: 'block' }}>
+                                <p className='text_in_btn'>รายการที่ยกเลิกประกาศขาย</p>
+                                <p className='small_text_in_btn'> จำนวน {products.length} รายการ </p>
+                            </div>
+                        </div>
+                    </button>
+                    <button onClick={() => setSelectedTab('All')} className='btn_blue'>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <img className='icon_in_btn' src='https://img.icons8.com/?size=512&id=0a0Pgc8Lxvoe&format=png' />
+                            <div style={{ display: 'block' }}>
+                                <p className='text_in_btn'>{"All"}</p>
+                                <p className='small_text_in_btn'> จำนวน {products.length} รายการ </p>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+
+
                 <div className='div_cover_table_and_tab'>
-                    <Segmented
+                    {/* <Segmented
                         block
                         options={['รายการที่กำลังประกาศขาย', 'รายการที่รออนุมัติ', 'รายการที่ยกเลิกประกาศขาย', 'รายการทั้งหมด']}
                         onChange={newTab => setSelectedTab(newTab as string)}
                         className='tp_tab'
-                    />
+                    /> */}
+
                     <Table
                         scroll={{ x: 1300 }}
                         columns={columns}
@@ -322,12 +404,38 @@ function MyProduct() {
                             className: 'TP_pagination_table'
                         }}
                     />
-
+                    
                 </div>
+
+
+
+                {OpenPopup && Data_ShowTicketPopup && (
+                        <div className='popupShowTicket'>
+                            <div className="popupContent">
+                                <div className='bar_title_popup'>
+                                    <h3 style={{ flex: 1, paddingLeft: '65px' }}> Check Ticket </h3>
+                                    <button onClick={() => (setOpenPopup(!OpenPopup))} className='btn_delete' style={{ marginRight: '5px' }}>
+                                        <CloseOutlined style={{ fontSize: '30px', color: '#fff' }} />
+                                    </button>
+                                </div>
+                                <div style={{ padding: '0px 0px' }}>
+                                    <h1 style={{color:'#333'}}> Hello Test </h1>
+                                </div>
+
+                            </div>
+                        </div>
+                    )}
+
+
+
+
 
             </div>
         </center>
+
+
+
     );
 }
 
-export default MyProduct;
+export default AdminCheckProduct;

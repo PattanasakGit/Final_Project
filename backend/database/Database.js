@@ -68,11 +68,53 @@ async function deleteData(id, DataModel) {
 }
 
 async function getDataById(id, DataModel) {
+  
   try {
     const data = await DataModel.findOne({ ID: id }).exec();
     return data;
   } catch (error) {
     console.error('Failed to retrieve Data:', error);
+    throw error;
+  }
+}
+
+async function listAdmins(DataModel) {
+  try {
+    const admins = await DataModel.aggregate([
+      {
+        $lookup: {
+          from: "logins",
+          localField: "U_EMAIL", 
+          foreignField: "EMAIL",
+          as: "userLogins" 
+        }
+      },
+      {
+        $unwind: "$userLogins"
+      },
+      {
+        $match: {
+          "userLogins.ROLE": "Admin"
+        }
+      },
+      {
+        $project: {
+          ID: 1,
+          U_NAME: 1,
+          U_PHONE: 1,
+          U_EMAIL: 1,
+          U_GENDER: 1,
+          ABOUT_ME: 1,
+          U_IMG: 1,
+          U_REGISTER: 1,
+          "userLogins.ID": 1
+        }
+      }
+    ]).exec();
+
+    return admins;
+  } catch (error) {
+    console.error('Failed to retrieve admin data:', error);
     throw error;
   }
 }
@@ -121,4 +163,5 @@ module.exports = {
   getNextDataId,
   getToken_check,
   getUserBy_Email,
+  listAdmins
 };
