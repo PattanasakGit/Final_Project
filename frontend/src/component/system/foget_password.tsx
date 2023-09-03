@@ -24,8 +24,16 @@ function ForgetPassword() {
                 Swal.fire({
                     icon: 'warning',
                     title: 'ไม่พบ Email ในระบบ',
-                    text: 'โปรดตรวจสอบ Email ของของคุณอีกครั้ง'
+                    text: 'โปรดตรวจสอบ Email ของของคุณอีกครั้ง',
+                    showCancelButton: true,
+                    confirmButtonText: 'สมัครสมาชิกใหม่',
+                    cancelButtonText: 'ตรวจสอบ Email อีกครั้ง',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "/CreateUser"
+                    }
                 })
+
             } else {
                 sendEmaiChangePassword(email);
             };

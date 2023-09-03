@@ -308,7 +308,9 @@
     background-color: rgba(0, 0, 0, 0.067);
 }
 
-.btn_need_review,.btn_need_report,.btn_submit_review{
+.btn_need_review,
+.btn_need_report,
+.btn_submit_review {
     font-family: 'Noto Sans Thai', sans-serif !important;
     margin: 1rem 0.5rem 0.5rem 0rem;
     height: 50px;
@@ -316,23 +318,27 @@
     /* border: 2px solid rgb(252, 156, 2); */
     border-radius: 15px;
     font-size: 16px;
- }
+}
 
 .btn_need_review {
-    background-color: #008736;  
-    width: 200px; 
+    background-color: #008736;
+    width: 200px;
 }
+
 .btn_need_report {
     background-color: #ff0000;
     width: 120px;
 }
+
 .btn_submit_review {
     background-color: #008736;
     width: 200px;
 }
 
-.btn_need_review:hover,.btn_need_report:hover,.btn_submit_review:hover{
-      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.477) ;
+.btn_need_review:hover,
+.btn_need_report:hover,
+.btn_submit_review:hover {
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.477);
 }
 
 /* ***********************  popup for reviews  ************************* */
@@ -378,7 +384,7 @@
     border-radius: 5px;
     cursor: pointer;
     align-self: flex-end;
-} 
+}
 
 .star_review_comment {
     font-size: 4rem !important;
@@ -387,6 +393,7 @@
     padding: 1rem 2rem;
     border-radius: 20px;
 }
+
 .textarea_comment {
     font-family: 'Noto Sans Thai', sans-serif !important;
     resize: none;
@@ -395,13 +402,84 @@
     margin-top: 2rem;
     background-color: #ffffff6b;
     border-radius: 20px;
-    font-size:18px;
+    font-size: 18px;
     color: #333;
     padding: 1rem;
 }
 
-/* ================================================================ */
+/* ***********************  Fraud Report  ************************* */
+.container_fraud_report{
+    display: flex;
+}
 
+.topic_main_Fraud_Report {
+    background-color: #00000025;
+    border-radius: 15px;
+    padding: 10px;
+    /* width: 100%; */
+    color: #ffffff;
+    border: 5px solid #00000009;
+}
+
+.container_profile_seller_Fraud_Report {
+    display: flex;
+    width: 30%;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container_information_Fraud_Report {
+    display: block;
+    width: 70%;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #333;
+}
+
+.container_information_Fraud_Report input,
+textarea {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    height: 50px;
+    width: 95%;
+    border-radius: 15px;
+    border: none;
+    background: #ffffff55;
+    outline: none;
+    padding: 10px;
+    color: #333;
+    font-size: 18px;
+}
+
+.container_information_Fraud_Report textarea {
+    resize: none;
+    height: 200px;
+}
+
+.Fraud_Repoard_form {
+    background-color: #ffffff55;
+    padding: 5%;
+    border-radius: 15px;
+    color: #333;
+}
+
+.btn_FraudReport {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    font-size: 20px;
+    margin: 2rem 0 0 0;
+    height: 50px;
+    width: 60%;
+    border-radius: 10px;
+    background-color: #ff0808;
+    border: 0;
+    box-shadow: 4px 4px 5px #00000055;
+}
+
+.btn_FraudReport:hover {
+    scale: 1.1;
+    box-shadow: 4px 4px 5px #00000055;
+}
 
 /* ================================================================ */
 /* CSS สำหรับ mobile */
@@ -471,9 +549,6 @@
         width: 100%;
         margin-top: 0 !important;
         padding-top: 0 !important;
-
-
-
     }
 
     .container_shop {
@@ -489,6 +564,7 @@
         padding: 1rem 2rem;
         border-radius: 20px;
     }
+
     .textarea_comment {
         font-family: 'Noto Sans Thai', sans-serif !important;
         resize: none;
@@ -497,17 +573,55 @@
         margin-top: 2rem !important;
         background-color: #ffffff6b;
         border-radius: 15px;
-        font-size:18px;
+        font-size: 18px;
         color: #333;
         padding: 1.5rem;
     }
+
     .popup_content_comment {
         width: 90%;
     }
 
 
+    /* ***********************  Fraud Report  ************************* */
+
+    .container_fraud_report{
+        display: block;
+    }
+
+    .container_profile_seller_Fraud_Report {
+        width: 98%;
+        padding: 0px;
+    }
+
+    .container_information_Fraud_Report {
+        width: 98%;
+        padding: 0px;
+        margin-top: 1rem;
+    }
+
+    .btn_FraudReport {
+        font-family: 'Noto Sans Thai', sans-serif !important;
+        font-size: 20px;
+        margin: 2rem 0 0 0;
+        height: 50px;
+        width: 100%;
+        border-radius: 10px;
+        background-color: #ff0808;
+        border: 0;
+        box-shadow: 4px 4px 5px #00000055;
+    }
+
+    .btn_FraudReport:hover {
+        scale: 1.1;
+        box-shadow: 4px 4px 5px #00000055;
+    }
+
+
 
     /* ================================================================ */
+
+
 
 
 

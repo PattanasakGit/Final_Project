@@ -404,8 +404,9 @@ export const TP_VerifyEmail = (data: any, part: string) => {
     });
 };
 //==============================================================================================================================================================================================================
-export const listProduct = (part: string) => {
-  const apiUrl = `http://localhost:${port}/${part}`;
+export const listProduct = () => {
+  const apiUrl = `http://localhost:${port}/listProduct`;
+  // const apiUrl = `http://localhost:${port}/${part}`;
   // const apiUrl = `http://localhost:8000/getProduct/1`;
 
   return axios.get(apiUrl)
@@ -525,6 +526,41 @@ export const addReview = async (data: any) => {
       })
     };
     console.log('พบข้อผิดพลาดในการบันทึกรายการรีวิว:' + error);
+    return [];
+  }
+};
+//============================ Fraud Report  ======================================
+export const addFRAUD_REPORT = async (data: any) => {
+  const apiUrl = `http://localhost:${port}/addFRAUD_REPORT`;
+  try {
+    const response = await axios.post(apiUrl, data);
+    Swal.fire({
+      title: 'บันทึกรายการสำเร็จ',
+      text: 'ระบบจะตรวจสอบรายการของท่าน ขอบคุณที่ร่วมเป็นส่วนหนึ่งที่ทำให้ชุมชน Yakkai น่าอยู่ยิ่งขึ้น',
+      icon: 'success',
+      showConfirmButton: true, // ไม่แสดงปุ่ม OK
+      willClose: () => {
+        window.location.reload();
+      }
+    })
+    return response.data;
+  } catch (error: any) {
+    Swal.fire({
+      title: 'เกิดข้อผิดพลาด',
+      text: error.message,
+      icon: 'error'
+    })
+    console.log('พบข้อผิดพลาดในการบันทึกรายการรีวิว:' + error);
+    return [];
+  }
+};
+export const listFRAUD_REPORT = async () => {
+  const apiUrl = `http://localhost:${port}/listFRAUD_REPORT`;
+  try {
+    const response = await axios.get(apiUrl);
+    return response.data;
+  } catch (error) {
+    console.log('พบข้อผิดพลาดในการดึงข้อมูล Admin: ' + error);
     return [];
   }
 };

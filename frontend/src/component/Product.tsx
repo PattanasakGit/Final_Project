@@ -138,7 +138,7 @@ function Product() {
                         <div className='TP_text_product_seller'>
                             <h2 style={{ margin: '5px' }}> ขายโดย </h2>
                             {Data_seller.U_NAME}<br />
-                            เป็นสมาชิกมาแล้ว : {D} วัน {M} เดือน {Y} ปี <br />
+                            เป็นสมาชิกมาแล้ว : {Y} ปี {M} เดือน {D} วัน <br />
                             รหัสประกาศขาย : P000#{data.ID}
                         </div>
 
@@ -193,7 +193,7 @@ function Product() {
 
 export default Product;
 
-interface interface_Product { P_NAME: string, P_IMG: string, P_PRICE: number, SEND_TO: string, SUBJECT: string, CusttomerTel:string, CustomerName:string};
+interface interface_Product { P_NAME: string, P_IMG: string, P_PRICE: number, SEND_TO: string, SUBJECT: string, CusttomerTel: string, CustomerName: string };
 async function need_to_buy(product: interface_Product) {
     const Checked_token = await Check_Token()
     if (Checked_token !== false) {
@@ -257,7 +257,7 @@ async function need_to_buy(product: interface_Product) {
 function Tell() {
     Swal.fire({
         title: 'คุณสนใจสินค้าใช่ไหม',
-        text: 'โปรดโทร : ' + PhoneNumber_in_product,
+        text: 'โทรหาผู้ขายโดยตรง : ' + PhoneNumber_in_product,
         showConfirmButton: true,
         confirmButtonText: 'Tell',
         confirmButtonColor: '#7A9D54',

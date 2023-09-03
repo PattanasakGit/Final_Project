@@ -15,7 +15,7 @@ import TransgenderIcon from '@mui/icons-material/Transgender';
 
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
 import { storage } from './system/firebase';
-const URL_backend = 'http://localhost:3000';
+const url_frontend = 'http://localhost:3000';
 
 interface DataType {
     key: number;

@@ -19,6 +19,12 @@ import AdminHome from "./component/Admin/AdminHome.tsx"
 import AdminManagement from "./component/Admin/AdminManagement.tsx"
 import AdminCheckProduct from "./component/Admin/AdminCheckProduct.tsx"
 
+import TestPage from "./component/Test2.tsx"
+
+
+
+import FraudReport from "./component/FraudReport.tsx"
+
 
 
 
@@ -43,7 +49,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/Login" element={<Login />} />
-          <Route path="/test" element={<FileUpload />} />
+          {/* <Route path="/test" element={<TestPage />} /> */}
           {role === 'User' && (
             <>
               <Route path="/" element={<Home />} />             
@@ -62,7 +68,8 @@ function App() {
             </>
           )}
           
-          <Route path="/" element={<Home />} />             
+          <Route path="/" element={<Home />} />  
+          <Route path="/FraudReport" element={<FraudReport />} />           
           <Route path="/Shop" element={<Shop />} />
           <Route path="/Advert" element={<Advert />} />
           <Route path="/CreateProduct" element={<CreateProduct />} />

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap');
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -23,6 +25,25 @@ body {
   width: 100%;
   background-image: linear-gradient(to right, #d3321d, #ffcf67);
 
+}
+
+.swal2-confirm {
+  font-family: 'Noto Sans Thai', sans-serif !important;
+  border: 0;
+  border-radius: 0.25em;
+  background: initial;
+  color: #fff;
+  font-size: 1em;
+}
+
+.swal2-deny {
+  font-family: 'Noto Sans Thai', sans-serif !important;
+  border: 0;
+  border-radius: 0.25em;
+  background: initial;
+  background-color: #dc3741;
+  color: #fff;
+  font-size: 1em;
 }
 
 /* a {

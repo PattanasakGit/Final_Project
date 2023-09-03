@@ -5,14 +5,14 @@ import '../../css/MyProduct.css';
 import '../../css/Admin_Home.css';
 import '../../css/AdminCheckProduct.css';
 
-import { Check_Token, listAdmins, DeleteByID, update, getProductBy_EmailUser } from '../system/HTTP_Request ';
+import { Check_Token, listAdmins, DeleteByID, update, getProductBy_EmailUser, listProduct, getUserByEmail } from '../system/HTTP_Request ';
 import CreateAdmin from '../Admin/CreateAdmin'
 
 import moment from 'moment';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2'; // Alert text --> npm install sweetalert2
-import { Space, Table, Tag, Segmented, Image } from 'antd';
+import { Space, Table, Tag, Segmented, Image, Empty } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
 import { Button, Input, } from 'antd';
@@ -22,8 +22,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { fontSize } from '@mui/system';
-import { CloseOutlined } from '@mui/icons-material';
+import { fontSize, margin } from '@mui/system';
+import { Block, CloseOutlined } from '@mui/icons-material';
 
 const url = 'http://localhost:3000'
 
@@ -31,23 +31,27 @@ function format_Price(number: number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
+interface DataType {
+    key: number;
+    ID: number;
+    P_NAME: string;
+    P_CATEGORY: string;
+    P_PRICE: number;
+    P_TYPE: string;
+    P_POST: string;
+    P_TEXT: string;
+    P_UPDATE: string;
+    P_STATUS: string;
+    U_EMAIL: string;
+    P_IMG: string[];
+    P_ADS: Boolean;
+}
+type DataIndex = keyof DataType;
+
 function AdminCheckProduct() {
     Check_Token();
 
-    interface DataType {
-        key: number;
-        ID: number;
-        P_NAME: string;
-        P_CATEGORY: string;
-        P_PRICE: number;
-        P_TYPE: string;
-        P_POST: string;
-        P_UPDATE: string;
-        P_STATUS: string;
-        P_IMG: string[];
-        P_ADS: Boolean;
-    }
-    type DataIndex = keyof DataType;
+
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     const searchInput = useRef<InputRef>(null);
     const handleSearch = (selectedKeys: string[], confirm: (param?: FilterConfirmProps) => void, dataIndex: DataIndex,) => { confirm(); };
@@ -168,117 +172,27 @@ function AdminCheckProduct() {
         {
             title: '',
             key: 'action',
+            width: '60px',
             render: (_, record) => (
-                
-
-                record.P_STATUS === "กำลังประกาศขาย" ? (
-                    <Space size="small" style={{ textAlign: 'center' }}>
-                        <button className='btn_show' onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
-                        <button
-                            className='btn_delete'
-                            onClick={async () => {
-                                Swal.fire({
-                                    title: 'คุณแน่ใจหรือไม่ว่าต้องการปิดประกาศการขายนี้?',
-                                    text: "หากปิดแล้วจะไม่สามารถแก้ไขได้อีก",
-                                    icon: 'warning',
-                                    showCancelButton: true,
-                                    confirmButtonColor: 'green',
-                                    cancelButtonColor: '#d33',
-                                }).then(async (result) => {
-                                    if (result.isConfirmed) {
-                                        await update({ 'P_STATUS': 'ยกเลิกประกาศขาย' }, 'updateProduct/' + record.ID);
-                                        const updatedProducts = products.filter(item => item.ID !== record.ID);
-                                        setProducts(updatedProducts);
-                                        Listdata();
-                                    }
-                                })
-
-                            }}
-                        >
-                            <DeleteIcon />
-                        </button>
-
-
-                        {record.P_ADS === true ? (
-                            <button className='btn_ads_true' onClick={() => handleAds(record)}><CampaignIcon /></button>
-                        ) : (<button className='btn_ads' onClick={() => handleAds(record)}><CampaignIcon /></button>)
-                        }
-
-                    </Space>
-                ) : record.P_STATUS === "รอตรวจสอบ" ? (
-                    <Space size="small">
-                        <button className='btn_show' onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
-                        <button className='btn_edit_table' onClick={() => window.location.href = url + '/EditProduct/' + record.ID}><EditIcon /></button>
-                        <button
-                            className='btn_delete'
-                            onClick={async () => {
-                                Swal.fire({
-                                    title: 'คุณแน่ใจหรือไม่ว่าต้องการปิดประกาศการขายนี้?',
-                                    text: "หากปิดแล้วจะไม่สามารถแก้ไขได้อีก",
-                                    icon: 'warning',
-                                    showCancelButton: true,
-                                    confirmButtonColor: 'green',
-                                    cancelButtonColor: '#d33',
-                                }).then(async (result) => {
-                                    if (result.isConfirmed) {
-                                        await update({ 'P_STATUS': 'ยกเลิกประกาศขาย' }, 'updateProduct/' + record.ID);
-                                        const updatedProducts = products.filter(item => item.ID !== record.ID);
-                                        setProducts(updatedProducts);
-                                        Listdata();
-                                    }
-                                })
-                            }}
-                        >
-                            <DeleteIcon />
-                        </button>
-                    </Space >
-                ) : (
-                    <Space size="small">
-                        <button className='btn_show' onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
-                    </Space>
-                )
-            ),
+                <Space size="small">
+                    <button className='btn_show' onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
+                </Space>
+            )
         },
         {
-            title: 'Check',
+            title: '',
             key: 'action',
+            width: '90px',
             className: 'customCell_action',
             render: (_, record) => (
-                <button onClick={() => hendle_btn_in_table(record)} className='btn_show' > Check Popup </button>
+                <button onClick={() => hendle_btn_in_table(record)} className='btn_ads_true' style={{ height: '35px' }}> ตรวจสอบ </button>
 
             )
 
 
         },
     ];
-
-
-    function handleEditbtn() { }
-    function handleDelete() {
-        // let data = { 'P_STATUS': 'ยกเลิกประกาศขาย' };
-        // update(data, 'updateProduct/' + ID_when_click);
-        // window.location.reload();
-    }
-
-    function handleAds(data: DataType) {
-        const newData = {
-            ID: data.ID,
-            P_IMG: data.P_IMG,
-            P_NAME: data.P_NAME,
-            P_PRICE: data.P_PRICE,
-            P_TYPE: data.P_TYPE,
-            P_ADS: data.P_ADS
-
-
-        }
-        localStorage.setItem('DataProduct_Ads', JSON.stringify(newData));
-        window.location.href = url + '/Advert';
-        // console.log('data in record: ' , newData);
-
-
-    }
-
-
+    const [EmailSeller, setSeller] = useState('');
     const [products, setProducts] = useState<DataType[]>([]);
     const [selectedTab, setSelectedTab] = useState<string>('รายการที่รออนุมัติ');
     const [filteredProducts, setFilteredProducts] = useState<DataType[]>(products);
@@ -290,13 +204,13 @@ function AdminCheckProduct() {
     //----------------- ดึงสินค้าที่ตรงกับ User ----------------------------
     const userEmail: any = localStorage.getItem('email');
     async function Listdata() {
-        setProducts(await getProductBy_EmailUser({ email: userEmail }));
+        const dataProduct = await listProduct();
+        setProducts(dataProduct);
+        setSeller(dataProduct.U_EMAIL);
     }
     //----------------------------------------------------------------
     useEffect(() => {
-
         Listdata();
-
     }, []);
 
     useEffect(() => {
@@ -326,21 +240,10 @@ function AdminCheckProduct() {
 
     }
 
-
-
-
-
     return (
         <center>
             <div style={{ height: '75vh', width: '90%', paddingBottom: '7rem' }} className='contentPage'>
                 <h1 className='topics_table'>  รายการประกาศขาย </h1>
-
-
-
-
-
-
-
 
                 <div className='container_btn_select'>
                     <button onClick={() => setSelectedTab('รายการที่รออนุมัติ')} className='btn_Yellow'>
@@ -348,7 +251,7 @@ function AdminCheckProduct() {
                             <img className='icon_in_btn' src='ICON/Icon_Padding.png' />
                             <div style={{ display: 'block' }}>
                                 <p className='text_in_btn'> รายการที่รออนุมัติ </p>
-                                <p className='small_text_in_btn'> จำนวน {products.length} รายการ </p>
+                                <p className='small_text_in_btn'> จำนวน {products.filter(product => product.P_STATUS === 'รอตรวจสอบ').length} รายการ </p>
                             </div>
                         </div>
                     </button>
@@ -357,7 +260,7 @@ function AdminCheckProduct() {
                             <img className='icon_in_btn' src='ICON/Icon_Accepted.png' />
                             <div style={{ display: 'block' }}>
                                 <p className='text_in_btn'>รายการที่กำลังประกาศขาย</p>
-                                <p className='small_text_in_btn'> จำนวน {products.length} รายการ </p>
+                                <p className='small_text_in_btn'> จำนวน {products.filter(product => product.P_STATUS === 'กำลังประกาศขาย').length} รายการ </p>
                             </div>
                         </div>
                     </button>
@@ -366,7 +269,7 @@ function AdminCheckProduct() {
                             <img className='icon_in_btn' src='ICON/Icon_Reject.png' />
                             <div style={{ display: 'block' }}>
                                 <p className='text_in_btn'>รายการที่ยกเลิกประกาศขาย</p>
-                                <p className='small_text_in_btn'> จำนวน {products.length} รายการ </p>
+                                <p className='small_text_in_btn'> จำนวน {products.filter(product => product.P_STATUS === 'ยกเลิกประกาศขาย').length} รายการ </p>
                             </div>
                         </div>
                     </button>
@@ -404,33 +307,30 @@ function AdminCheckProduct() {
                             className: 'TP_pagination_table'
                         }}
                     />
-                    
+
                 </div>
 
 
-
-                {OpenPopup && Data_ShowTicketPopup && (
-                        <div className='popupShowTicket'>
-                            <div className="popupContent">
-                                <div className='bar_title_popup'>
-                                    <h3 style={{ flex: 1, paddingLeft: '65px' }}> Check Ticket </h3>
-                                    <button onClick={() => (setOpenPopup(!OpenPopup))} className='btn_delete' style={{ marginRight: '5px' }}>
-                                        <CloseOutlined style={{ fontSize: '30px', color: '#fff' }} />
-                                    </button>
-                                </div>
-                                <div style={{ padding: '0px 0px' }}>
-                                    <h1 style={{color:'#333'}}> Hello Test </h1>
-                                </div>
-
-                            </div>
-                        </div>
-                    )}
-
-
-
-
-
             </div>
+            {OpenPopup && Data_ShowTicketPopup && (
+                <div className='popupShowTicket'>
+                    <div className="popupContent">
+                        <div className='bar_title_popup'>
+                            <h3 className='TP_font' style={{ flex: 1, paddingLeft: '65px', color: '#888' }}> ตรวจสอบประกาศขาย </h3>
+                            <button onClick={() => (setOpenPopup(!OpenPopup))} className='btn_delete' style={{ marginRight: '5px' }}>
+                                <CloseOutlined style={{ fontSize: '30px', color: '#fff' }} />
+                            </button>
+                        </div>
+                        <div style={{ padding: '10px 0px', display: 'flex', justifyContent: 'center' }}>
+
+                            {showDataTicket(Data_ShowTicketPopup)}
+
+
+                        </div>
+
+                    </div>
+                </div>
+            )}
         </center>
 
 
@@ -439,3 +339,101 @@ function AdminCheckProduct() {
 }
 
 export default AdminCheckProduct;
+
+
+const showDataTicket = (data: any) => {
+
+    const hendle_update_status = (status: any) => {
+        let newData = {
+            ID: data.ID,
+            P_STATUS: status,
+            SEND_EMAIL_TO: data.U_EMAIL
+        }
+        update(newData,`updateProductByAdmin/`+newData.ID);
+        
+        // console.log('status ------>', newData);
+
+    };
+
+    return (
+        <center>
+            <div style={{ margin: 0, height: '100%', width: '95%' }} className='contentPage'>
+                <div className='product_container'>
+                    <div className='product_images' style={{ marginTop: '10px' }}>
+                        {data.P_IMG.slice(1).map((image: string) => (
+                            <Image src={image} alt='Product Image' key={image} className='TP_IMG' />
+                        ))}
+                    </div>
+
+                    <div className='product_container_img'>
+                        {data.P_IMG.length > 0 ? (
+                            <Image src={data.P_IMG[0]} className='TP_main_img_product' />
+                        ) : (
+                            <div className='TP_text_product_seller' style={{ color: '#333' }} >
+                                <h2>ขออภัย</h2>
+                                <p>ผู้ขายไม่ได้อัพโหลดภาพสินค้า</p>
+                                <Empty />
+                            </div>
+
+
+                        )}
+                    </div>
+
+                    <div className='product_container_text' style={{ color: '#555' }}>
+                        <h1 style={{ margin: 0 }}> {data.P_NAME}</h1>
+                        <h1 style={{ margin: 1 }}> ราคา {format_Price(data.P_PRICE)} บาท</h1>
+                        <h2 style={{ margin: 1 }}> {data.P_TYPE} </h2>
+                        {
+                            data.P_STATUS === "กำลังประกาศขาย" ? (
+                                <Tag className='TP_font' color="green" > {data.P_STATUS} </Tag>
+                            ) : data.P_STATUS === "รอตรวจสอบ" ? (
+                                <Tag className='TP_font' color="gold" > {data.P_STATUS} </Tag>
+                            ) : data.P_STATUS === "ยกเลิกประกาศขาย" ? (
+                                <Tag className='TP_font' color="red" > {data.P_STATUS} </Tag>
+                            ) : (<Tag className='TP_font' color="purple" > {data.P_STATUS} </Tag>)
+                        }
+                        <center> <h2>รายละเอียดสินค้า</h2> </center>
+                        <div className='TP_text_product' style={{ backgroundColor: '#00000015' }}>
+                            {data.P_TEXT}
+                        </div>
+                        <div className='TP_text_product_seller'>
+                            ลงประกาศขายเมื่อ {data.P_POST}
+                        </div>
+                        <div className='TP_text_product_seller'>
+                            ประกาศขายโดย : {data.U_EMAIL}
+                        </div>
+                    </div>
+                </div>
+                <div style={{ margin: '1rem', padding: '20px', boxShadow: '0 -5px 5px #00000010', borderRadius: '10px' }}>
+                    <h1 style={{ color: '#333', marginTop: '0px' }}> อัพเดตรายการประกาศขาย </h1>
+                    <div className='container_btn_select' style={{ margin: '0rem', backgroundColor: '#00000015',padding:'20px' }}>
+                        <button className='btn_Yellow' onClick={() => hendle_update_status('รอตรวจสอบ')}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <img className='icon_in_btn' src='ICON/Icon_Padding.png' />
+                                <div style={{ display: 'block' }}>
+                                    <p className='text_in_btn'> รออนุมัติ </p>
+                                </div>
+                            </div>
+                        </button>
+                        <button className='btn_Green' onClick={() => hendle_update_status('กำลังประกาศขาย')} >
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <img className='icon_in_btn' src='ICON/Icon_Accepted.png' />
+                                <div style={{ display: 'block' }}>
+                                    <p className='text_in_btn'>อนุมัติประกาศขาย</p>
+                                </div>
+                            </div>
+                        </button>
+                        <button className='btn_Pink' onClick={() => hendle_update_status('ยกเลิกประกาศขาย')} >
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <img className='icon_in_btn' src='ICON/Icon_Reject.png' />
+                                <div style={{ display: 'block' }}>
+                                    <p className='text_in_btn'>ไม่การอนุมัติประกาศขาย</p>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </center>
+    )
+}

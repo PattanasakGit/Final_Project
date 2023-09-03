@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 const { Schema } = mongoose;
-const { insertData, getData, updateData, deleteData, getDataById, getNextDataId, getUserBy_Email} = require('../database/Database.js');
+const { insertData, getData, updateData, deleteData, getDataById, getNextDataId, getUserBy_Email } = require('../database/Database.js');
 const { getUserModel } = require('../controllers/userController.js');
+const { Send_Email_after_checkd } = require('../controllers/MailController.js');
 
 var str_collection = "Product";
 
@@ -23,7 +24,7 @@ const productSchema = new Schema({
   P_UPDATE: { type: String },
   P_TYPE: { type: String, required: true },
   P_STATUS: { type: String, required: true },
-  P_ADS: { type: Boolean},
+  P_ADS: { type: Boolean },
   U_EMAIL: { type: String, required: true },
 }, { versionKey: false });
 
@@ -175,7 +176,7 @@ async function ListProduct_for_one_user(req, res,) {
     if (!user) {
       return res.status(404).json({ error: 'ไม่พบบัญชีผู้ใช้นี้ในระบบ' });
     }
-    const Products = await DataModel.find({U_EMAIL: user.U_EMAIL }).sort({ ID: -1 }).exec();
+    const Products = await DataModel.find({ U_EMAIL: user.U_EMAIL }).sort({ ID: -1 }).exec();
     res.status(200).json(Products);
   } catch (error) {
     console.error('พบข้อผิดพลาด:', error);
@@ -187,7 +188,7 @@ async function ListProduct_for_one_user(req, res,) {
 async function getProductByMultipleConditions(req, res) {
   try {
     const { nameProduct, category, type, minPrice, maxPrice } = req.body;
-    let conditions = {P_STATUS: "กำลังประกาศขาย"};
+    let conditions = { P_STATUS: "กำลังประกาศขาย" };
 
     // ตรวจสอบเงื่อนไขการค้น ชื่อ
     if (nameProduct) {
@@ -236,15 +237,24 @@ async function getProductByMultipleConditions(req, res) {
   }
 }
 
+// updat status by admin
+async function updateProductByAdmin(req, res) {
+  try {
+    const { id } = req.params;
+    const newData = req.body;
+    const SEND_EMAIL_TO = newData.SEND_EMAIL_TO;
+    newData.P_UPDATE = formatDate(new Date());
 
-
-
-
-
-
-
-
-
+    await updateData(id, newData, DataModel); // อัปเดตข้อมูลผู้ใช้ในฐานข้อมูล
+    
+    console.log('Product updated successfully');
+    res.status(200).json({ status: true, message: 'Product updated successfully' });
+    await Send_Email_after_checkd(SEND_EMAIL_TO, newData);
+  } catch (error) {
+    console.error('Failed to update Product:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
 
 
 
@@ -262,6 +272,7 @@ module.exports = {
   getProductByCATEGORY,
   getProductTYPE,
   getProductByMultipleConditions,
-  ListProduct_for_one_user
+  ListProduct_for_one_user,
+  updateProductByAdmin
 
 };
