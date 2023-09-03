@@ -23,7 +23,7 @@
   background-size: cover;
   content: "";
   /* background-color: rgba(255, 255, 255, 0.5); */
-  z-index: 999;
+  z-index: 199;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 

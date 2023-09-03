@@ -15,7 +15,8 @@ const { addTopBanner, listTopBanners, updateTopBanner, deleteTopBanner, getTopBa
 const { addSideBanner, listSideBanners, updateSideBanner, deleteSideBanner, getSideBannerById } = require('./controllers/SideBannerController');
 // const { addStatusProduct, listStatusProducts, updateStatusProduct, deleteStatusProduct, getStatusProductById } = require('./controllers/StatusProductController');
 const { addCategoryProduct, listCategoryProducts, updateCategoryProduct, deleteCategoryProduct, getCategoryProductById } = require('./controllers/CategoryProductController');
-const { addProduct, listProducts, updateProduct, deleteProduct, getProductById,  getProductByName, getProductByCATEGORY, getProductTYPE ,getProductByMultipleConditions, ListProduct_for_one_user} = require('./controllers/productController');
+const { addProduct, listProducts, updateProduct, deleteProduct, getProductById,  getProductByName, getProductByCATEGORY, getProductTYPE ,getProductByMultipleConditions, ListProduct_for_one_user,updateProductByAdmin} = require('./controllers/productController');
+const { addFRAUD_REPORT, listFRAUD_REPORT, updateFRAUD_REPORT, deleteFRAUD_REPORT, getFRAUD_REPORT_Id } = require('./controllers/Fraud_Report');
 
 app.use(express.json());
 app.use(cors());
@@ -43,6 +44,7 @@ app.post('/createAdmin', addAdmin);
 app.post('/ListProductByUser', ListProduct_for_one_user);
 app.post('/createProduct', addProduct);
 app.put('/updateProduct/:id', updateProduct);
+app.put('/updateProductByAdmin/:id', updateProductByAdmin);
 app.delete('/deleteProduct/:id', deleteProduct);
 app.get('/getProduct/:id', getProductById);
 app.get('/listProduct', listProducts)
@@ -83,6 +85,13 @@ app.delete('/deleteTopBanner/:id', deleteTopBanner);
 app.get('/getTopBanner/:id', getTopBannerById);
 app.get('/listTopBanner', listTopBanners)
 app.get('/listSideBanner', listSideBanners)
+
+//StatusProduct
+app.post('/addFRAUD_REPORT', addFRAUD_REPORT);
+app.put('/updateFRAUD_REPORT/:id', updateFRAUD_REPORT);
+app.delete('/deleteFRAUD_REPORT/:id', deleteFRAUD_REPORT);
+app.get('/getFRAUD_REPORT_Id/:id', getFRAUD_REPORT_Id);
+app.get('/listFRAUD_REPORT', listFRAUD_REPORT)
 
 //StatusProduct
 // app.post('/createStatusProduct', addStatusProduct);

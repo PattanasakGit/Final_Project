@@ -7,6 +7,7 @@ const Path = 'Login';
 
 function Login() {
   localStorage.clear();
+  sessionStorage.clear();
 
   const [showPassword, setShowPassword] = useState(false);
   const [emailInput, setEmail] = useState('');

@@ -147,7 +147,7 @@ async function changePassword(req, res) {
     <body>
       <div class="container">
         <div class="logo">
-          <a href="https://www.example.com">
+          <a href="http://localhost:3000/">
             <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FLOGO_YaKKAI.png?alt=media&token=1410c18c-d307-4612-a1e4-30f21b6ee705" alt="Yakkai Logo">
           </a>
         </div>
@@ -189,12 +189,6 @@ async function changePassword(req, res) {
 async function Every_Email(req, res) {
     try {
         const data = req.body;
-        // console.log('///////////////////////////////////////////');
-        // console.log(data);
-        // console.log('///////////////////////////////////////////');
-        // res.status(200).json({ status: true });
-        // return
-
         const from = 'Yakkai.th@gmail.com';
         const subject = data.SUBJECT;
 
@@ -271,4 +265,104 @@ async function Every_Email(req, res) {
         res.status(500).json({ error: error.message });
     }
 }
-module.exports = { sendEmail, changePassword, Every_Email };
+
+
+
+//======================================================================================================================
+//                      อันนี้คือ เมื่อ Admin อนุมัติ/ไม่อนุมัต จะทำการส่ง Email ไปแจ้งคนขาย 
+//======================================================================================================================
+async function Send_Email_after_checkd(SEND_EMAIL_TO, data) {
+    try {
+
+        const status_text_to_user = () => {
+          if (data.P_STATUS === 'รอตรวจสอบ'){
+            return 'รอการตรวจสอบอีกครั้ง';
+          }else if (data.P_STATUS === 'กำลังประกาศขาย') {
+            return 'ผ่านการอนุมัติ';
+          }else if (data.P_STATUS === 'ยกเลิกประกาศขาย'){
+            return 'ไม่ผ่านการอนุมัติ';
+          }else{
+            return '!!! เกิดข้อผิดพลาด โปรดติดต่อผู้ดูแลระบบ !!!';
+          }
+        }
+
+        let status_text = status_text_to_user();
+        const from = 'Yakkai.th@gmail.com';
+        const subject = 'แจ้งผลการประกาศขาย';
+
+        // สร้าง transporter
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'Yakkai.th@gmail.com',
+                pass: 'zqbswfzjdfaykmxa'
+            }
+        });
+        // สร้างข้อความอีเมล์
+        const Email = {
+            from: from,
+            to: SEND_EMAIL_TO,
+            subject: subject,
+            html:
+                `
+                <html lang="en">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Reset Password</title>
+                  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap">
+                  <style>
+                    body { margin: 0; padding: 0; background-color: #fafafa; font-family: 'Noto Sans Thai', sans-serif; }
+                    .container {width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; }
+                    .logo { text-align: center; }
+                    .logo img { max-width: 150px; border-radius: 100px; height: auto; }
+                    .content {text-align: center; padding: 0px 40px 40px 40px; margin-top: 0px;}
+                    .button {background-color: #f3560b;color: #ffffff;text-decoration: none;padding: 10px 30px;border-radius: 5px;font-family: 'Noto Sans Thai', sans-serif; 
+                  border: none;cursor: pointer;transition: background-color 0.3s ease-in-out;margin: 10px 0px;
+                }
+                .button:hover { background-color: #e74c3c; }
+                  </style>
+                </head>
+                
+                
+                <body>
+                  <div class="container">
+                    <div class="content">
+                    <div class="logo">
+                      <a href="http://localhost:3000/">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FLOGO_YaKKAI.png?alt=media&token=1410c18c-d307-4612-a1e4-30f21b6ee705" alt="Yakkai Logo">
+                      </a>
+                    </div>
+                    <h2> ระบบได้ทำการตรวจสอบ <br/> รายการประกาศขายของคุณแล้ว <h2>
+                    <h2> ผลการตรวจสอบคือ <h2>
+                    <h1 style='background-color: #F8F0E5'> ${status_text} <h1>
+                      
+                        <a href="http://localhost:3000/Product/${data.ID}">
+                          <button class="button"> 
+                            ดูรายการประกาศขายของคุณ!
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </body>
+                </html>
+                `
+        };
+        // ส่งอีเมล์
+        transporter.sendMail(Email, (error, info) => {
+            if (error) {
+                console.error('Error sending email:', error);
+            } else {
+                console.log('Email sent:', info.response);
+            }
+        });
+    } catch (error) {
+        console.error('เกิดข้อผิดพลาดที่กระบวนการส่ง Email:', error);
+    }
+}
+
+
+
+
+module.exports = { sendEmail, changePassword, Every_Email, Send_Email_after_checkd };

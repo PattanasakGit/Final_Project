@@ -11,7 +11,7 @@ import { bgcolor, width } from '@mui/system';
 import { deepOrange } from '@mui/material/colors';
 import CloseIcon from '@mui/icons-material/Close';
 
-const url_backend = 'http://localhost:3000'
+const url = 'http://localhost:3000'
 
 function format_Price(number: number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -32,7 +32,7 @@ function Shop() {
 
     const userEmail = localStorage.getItem('UserEmail_for_Shop');
     const [products, setProducts] = useState<DataType[]>([]);
-    const [user, setUser] = useState([]);
+    const [User_Seller_Data, setUser] = useState([]);
 
     const [userRating, setUserRating] = useState(0);
 
@@ -67,7 +67,7 @@ function Shop() {
     //----------------- ดึงสินค้าที่ตรงกับ User ----------------------------
     async function fetchUser() {
         try {
-            const response = await getUserByEmail({ email: userEmail });
+            const response = await getUserByEmail({ email: userEmail });            
             setUser(response);
             setUser_ID(response.ID);
             setName(response.U_NAME);
@@ -170,6 +170,13 @@ function Shop() {
         );
     }
 
+    const fraud_repoet = () =>{
+        if (userEmail){
+            sessionStorage.setItem('User_Seller_Data_for_Report',userEmail);
+            window.location.href=url+'/FraudReport';
+        }
+    }
+
     return (
         <center>
 
@@ -180,7 +187,7 @@ function Shop() {
                         <Avatar style={{ height: '200px', width: '200px', border: '6px solid #33333367' }} src={Img} />
                         {/* <img src={Img} style={{width:'50%', borderRadius:'20px'}} /> */}
                         <p> {name} </p>
-                        <p> เป็นสมาชิกมาแล้ว : {D} วัน {M} เดือน {Y} ปี  </p>
+                        <p> เป็นสมาชิกมาแล้ว : {Y} ปี {M} เดือน {D} วัน </p>
                         <p>" {about} "</p>
                         <div style={{ backgroundColor: '#ffffff', width: '80%', borderRadius: '20px', border: '2px solid orange', padding: '5px', boxShadow: '8px 5px 10px rgba(0, 0, 0, 0.477)' }}>
                             <Rating value={userRating} readOnly size='large' precision={0.5} />
@@ -189,7 +196,7 @@ function Shop() {
                             )}
                         </div>
                         <button className='btn_need_review' onClick={openPopup}>ฉันต้องการให้คะแนน</button>
-                        <button className='btn_need_report'>รายงานการโกง</button>
+                        <button className='btn_need_report' onClick={fraud_repoet} >รายงานการโกง</button>
 
 
                         {U_REVIEWS && U_REVIEWS.length > 0 ? (
