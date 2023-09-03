@@ -577,6 +577,10 @@ export const Create_Ads = async (data: any) => {
       showCancelButton: false,
       width: '80%'
       // showConfirmButton: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.reload();
+      }
     })
     return response.data;
   } catch (error: any) {
@@ -590,6 +594,17 @@ export const Create_Ads = async (data: any) => {
   }
 };
 
+export const ListAllAds = async () => {
+  const apiUrl = `http://localhost:${port}/listAdvert`;
+  try {
+    const response = await axios.get(apiUrl);
+    return response.data;
+  } catch (error) {
+    console.log('พบข้อผิดพลาดในการดึง Ads:' + error);
+    return ({ ID: 0, P_ID: 0, Ad_CREATE_BILL: '', Ad_IMG: '', Ad_CHECKED: false, });
+  }
+};
+
 export const getAdvertByProduct = async (ID: number | string) => {
   const apiUrl = `http://localhost:${port}/getAdvertByProduct/${ID}`;
   try {
@@ -600,6 +615,10 @@ export const getAdvertByProduct = async (ID: number | string) => {
     return ({ ID: 0, P_ID: 0, Ad_CREATE_BILL: '', Ad_IMG: '', Ad_CHECKED: false, });
   }
 };
+//=========================================================================
+
+
+
 
 
 

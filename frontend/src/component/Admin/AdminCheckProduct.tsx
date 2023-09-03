@@ -5,25 +5,15 @@ import '../../css/MyProduct.css';
 import '../../css/Admin_Home.css';
 import '../../css/AdminCheckProduct.css';
 
-import { Check_Token, listAdmins, DeleteByID, update, getProductBy_EmailUser, listProduct, getUserByEmail } from '../system/HTTP_Request ';
-import CreateAdmin from '../Admin/CreateAdmin'
-
-import moment from 'moment';
-import { Card, CardContent, Grid, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import Swal from 'sweetalert2'; // Alert text --> npm install sweetalert2
-import { Space, Table, Tag, Segmented, Image, Empty } from 'antd';
+import { Check_Token, update, getProductBy_EmailUser, listProduct, getUserByEmail } from '../system/HTTP_Request ';
+import { Space, Table, Tag, Image, Empty } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
 import { Button, Input, } from 'antd';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import CampaignIcon from '@mui/icons-material/Campaign';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { fontSize, margin } from '@mui/system';
-import { Block, CloseOutlined } from '@mui/icons-material';
+import { CloseOutlined } from '@mui/icons-material';
 
 const url = 'http://localhost:3000'
 

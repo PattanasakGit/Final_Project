@@ -50,7 +50,7 @@ function decodeJwtToken(token) {
 async function Token(req, res) {
     try {
         const token = req.headers.authorization;
-        console.log(token);
+        // console.log(token);
 
         // ตรวจสอบและแยก payload จาก JWT เพื่อดึงค่าเวลาหมดอายุของ token
         let decodedToken = "";
@@ -59,7 +59,7 @@ async function Token(req, res) {
         } catch (error) {
             decodedToken = "";
         }
-        console.log(decodedToken);
+        // console.log(decodedToken); 
 
         // ตรวจสอบว่า token ยังคงใช้งานได้หรือไม่
         if (!decodedToken || Date.now() >= decodedToken.exp * 1000) {
@@ -70,7 +70,7 @@ async function Token(req, res) {
         const tokenData = await getToken_check(token, DataModel);
 
         if (tokenData) {
-            console.log(tokenData);
+            // console.log(tokenData); //จะแสดงทุกครั้เมื่อมีการ ตรวจสอบ Token
 
             // ตรวจสอบเส้นทางของ token โดยตรวจสอบข้อมูลเพิ่มเติมจาก tokenData และจัดการตามที่ต้องการ
             // ส่งข้อมูลต่างๆ ที่เกี่ยวข้องกับ token กลับไปยัง Frontend
