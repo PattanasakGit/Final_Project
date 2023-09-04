@@ -41,8 +41,37 @@ async function addAdvert(req, res) {
 
 
 async function listAdverts(req, res) {
+  const command_for_get_Data = [
+    {
+      $lookup: {
+        from: "products",
+        localField: "P_ID",
+        foreignField: "ID",
+        as: "product_in_ADS"
+      }
+    },
+    {
+      $unwind: "$product_in_ADS"
+    },
+    {
+      $match: {
+        "product_in_ADS.P_ADS": true
+      }
+    },
+    {
+      $project: {
+        ID: 1,
+        Ad_IMG: 1,
+        Ad_CREATE_BILL: 1,
+        Ad_CHECKED: 1,
+        P_ID: 1
+      }
+    }
+  ];
+
   try {
-    const data = await getData(DataModel);
+    await deleteAdvert_not_need();
+    const data = await DataModel.aggregate(command_for_get_Data).exec();
 
     res.status(200).json(data);
   } catch (error) {
@@ -50,6 +79,7 @@ async function listAdverts(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
+
 
 async function updateAdvert(req, res) {
   try {
@@ -62,8 +92,8 @@ async function updateAdvert(req, res) {
       await updateData(id, newData, DataModel);
       // ให้ทำการอัพเดตข้อมูลในส่วนของสถานะโฆษณาตัวของประกาศขาย
       await update_Ads(product_ID, true);
-    }else{
-      res.status(500).json({ error: 'รหัสข้อผิดพลาด'+'Ads_ID = '+id+' P_ID = '+product_ID });
+    } else {
+      res.status(500).json({ error: 'รหัสข้อผิดพลาด' + 'Ads_ID = ' + id + ' P_ID = ' + product_ID });
     }
 
 
@@ -85,8 +115,8 @@ async function deleteAdvert(req, res) {
       await deleteData(id, DataModel);
       // ให้ทำการอัพเดตข้อมูลในส่วนของสถานะโฆษณาตัวของประกาศขาย
       await update_Ads(product_ID, false);
-    }else{
-      res.status(500).json({ error: 'รหัสข้อผิดพลาด'+'Ads_ID = '+id+' P_ID = '+product_ID });
+    } else {
+      res.status(500).json({ error: 'รหัสข้อผิดพลาด' + 'Ads_ID = ' + id + ' P_ID = ' + product_ID });
     }
 
     console.log('Advert deleted successfully');
@@ -131,9 +161,41 @@ async function getAdvertByProduct(req, res) {
   }
 }
 
+const deleteAdvert_not_need = async () => {
+  const command_for_get_Data_NotNeed = [
+    {
+      $lookup: {
+        from: "products",
+        localField: "P_ID", 
+        foreignField: "ID",
+        as: "product_in_ADS" 
+      }
+    },
+    {
+      $unwind: "$product_in_ADS"
+    },
+    {
+      $match: {
+        "product_in_ADS.P_ADS": false
+      }
+    }
+  ];
+  
+  try {
+    const data = await DataModel.aggregate(command_for_get_Data_NotNeed).exec();
+    if(data){
+      for(let OneData of data){
+        await deleteData(OneData.ID, DataModel);
+        console.log('ลบรายการ ADS ที่ไม่จำเป็นเสร็จสิ้น Ad_ID = ',OneData.ID);
+      }
+    }
+  } catch (error) {
+    console.error('พบข้อผิดพลาดในการลบรายการที่ไม่จำเป็น', error);
+  }
+}
+
+
 module.exports = { addAdvert, listAdverts, updateAdvert, deleteAdvert, getAdvertById, getAdvertByProduct };
-
-
 
 
 

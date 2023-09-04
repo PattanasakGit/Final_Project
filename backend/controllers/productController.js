@@ -307,6 +307,7 @@ module.exports = {
 };
 
 
+
 // ฟังก์ชันนี้จะตรวจสอบ วันหมดอายุของ การลงโฆษณาประกาศขาย และอัพเดตหากหมดอายุแล้ว 
 async function Check_Ads_Product() {
   console.log('----------- รายการผลตรวจสอบโฆษณา ----------------');
@@ -322,6 +323,7 @@ async function Check_Ads_Product() {
     if (time_Ads_for_check < current_time) {
       console.log('P_ID = ' + oneProductAds.ID + '  ❌ หมดอายุแล้ว ❌');
       update_Ads(oneProductAds.ID, false); // ทำการยกเลิก โฆษณา
+
     } else if (time_Ads_for_check > current_time) {
       console.log('P_ID = ' + oneProductAds.ID + ' ✅ ยังไม่หมดอายุ ✅');
     } else {
