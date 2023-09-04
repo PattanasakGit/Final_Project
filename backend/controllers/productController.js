@@ -308,16 +308,28 @@ module.exports = {
 
 
 // ฟังก์ชันนี้จะตรวจสอบ วันหมดอายุของ การลงโฆษณาประกาศขาย และอัพเดตหากหมดอายุแล้ว 
-function Check_Ads_Product() {
+async function Check_Ads_Product() {
+  console.log('----------- รายการผลตรวจสอบโฆษณา ----------------');
   const current_time = formatDate(new Date());
-  const time_Ads_for_check = '2023/10/04 03:28:13';
+  const All_Product_Ads = await DataModel.find({ P_ADS: true }).exec();
 
-  if( time_Ads_for_check < current_time ){
-    console.log('เวลาเช็ค < เวลาปัจจุบัน');
-  }else{
-    console.log('เวลาเช็ค > กว่าเวลาปัจจุบัน');
+  if (!All_Product_Ads) {
+    console.log('All_Product_Ads ------> ไม่พบข้อมูลสินค้าที่โฆษณา');
+    return false;
   }
+  for (let oneProductAds of All_Product_Ads) {
+    const time_Ads_for_check = oneProductAds.P_ADS_Limit_time;
+    if (time_Ads_for_check < current_time) {
+      console.log('P_ID = ' + oneProductAds.ID + '  ❌ หมดอายุแล้ว ❌');
+      update_Ads(oneProductAds.ID, false); // ทำการยกเลิก โฆษณา
+    } else if (time_Ads_for_check > current_time) {
+      console.log('P_ID = ' + oneProductAds.ID + ' ✅ ยังไม่หมดอายุ ✅');
+    } else {
+      console.log('พบข้อผิดพลาดในการตรวจสอบเวลาหมดอายุ');
+    }
+  }
+  console.log('-------------------------------------------------');
 }
 
-// setInterval(Check_Ads_Product, 1000 * 60 * 60 * 24); 
-setInterval(Check_Ads_Product, 1000 * 2); 
+setInterval(Check_Ads_Product, 1000 * 60 * 60 * 24);
+// setInterval(Check_Ads_Product, 1000 * 5);
