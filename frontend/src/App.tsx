@@ -19,6 +19,7 @@ import AdminHome from "./component/Admin/AdminHome.tsx"
 import AdminManagement from "./component/Admin/AdminManagement.tsx"
 import AdminCheckProduct from "./component/Admin/AdminCheckProduct.tsx"
 import AdminCheckAds from "./component/Admin/AdminCheckAds.tsx"
+import AdminCategory from "./component/Admin/AdminCategory.tsx"
 
 import TestPage from "./component/Test2.tsx"
 
@@ -67,6 +68,7 @@ function App() {
               <Route path="/AdminCheckProduct" element={<AdminCheckProduct />} />
               <Route path="/MyProfile" element={<MyProfile />} />
               <Route path="/AdminCheckAds" element={<AdminCheckAds />} />
+              <Route path="/AdminCategory" element={<AdminCategory />} />
             </>
           )}
           

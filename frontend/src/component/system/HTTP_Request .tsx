@@ -419,11 +419,8 @@ export const listProduct = () => {
     });
 };
 //==============================================================================================================================================================================================================
-type Category = {
-  id: string;
-  name: string;
-};
-
+// type Category = {  id: string;  name: string;};
+type Category = {ID:number,CP_NAME:string,CP_ICON:string};
 export const fetchCategories = async (): Promise<Category[]> => {
   const apiUrl = `http://localhost:${port}/listCategoryProduct`;
   return axios.get(apiUrl)
@@ -616,11 +613,6 @@ export const getAdvertByProduct = async (ID: number | string) => {
   }
 };
 //=========================================================================
-
-
-
-
-
 
 //============================ อื่น ๆ  ======================================
 export const DeleteByID = async (ID: number, path: string) => {

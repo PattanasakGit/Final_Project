@@ -212,7 +212,7 @@ function AdminCheckAds() {
     return (
         <center>
             <div style={{ height: '75vh', width: '90%', paddingBottom: '7rem' }} className='contentPage'>
-                <h1 className='topics_table'>  รายการประกาศขาย </h1>
+                <h1 className='topics_table'>  ตรวจสอบรายการโฆษณา </h1>
 
                 {/* <div className='container_btn_select'>
                     <button onClick={() => setSelectedTab('รายการที่รออนุมัติ')} className='btn_Yellow'>

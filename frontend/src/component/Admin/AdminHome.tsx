@@ -37,7 +37,7 @@ function AdminHome() {
                         <img src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/ICON%2Fwebsites.png?alt=media&token=7bbd4347-6476-4339-99ce-1327d2b65838' />
                         <p>ตั้งค่าเว็ปไซต์</p>
                     </div>
-                    <div id="menu_admin_5" className='menu_admin'>
+                    <div id="menu_admin_5" className='menu_admin'onClick={() => window.location.href = url + '/AdminCategory'} >
                         <img src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/ICON%2Fcategory.png?alt=media&token=b0412637-b76d-435f-91e0-5949b6e5a287' />
                         <p>จัดการหมวดหมู่สินค้า</p>
                     </div>
