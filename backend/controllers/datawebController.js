@@ -5,7 +5,7 @@ const { insertData, getData, updateData, deleteData, getDataById,getNextDataId }
 var str_collection = "dataweb";
 
 function formatDate(date) {
-  const formattedDate = moment(date).utcOffset('+07:00').format('DD-MM-YYYY HH:mm:ss');
+  const formattedDate = moment(date).utcOffset('+07:00').format('YYYY/MM/DD HH:mm:ss');
   return formattedDate;
 }
 

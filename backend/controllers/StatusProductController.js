@@ -5,9 +5,9 @@
 // var str_collection = "StatusProduct";
 
 // function formatDate(date) {
-//   const formattedDate = moment(date).utcOffset('+07:00').format('DD-MM-YYYY HH:mm:ss');
-//   return formattedDate;
-// }
+//     const formattedDate = moment(date).utcOffset('+07:00').format('YYYY/MM/DD HH:mm:ss');
+//     return formattedDate;
+//   }
 
 // const StatusProductSchema = new Schema({
 //   ID: { type: Number, required: true, unique: true },

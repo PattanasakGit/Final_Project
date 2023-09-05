@@ -3,12 +3,12 @@ const moment = require('moment');
 const { Schema } = mongoose;
 const { insertData, getData, updateData, deleteData, getDataById, getNextDataId, getUserBy_Email } = require('../database/Database.js');
 const { getUserModel } = require('../controllers/userController.js');
-const { Send_Email_after_checkd } = require('../controllers/MailController.js');
+const { Send_Email_after_checkd, Send_Email_after_checkd_Ads } = require('../controllers/MailController.js');
 
 var str_collection = "Product";
 
 function formatDate(date) {
-  const formattedDate = moment(date).utcOffset('+07:00').format('DD-MM-YYYY HH:mm:ss');
+  const formattedDate = moment(date).utcOffset('+07:00').format('YYYY/MM/DD HH:mm:ss');
   return formattedDate;
 }
 
@@ -25,6 +25,7 @@ const productSchema = new Schema({
   P_TYPE: { type: String, required: true },
   P_STATUS: { type: String, required: true },
   P_ADS: { type: Boolean },
+  P_ADS_Limit_time: { type: String },
   U_EMAIL: { type: String, required: true },
 }, { versionKey: false });
 
@@ -246,7 +247,7 @@ async function updateProductByAdmin(req, res) {
     newData.P_UPDATE = formatDate(new Date());
 
     await updateData(id, newData, DataModel); // อัปเดตข้อมูลผู้ใช้ในฐานข้อมูล
-    
+
     console.log('Product updated successfully');
     res.status(200).json({ status: true, message: 'Product updated successfully' });
     await Send_Email_after_checkd(SEND_EMAIL_TO, newData);
@@ -256,7 +257,34 @@ async function updateProductByAdmin(req, res) {
   }
 }
 
-
+async function update_Ads(id, status) {
+  try {
+    const Product = await getDataById(id, DataModel);
+    if (Product) {
+      if (status === true) { // admin กดอนุมัติให้โฆษณา
+        const currentDate = new Date();
+        const currentDate_plus_29 = currentDate.setDate(currentDate.getDate() + 29);
+        const data_for_update = {
+          P_ADS: true,
+          P_ADS_Limit_time: formatDate(currentDate_plus_29)
+        }
+        Send_Email_after_checkd_Ads(Product.U_EMAIL, Product, true, formatDate(currentDate_plus_29));
+        await updateData(id, data_for_update, DataModel);
+        return true;
+      } else { // admin ทำการยกกเลิก โฆาณา
+        const data_for_update = {
+          P_ADS: false,
+          P_ADS_Limit_time: formatDate(new Date())
+        }
+        Send_Email_after_checkd_Ads(Product.U_EMAIL, Product, false, formatDate(new Date()));
+        await updateData(id, data_for_update, DataModel);
+        return true;
+      }
+    }
+  } catch (error) {
+    return false;
+  }
+}
 
 
 //==================================== สำหรับการค้นหาข้อมูล  ===================================================
@@ -273,6 +301,37 @@ module.exports = {
   getProductTYPE,
   getProductByMultipleConditions,
   ListProduct_for_one_user,
-  updateProductByAdmin
+  updateProductByAdmin,
+  update_Ads
 
 };
+
+
+
+// ฟังก์ชันนี้จะตรวจสอบ วันหมดอายุของ การลงโฆษณาประกาศขาย และอัพเดตหากหมดอายุแล้ว 
+async function Check_Ads_Product() {
+  console.log('----------- รายการผลตรวจสอบโฆษณา ----------------');
+  const current_time = formatDate(new Date());
+  const All_Product_Ads = await DataModel.find({ P_ADS: true }).exec();
+
+  if (!All_Product_Ads) {
+    console.log('All_Product_Ads ------> ไม่พบข้อมูลสินค้าที่โฆษณา');
+    return false;
+  }
+  for (let oneProductAds of All_Product_Ads) {
+    const time_Ads_for_check = oneProductAds.P_ADS_Limit_time;
+    if (time_Ads_for_check < current_time) {
+      console.log('P_ID = ' + oneProductAds.ID + '  ❌ หมดอายุแล้ว ❌');
+      update_Ads(oneProductAds.ID, false); // ทำการยกเลิก โฆษณา
+
+    } else if (time_Ads_for_check > current_time) {
+      console.log('P_ID = ' + oneProductAds.ID + ' ✅ ยังไม่หมดอายุ ✅');
+    } else {
+      console.log('พบข้อผิดพลาดในการตรวจสอบเวลาหมดอายุ');
+    }
+  }
+  console.log('-------------------------------------------------');
+}
+
+setInterval(Check_Ads_Product, 1000 * 60 * 60 * 24);
+// setInterval(Check_Ads_Product, 1000 * 5);
