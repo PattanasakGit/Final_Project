@@ -41,7 +41,7 @@ function AdminHome() {
                         <img src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/ICON%2Fcategory.png?alt=media&token=b0412637-b76d-435f-91e0-5949b6e5a287' />
                         <p>จัดการหมวดหมู่สินค้า</p>
                     </div>
-                    <div id="menu_admin_6" className='menu_admin'>
+                    <div id="menu_admin_6" className='menu_admin' onClick={() => window.location.href = url + '/AdminTopBanner'}>
                         <img src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/ICON%2Fads_sitting.png?alt=media&token=35e3952a-2a60-467c-98ab-46ac25de86be' />
                         <p>จัดการโฆษณาบนเว็ปไซต์</p>
                     </div>

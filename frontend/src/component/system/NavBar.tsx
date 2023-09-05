@@ -45,7 +45,11 @@ const NavBar = () => {
   }
 
 
-  function handleLogout() { window.location.href = URL_backend + '/Login'; }
+  function handleLogout() { 
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.href = URL_backend + '/'; 
+  }
 
   return (
     // <AppBar className="NavBar">

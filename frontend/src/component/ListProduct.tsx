@@ -146,11 +146,11 @@ const ProductsGrid = () => {
       const windowWidth = window.innerWidth;
 
       if (windowWidth < 576) { // หน้าจอมือถือ (mobile)
-        setItemsPerPage_CP(4);
+        setItemsPerPage_CP(3);
       } else if (windowWidth >= 576 && windowWidth < 992) { // หน้าจอ iPad
-        setItemsPerPage_CP(7);
+        setItemsPerPage_CP(6);
       } else { // หน้าจอ desktop
-        setItemsPerPage_CP(15);
+        setItemsPerPage_CP(14);
       }
     };
 

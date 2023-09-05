@@ -84,7 +84,6 @@ app.put('/updateTopBanner/:id', updateTopBanner);
 app.delete('/deleteTopBanner/:id', deleteTopBanner);
 app.get('/getTopBanner/:id', getTopBannerById);
 app.get('/listTopBanner', listTopBanners)
-app.get('/listSideBanner', listSideBanners)
 
 //StatusProduct
 app.post('/addFRAUD_REPORT', addFRAUD_REPORT);

@@ -1,29 +1,46 @@
 import NavBar from "./system/NavBar";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Carousel } from 'antd';
 import '../css/Background.css';
 import { Box, Container, Grid, Paper } from "@mui/material";
 import ProductsGrid from './ListProduct';
 import { padding } from "@mui/system";
 import { Player } from '@lottiefiles/react-lottie-player';
+import { listData } from "./system/HTTP_Request ";
+
+const IMG_Banner = [
+    'https://www.schwab.com/sites/g/files/eyrktu1071/files/Getty_635946862_2x1.jpg',
+    'https://cdn.pic.in.th/file/picinth/Branner.jpeg',
+    'https://www.matichon.co.th/wp-content/uploads/2018/08/Banner-770x433.jpg',
+    'https://cdn.pic.in.th/file/picinth/Branner.jpeg',
+]
 
 
 function Home() {
+    const [IMG_Banner, setIMG_Banner] = useState([]);
+
+    const listAllData = async () => {
+        const dataIMG_Banner = await listData('listTopBanner');
+        if (dataIMG_Banner) {
+            setIMG_Banner(dataIMG_Banner);
+        }
+    }
+
+    useEffect(() => {
+        listAllData();
+    }, []);
+
     return (
         <div >
             <center>
                 {/* <div className="content_Home_Page"> */}
                 <div className="pigture_Carousel">
                     <Carousel autoplay >
-                        <div>
-                            <img src="https://www.schwab.com/sites/g/files/eyrktu1071/files/Getty_635946862_2x1.jpg" />
-                        </div>
-                        <div>
-                            <img src="https://cdn.pic.in.th/file/picinth/Branner.jpeg" />
-                        </div>
-                        <div>
-                            <img src="https://www.matichon.co.th/wp-content/uploads/2018/08/Banner-770x433.jpg" />
-                        </div>
+                        {IMG_Banner.map((oneBanner: any) => (
+                            <a href={oneBanner.TB_LINK}>
+                                <img src={oneBanner.TB_IMG} />
+                            </a>
+                        ))}
                     </Carousel>
                 </div>
 

@@ -653,3 +653,14 @@ export const listAdmins = async () => {
     return [];
   }
 };
+//============================ Banner  ======================================
+export const listData = async (path:string) => {
+  const apiUrl = `http://localhost:${port}/${path}`;
+  try {
+    const response = await axios.get(apiUrl);
+    return response.data;
+  } catch (error) {
+    console.log('พบข้อผิดพลาดในการดึงข้อมูล Admin: ' + error);
+    return [];
+  }
+};
