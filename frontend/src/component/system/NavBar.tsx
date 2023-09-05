@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppBar, Box, Toolbar, IconButton, Typography, Button, Menu, MenuItem, Avatar } from '@mui/material';
 import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, getUserByEmail } from './HTTP_Request ';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -6,16 +6,17 @@ import '../../css/Navbar.css';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-
-
-
-const logo = 'https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FLOGO_YaKKAI.png?alt=media&token=1410c18c-d307-4612-a1e4-30f21b6ee705'
+import CheckDataWeb from './Datawebsite';
 
 const NavBar = () => {
-
   const URL_backend = 'http://localhost:3000';
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [user, setUser] = React.useState<any>([]);
+
+  const Logo = CheckDataWeb().W_IMG ;
+  const W_NAME =CheckDataWeb().W_NAME ;
+
+
 
   const handleMenuOpen = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -45,10 +46,10 @@ const NavBar = () => {
   }
 
 
-  function handleLogout() { 
+  function handleLogout() {
     localStorage.clear();
     sessionStorage.clear();
-    window.location.href = URL_backend + '/'; 
+    window.location.href = URL_backend + '/';
   }
 
   return (
@@ -59,9 +60,9 @@ const NavBar = () => {
       <Toolbar>
         <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
           <a href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-            <img src={logo} alt="Flowbite Logo" className='imgLogo' />
+            <img src={Logo} className='imgLogo' />
             <div className='band'>
-              YakKai
+              {W_NAME}
             </div>
           </a>
         </Box>

@@ -33,7 +33,7 @@ function AdminHome() {
                         <p>ผู้ดูแลระบบ</p>
 
                     </div>
-                    <div id="menu_admin_4" className='menu_admin'>
+                    <div id="menu_admin_4" className='menu_admin' onClick={() => window.location.href = url + '/DataWeb'}>
                         <img src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/ICON%2Fwebsites.png?alt=media&token=7bbd4347-6476-4339-99ce-1327d2b65838' />
                         <p>ตั้งค่าเว็ปไซต์</p>
                     </div>

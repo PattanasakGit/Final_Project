@@ -21,30 +21,16 @@ import AdminCheckProduct from "./component/Admin/AdminCheckProduct.tsx"
 import AdminCheckAds from "./component/Admin/AdminCheckAds.tsx"
 import AdminCategory from "./component/Admin/AdminCategory.tsx"
 import AdminTopBanner from "./component/Admin/AdminBanner.tsx"
-
+import DataWeb from "./component/Admin/DataWeb.tsx"
 import TestPage from "./component/Test2.tsx"
-
-
-
 import FraudReport from "./component/FraudReport.tsx"
-
-
-
-
-
-
-// import { Check_Token } from './component/HTTP_Request .tsx';
-
 import './App.css'
-
+import { getDataWeb } from "./component/system/HTTP_Request .tsx";
+import { useEffect } from "react";
 
 function App() {
-  // ตรวจสอบ token และข้อมูล EMAIL และ ROLE
-  // const tokenData = await Check_Token();
-  // const email = tokenData.EMAIL;
-  // const role = tokenData.ROLE;
-
   const role: string | null = localStorage.getItem('role'); // ควนรจาก LS
+
 
   return (
     <>
@@ -75,6 +61,7 @@ function App() {
               <Route path="/AdminCheckAds" element={<AdminCheckAds />} />
               <Route path="/AdminCategory" element={<AdminCategory />} />
               <Route path="/AdminTopBanner" element={<AdminTopBanner />} />
+              <Route path="/DataWeb" element={<DataWeb />} />
 
             </>
           )}

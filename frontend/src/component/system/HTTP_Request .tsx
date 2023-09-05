@@ -660,7 +660,19 @@ export const listData = async (path:string) => {
     const response = await axios.get(apiUrl);
     return response.data;
   } catch (error) {
-    console.log('พบข้อผิดพลาดในการดึงข้อมูล Admin: ' + error);
+    console.log('พบข้อผิดพลาดในการดึงข้อมูล Banner: ' + error);
+    return [];
+  }
+};
+
+//============================ Banner  ======================================
+export const getDataWeb = async () => {
+  const apiUrl = `http://localhost:${port}/getDataWeb/1`;
+  try {
+    const response = await axios.get(apiUrl);
+    return response.data;
+  } catch (error) {
+    console.log('พบข้อผิดพลาดในการดึงข้อมูล เว็ปไซต์: ' + error);
     return [];
   }
 };

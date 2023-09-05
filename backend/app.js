@@ -85,7 +85,7 @@ app.delete('/deleteTopBanner/:id', deleteTopBanner);
 app.get('/getTopBanner/:id', getTopBannerById);
 app.get('/listTopBanner', listTopBanners)
 
-//StatusProduct
+//fraud report
 app.post('/addFRAUD_REPORT', addFRAUD_REPORT);
 app.put('/updateFRAUD_REPORT/:id', updateFRAUD_REPORT);
 app.delete('/deleteFRAUD_REPORT/:id', deleteFRAUD_REPORT);
