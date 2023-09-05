@@ -6,35 +6,34 @@ import '../../css/Admin_Home.css';
 import '../../css/AdminCheckProduct.css';
 import '../../css/AdminManageTable.css';
 
-import { Space, Table, Image, Empty } from 'antd';
+import { Space, Table, Image } from 'antd';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
-import { Check_Token, submit, fetchCategories, DeleteByID, listData } from '../system/HTTP_Request ';
+import { submit, DeleteByID, listData } from '../system/HTTP_Request ';
 import Swal from 'sweetalert2';
 import { DeleteOutlined } from '@mui/icons-material';
-import AdminSideBanner from './AdminSideBanner';
 
 const url = 'http://localhost:3000'
 
-function AdminTopBanner() {
-    interface TopBanner { ID: number, TB_LINK: string, TB_IMG: string }
-    const [AllTopBanner, setTopBanner] = useState<TopBanner[]>([]);
-    const [TB_LINK, setTB_LINK] = useState('');
-    const [TB_IMG, setTB_IMG] = useState('');
-    const [OpenCreateTopBanner, setOpenCreateTopBanner] = useState(false);
+function AdminSideBanner() {
+    interface SideBanner { ID: number, SB_LINK: string, SB_IMG: string }
+    const [AllSideBanner, setSideBanner] = useState<SideBanner[]>([]);
+    const [SB_LINK, setSB_LINK] = useState('')
+    const [SB_IMG, setSB_IMG] = useState('');
+    const [OpenCreateSideBanner, setOpenCreateSideBanner] = useState(false);
 
     const listAllData = async () => {
-        const dataCategory = await listData('listTopBanner');
-        if (dataCategory) {
-            setTopBanner(dataCategory);
+        const dataSideBanner = await listData('listSideBanner');
+        if (dataSideBanner) {
+            setSideBanner(dataSideBanner);
         }
     }
 
     useEffect(() => {
         listAllData();
-    }, [AllTopBanner]);
+    }, [AllSideBanner]);
 
-    const columns: ColumnsType<TopBanner> = [
+    const columns: ColumnsType<SideBanner> = [
         {
             title: 'ID',
             className: 'TP_font',
@@ -46,7 +45,7 @@ function AdminTopBanner() {
             sorter: (a, b) => a.ID - b.ID,
         },
         {
-            title: 'ภาพที่ใช้',
+            title: 'ภาพโฆษณาที่ใช้',
             className: 'TP_font',
             align: 'center',
             width: '300px',
@@ -54,7 +53,7 @@ function AdminTopBanner() {
             // width: '60px',
             render: (_, record) => (
                 <Space size="small">
-                    <Image src={record.TB_IMG} style={{ height: '50px', width: '150px', objectFit: 'cover', borderRadius: '10px' }} />
+                    <Image src={record.SB_IMG} style={{ height: '80px', width: '80px', objectFit: 'cover', borderRadius: '10px' }} />
                 </Space>
             )
         },
@@ -62,14 +61,14 @@ function AdminTopBanner() {
             title: 'ลิงค์ที่เชื่อมโยง',
             className: 'TP_font',
             align: 'center',
-            dataIndex: 'TB_LINK',
-            key: 'TB_LINK',
+            dataIndex: 'SB_LINK',
+            key: 'SB_LINK',
 
         },
         {
             title: <>
-                <button className='btn_manageTable' onClick={() => setOpenCreateTopBanner(!OpenCreateTopBanner)} style={{ fontSize: '15px', width: '100%' }}>
-                    {!OpenCreateTopBanner ? <PlusOutlined style={{ fontSize: '38px' }} /> : <CloseOutlined style={{ fontSize: '38px' }} />}
+                <button className='btn_manageTable' onClick={() => setOpenCreateSideBanner(!OpenCreateSideBanner)} style={{ fontSize: '15px', width: '100%' }}>
+                    {!OpenCreateSideBanner ? <PlusOutlined style={{ fontSize: '38px' }} /> : <CloseOutlined style={{ fontSize: '38px' }} />}
                 </button>
             </>,
             key: 'action',
@@ -82,7 +81,7 @@ function AdminTopBanner() {
     ];
 
 
-    const handleDelete = (data: TopBanner) => {
+    const handleDelete = (data: SideBanner) => {
         Swal.fire({
             title: 'คุณกำลังลบรายการสำคัญ',
             html: ` หากดำเนินการต่อจะเป็นการลบภาพ Banner <br/> ออกจากระบบอย่างถาวร`,
@@ -92,18 +91,18 @@ function AdminTopBanner() {
             showLoaderOnConfirm: true,
         }).then((result) => {
             if (result.isConfirmed) {
-                DeleteByID(data.ID, 'deleteTopBanner');
+                DeleteByID(data.ID, 'deleteSideBanner');
 
             }
         })
     };
 
-    const hendle_Create_Category = () => {
-        let TopBanner = {
-            TB_LINK: TB_LINK,
-            TB_IMG: TB_IMG
+    const hendle_Create_SideBanner = () => {
+        let SideBanner = {
+            SB_LINK: SB_LINK,
+            SB_IMG: SB_IMG
         }
-        if (TB_IMG === '') {
+        if (SB_IMG === '') {
             Swal.fire({
                 title: 'คุณยังกรอกข้อมูลไม่ครบถ้วน',
                 html: ` โปรดตรวจสอบและดำเนินการอีกครั้ง`,
@@ -112,32 +111,33 @@ function AdminTopBanner() {
                 showLoaderOnConfirm: true,
             })
         } else {
-            submit(TopBanner, 'createTopBanner');
-            setOpenCreateTopBanner(!OpenCreateTopBanner);
-            setTB_IMG('');
-            setTB_LINK('');
+            submit(SideBanner, 'createSideBanner');
+            setOpenCreateSideBanner(!OpenCreateSideBanner);
+            setSB_IMG('');
+            setSB_LINK('');
         }
+
     }
 
     return (
         <center>
             <div style={{ height: 'fit-content', width: '90%', minHeight: 'fit-content' }} className='contentPage'>
-                <h1 className='topics_table'>  จัดกการโฆษณา ด้านบน </h1>
-                {OpenCreateTopBanner && (
-                    <div className='container_manageTable' style={{ padding: '20px', display: 'block' }}>
-                        <div id='Card_Cat' className='Card_Cat' style={{ width: '85%', height: '300px', marginBottom: '1rem', padding: '5px' }} >
-                            <img src={TB_IMG} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }} />
+                <h1 className='topics_table'>  จัดกการโฆษณา ด้านล่าง </h1>
+                {OpenCreateSideBanner && (
+                    <div className='container_manageTable' style={{ padding: '20px' }}>
+                        <div style={{ width: '30%' }} >
+                            <img src={SB_IMG} className='Card_Cat' style={{ width: '300px', height: '300px', objectFit: 'cover', borderRadius: '10px' }} />
+                            <p style={{ fontSize: '12px', color: '#fff' }} > * โปรดทราบ อัตราส่วนของภาพที่เหมาะสมคือ 1 : 1 </p>
                         </div>
-                        <p style={{ fontSize: '12px', textAlign: 'right', width: '85%' }} > * โปรดทราบ ขนาดของภาพที่เหมาะสมคือ 1800 : 500 (px) </p>
 
-                        <div className='input_container_admin_manageTable'>
+                        <div className='input_container_admin_manageTable' >
                             <p className='P_label_input' style={{ marginTop: 0 }}> ที่อยู่ภาพ : </p>
-                            <input className='input_manage' type="text" value={TB_IMG} placeholder="กรุณากรอก URL รูปภาพ" onChange={(event) => setTB_IMG(event.target.value)} />
+                            <input className='input_manage' type="text" value={SB_IMG} placeholder="กรุณากรอก URL รูปภาพ" onChange={(event) => setSB_IMG(event.target.value)} />
                             <p className='P_label_input'> Link เชื่อมโยง : </p>
-                            <input className='input_manage' type="text" value={TB_LINK} placeholder="กรุณากรอก ลิงค์ที่ต้องการให้เชื่อมโยงไปเมื่อกด" onChange={(event) => setTB_LINK(event.target.value)} />
+                            <input className='input_manage' type="text" value={SB_LINK} placeholder="กรุณากรอก ลิงค์ที่ต้องการให้เชื่อมโยงไปเมื่อกด" onChange={(event) => setSB_LINK(event.target.value)} />
                         </div>
                         <div className='btn_add_cat' style={{ marginTop: '2rem' }}>
-                            <button className='btn_manageTable' onClick={hendle_Create_Category} > เพิ่มรายการ </button>
+                            <button className='btn_manageTable' onClick={hendle_Create_SideBanner} > เพิ่มรายการ </button>
                         </div>
                     </div>
                 )}
@@ -145,7 +145,7 @@ function AdminTopBanner() {
                     <Table
                         // scroll={{ x: 1300 }}
                         columns={columns}
-                        dataSource={AllTopBanner.map(item => ({ ...item, key: item.ID }))}
+                        dataSource={AllSideBanner.map(item => ({ ...item, key: item.ID }))}
                         // scroll={{ y: 750 }}
                         size='middle'
                         bordered
@@ -158,11 +158,8 @@ function AdminTopBanner() {
                     />
                 </div>
             </div>
-
-            {AdminSideBanner()}
-
         </center >
     );
 }
 
-export default AdminTopBanner;
+export default AdminSideBanner;

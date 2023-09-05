@@ -151,8 +151,8 @@
     position: relative;
     border: 10px;
     margin-bottom: 6.5rem;
-    
-    
+
+
     /* overflow: hidden; */
 }
 
@@ -168,21 +168,52 @@
 }
 
 .BannerSide {
-    margin-top: 3rem;
-    margin-bottom: 2rem;
-    height: auto;
-    background-color: rgba(255, 255, 255, 0);
-    border-radius: 20px;
-    /* justify-content: flex-start; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 3rem; */
+    /* margin-bottom: 2rem; */
+    height: fit-content;
 
 }
 
-.BannerSide img {
-    margin-left: 8%;
-    width: 100%;
-    height: auto;
-    border-radius: 20px;
+.Img_SideBanner {
 
+    border-radius: 15px;
+    width: 600px;
+    height: 600px;
+    object-fit: cover;
+    object-position: center;
+
+}
+
+.coverSideBar {
+    width: 50%;
+}
+
+@media (max-width: 767px) {
+    .coverSideBar {
+        width: 90%;
+    }
+    .BannerSide {
+        display: block;
+        justify-content: center;
+        align-items: center;
+        /* margin-top: 3rem; */
+        /* margin-bottom: 2rem; */
+        height: fit-content;
+
+    }
+
+    .Img_SideBanner {
+
+        border-radius: 15px;
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+        object-position: center;
+
+    }
 }
 
 /* ======================================== ส่วนของการแสดง สินค้า ====================================================== */
@@ -278,6 +309,7 @@
         font-size: 10px !important;
     }
 }
+
 @media (min-width: 576px) and (max-width: 992px) {
     .TP_Box_for_search {
         width: 80%;
@@ -525,29 +557,34 @@
     .tp-category-card {
         padding: 2.5%;
     }
+
     .tp-category-container {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         font-family: 'Noto Sans Thai', sans-serif !important;
         font-size: 16px;
-    }   
+    }
+
     .tp-category-name {
         font-size: 9px;
         max-width: 120px;
     }
 }
+
 @media (min-width: 576px) and (max-width: 992px) {
     .tp-category-card {
         padding: 2.5%;
     }
+
     .tp-category-container {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         font-family: 'Noto Sans Thai', sans-serif !important;
         font-size: 16px;
-    }   
+    }
+
     .tp-category-name {
         font-size: 11px;
         max-width: 120px;
