@@ -13,7 +13,7 @@ let Data_seller_out: any = {};
 let PhoneNumber_in_product: any = '';
 const url_backend = 'http://localhost:3000'
 
-function formatNumber(number: number) {
+function format_Price(number: number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
@@ -116,7 +116,7 @@ function Product() {
 
                     <div className='product_container_text'>
                         <h1 style={{ margin: 0 }}> {data.P_NAME}</h1>
-                        <h1 style={{ margin: 1 }}> ราคา {formatNumber(data.P_PRICE)} บาท</h1>
+                        <h1 style={{ margin: 1 }}> ราคา {format_Price(data.P_PRICE)} บาท</h1>
                         <h2 style={{ margin: 1 }}> {data.P_TYPE} </h2>
                         {
                             data.P_STATUS === "กำลังประกาศขาย" ? (
@@ -139,10 +139,10 @@ function Product() {
                             <h2 style={{ margin: '5px' }}> ขายโดย </h2>
                             {Data_seller.U_NAME}<br />
                             เป็นสมาชิกมาแล้ว : {Y} ปี {M} เดือน {D} วัน <br />
-                            รหัสประกาศขาย : P000#{data.ID}
+                            รหัสประกาศขาย : #{data.ID}
                         </div>
 
-                        <div style={{ marginTop: '100px', textAlign: 'center' }} >
+                        <div style={{ marginTop: '100px', textAlign: 'center' }} className='btn_want_to_buy'>
                             <button className='btn_product2' onClick={Tell}>โทรหาผู้ขาย</button>
                             <button className='btn_product1' onClick={() => need_to_buy(data)}>ให้ผู้ขายติดต่อหาคุณ</button>
                             <button className='btn_product2' onClick={go_to_shop_page}>ดูสินค้าจากร้านนี้</button>
@@ -159,28 +159,39 @@ function Product() {
             <div style={{ height: '100%', width: '88%' }} className="table_show_products">
                 <Grid container spacing={2} >
                     {products.map((product: any) => (
-                        <Grid item xs={6} sm={6} md={5} lg={2} key={product.ID}>
-                            <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
-                                <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
-                                    <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
-                                        <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                    </div>
-                                    <Typography variant="h6" component="div" className='TP_font'>
-                                        {product.P_NAME}
-                                    </Typography>
-                                    <Typography variant="body1" component="div" className='TP_font'>
-                                        ราคา: {formatNumber(product.P_PRICE)} บาท
-                                    </Typography>
-                                    <Typography variant="body1" component="div" fontSize={'13px'} marginTop={1} >
-                                        {product.P_TYPE === "สินค้ามือ 1" ? (
-                                            <Tag color="green" className='TP_font'> {product.P_TYPE} </Tag>
-                                        ) : (
-                                            <Tag color="gold" className='TP_font'> {product.P_TYPE} </Tag>
-                                        )}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
+                        <Grid item xs={6} sm={4} md={3} lg={2} key={product.ID}>
+                    <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
+                      <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
+                        <div className='container_show_img_in_card'>
+                          {product.P_IMG.length > 0 ? (
+                            <img src={product.P_IMG[0]}  />
+                          ) : (
+                            <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
+                              <p>ผู้ขายไม่ได้อัพโหลด<br />ภาพสินค้า</p>
+                              <Empty />
+                            </div>
+                          )}
+                        </div>
+                        <p   className='TP_font_in_card' >
+                          {product.P_NAME}
+                        </p>
+                        <Typography variant="body1" component="div" className='TP_font'>
+                          ราคา: {format_Price(product.P_PRICE)} บาท
+                        </Typography>
+                        <Typography variant="body1" component="div" fontSize={'13px'} marginTop={1}>
+                          {product.P_TYPE === "สินค้ามือ 1" ? (
+                            <Tag color="green" className='TP_font'> {product.P_TYPE} </Tag>
+                          ) : (
+                            <Tag color="gold" className='TP_font'> {product.P_TYPE} </Tag>
+                          )}
+                        </Typography>
+
+                        {/* <Button style={{marginRight:'1rem'}}>ดูสินค้า</Button>
+                <Button>ดูสินค้า</Button> */}
+
+                      </CardContent>
+                    </Card>
+                  </Grid>
                     ))}
                 </Grid>
             </div>
@@ -214,7 +225,7 @@ async function need_to_buy(product: interface_Product) {
                     <h6 style="margin: 0;" >*หากข้อมูลส่วนตัวของคุณไม่ถูกต้อง สามารถแก้ไขได้ที่โปรไฟล์ของคุณ*<h6>
                     <h4>คุณกำลังสนใจ</h4>
                     <h4 style="margin: 0;" >ชื่อสินค้า: ${product.P_NAME}</h4>
-                    <h4 style="margin: 0;" >ราคา: ${formatNumber(product.P_PRICE)} บาท</h4>
+                    <h4 style="margin: 0;" >ราคา: ${format_Price(product.P_PRICE)} บาท</h4>
                     <img style="height:200px; border-radius: 15px;" src=${product.P_IMG[0]}>
                     
                 <center>
@@ -222,7 +233,7 @@ async function need_to_buy(product: interface_Product) {
             // icon: 'success',
             showConfirmButton: true,
             showCancelButton: true,
-            width: '60%',
+            // width: '70%',
         }).then((result) => {
             if (result.isConfirmed) {
                 let newdata = product;
@@ -249,7 +260,7 @@ async function need_to_buy(product: interface_Product) {
             }
         });
     } else {
-        window.location.href = "http://localhost:3000/Login";
+        window.location.href = "http://localhost:3000/";
     }
 }
 

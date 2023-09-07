@@ -8,7 +8,7 @@ import Product from "./component/Product.tsx";
 import CreateProduct from "./component/CreateProduct.tsx";
 import FileUpload from './component/Test2.tsx'
 import MyProfile from "./component/MyProfile.tsx";
-import {ResetPasswordPage,ResetPasswordPage_canLogin} from "./component/system/NewPassword.tsx";
+import { ResetPasswordPage, ResetPasswordPage_canLogin } from "./component/system/NewPassword.tsx";
 import ForgetPassword from "./component/system/foget_password.tsx"
 import MyProduct from "./component/MyProduct.tsx";
 import EditProduct from "./component/EditProduct.tsx";
@@ -20,41 +20,30 @@ import AdminManagement from "./component/Admin/AdminManagement.tsx"
 import AdminCheckProduct from "./component/Admin/AdminCheckProduct.tsx"
 import AdminCheckAds from "./component/Admin/AdminCheckAds.tsx"
 import AdminCategory from "./component/Admin/AdminCategory.tsx"
-
+import AdminTopBanner from "./component/Admin/AdminBanner.tsx"
+import DataWeb from "./component/Admin/DataWeb.tsx"
 import TestPage from "./component/Test2.tsx"
-
-
-
 import FraudReport from "./component/FraudReport.tsx"
-
-
-
-
-
-
-// import { Check_Token } from './component/HTTP_Request .tsx';
-
 import './App.css'
-
+import { getDataWeb } from "./component/system/HTTP_Request .tsx";
+import { useEffect } from "react";
 
 function App() {
-  // ตรวจสอบ token และข้อมูล EMAIL และ ROLE
-  // const tokenData = await Check_Token();
-  // const email = tokenData.EMAIL;
-  // const role = tokenData.ROLE;
-
   const role: string | null = localStorage.getItem('role'); // ควนรจาก LS
-
   return (
     <>
       <NavBar />
       <BrowserRouter>
         <Routes>
-          <Route path="/Login" element={<Login />} />
           {/* <Route path="/test" element={<TestPage />} /> */}
+          {role !== 'User' && role !== 'Admin' && (
+            <>
+              <Route path="/" element={<Login />} />
+            </>
+          )}
           {role === 'User' && (
             <>
-              <Route path="/" element={<Home />} />             
+              <Route path="/" element={<Home />} />
               <Route path="/MyProfile" element={<MyProfile />} />
               <Route path="/EditProduct/:id" element={<EditProduct />} />
               {/* <Route path="/MyProduct" element={<MyProduct />} /> */}
@@ -62,18 +51,21 @@ function App() {
           )}
           {role === 'Admin' && (
             <>
-              
+
               <Route path="/" element={<AdminHome />} />
               <Route path="/AdminManagement" element={<AdminManagement />} />
               <Route path="/AdminCheckProduct" element={<AdminCheckProduct />} />
               <Route path="/MyProfile" element={<MyProfile />} />
               <Route path="/AdminCheckAds" element={<AdminCheckAds />} />
               <Route path="/AdminCategory" element={<AdminCategory />} />
+              <Route path="/AdminTopBanner" element={<AdminTopBanner />} />
+              <Route path="/DataWeb" element={<DataWeb />} />
+
             </>
           )}
-          
-          <Route path="/" element={<Home />} />  
-          <Route path="/FraudReport" element={<FraudReport />} />           
+
+          <Route path="/" element={<Home />} />
+          <Route path="/FraudReport" element={<FraudReport />} />
           <Route path="/Shop" element={<Shop />} />
           <Route path="/Advert" element={<Advert />} />
           <Route path="/CreateProduct" element={<CreateProduct />} />

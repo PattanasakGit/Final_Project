@@ -12,7 +12,7 @@ function formatDate(date) {
 const topBannerSchema = new Schema({
   ID: { type: Number, required: true, unique: true },
   TB_IMG: { type: String },
-  P_ID: { type: String }
+  TB_LINK: { type: String }
 }, { versionKey: false });
 
 const DataModel = mongoose.model(str_collection, topBannerSchema);

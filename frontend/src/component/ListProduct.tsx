@@ -146,11 +146,11 @@ const ProductsGrid = () => {
       const windowWidth = window.innerWidth;
 
       if (windowWidth < 576) { // หน้าจอมือถือ (mobile)
-        setItemsPerPage_CP(4);
+        setItemsPerPage_CP(3);
       } else if (windowWidth >= 576 && windowWidth < 992) { // หน้าจอ iPad
-        setItemsPerPage_CP(7);
+        setItemsPerPage_CP(6);
       } else { // หน้าจอ desktop
-        setItemsPerPage_CP(15);
+        setItemsPerPage_CP(14);
       }
     };
 
@@ -334,15 +334,15 @@ const ProductsGrid = () => {
               {products
                 .filter((product: any) => product.P_ADS === true)
                 .map((product: any) => (
-                  <Grid item xs={6} sm={6} md={3} lg={2} key={product.ID}>
+                  <Grid item xs={6} sm={4} md={3} lg={2} key={product.ID}>
                     <Card sx={{ width: '100%', borderRadius: '10px', backgroundColor: '#FFFDE8', position: 'relative', boxShadow: ' 0 0 0 4px #FFCC48' }} className='product_cardContainer' >
                       <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'absolute', top: '0', right: '0', padding: '10px' }}>
-                        <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FICON%2FPremium%20ICON.png?alt=media&token=2da96bd0-d868-4a85-9f52-becfe26fda9b" style={{ height: '40px', width: '35px', filter: 'drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.9))' }} />
+                        <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FICON%2FPremium%20ICON.png?alt=media&token=2da96bd0-d868-4a85-9f52-becfe26fda9b" style={{ height: '40px', width: '40px', filter: 'drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.9))' }} />
                       </div>
                       <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
-                        <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
+                        <div className='container_show_img_in_card'>
                           {product.P_IMG.length > 0 ? (
-                            <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={product.P_IMG[0]}  />
                           ) : (
                             <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
                               <p>ผู้ขายไม่ได้อัพโหลด<br />ภาพสินค้า</p>
@@ -350,9 +350,9 @@ const ProductsGrid = () => {
                             </div>
                           )}
                         </div>
-                        <Typography variant="h6" component="div" className='TP_font'>
+                        <p   className='TP_font_in_card' >
                           {product.P_NAME}
-                        </Typography>
+                        </p>
                         <Typography variant="body1" component="div" className='TP_font'>
                           ราคา: {format_Price(product.P_PRICE)} บาท
                         </Typography>
@@ -372,12 +372,13 @@ const ProductsGrid = () => {
               {products
                 .filter((product: any) => product.P_ADS !== true)
                 .map((product: any) => (
-                  <Grid item xs={6} sm={6} md={3} lg={2} key={product.ID}>
+                  // <Grid item xs={6} sm={6} md={3} lg={2} key={product.ID}>
+                  <Grid item xs={6} sm={4} md={3} lg={2} key={product.ID}>
                     <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
                       <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
-                        <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
+                        <div className='container_show_img_in_card'>
                           {product.P_IMG.length > 0 ? (
-                            <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={product.P_IMG[0]}  />
                           ) : (
                             <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
                               <p>ผู้ขายไม่ได้อัพโหลด<br />ภาพสินค้า</p>
@@ -385,9 +386,9 @@ const ProductsGrid = () => {
                             </div>
                           )}
                         </div>
-                        <Typography variant="h6" component="div" className='TP_font'>
+                        <p   className='TP_font_in_card' >
                           {product.P_NAME}
-                        </Typography>
+                        </p>
                         <Typography variant="body1" component="div" className='TP_font'>
                           ราคา: {format_Price(product.P_PRICE)} บาท
                         </Typography>

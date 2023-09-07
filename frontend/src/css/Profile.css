@@ -250,6 +250,7 @@
   .Profile_text_space {
     background: #0000005e;
     padding: 10px 60px 10px 40px;
+    width: 70%;
   }
 
   .Profile_IMG_space {
@@ -275,11 +276,12 @@
   }
 
   .container_IMG {
-    background-color: #0000002e;
+    background-color: #00000000;
     /* width: 400px; */
     margin: 20px 0px;
     padding-top: 10px;
-    /* border-radius: 20px; */
+    padding-bottom: 10px;
+    /* border-radius: 0; */
   }
 
   .TP_label .TP_span:hover {
