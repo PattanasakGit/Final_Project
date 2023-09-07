@@ -67,6 +67,9 @@ function DataWeb() {
             })
         } else {
             update(new_DataWeb, 'updateDataWeb/1');
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         }
     }
     //==========================================================================================================================
@@ -188,7 +191,7 @@ function DataWeb() {
                         <textarea value={W_CONTACT} onChange={(event) => setW_CONTACT(event.target.value)} className='textarea_input_DataWeb' />
 
                         <p className='label_text_DataWeb'> Email ระบบ </p>
-                        <input value={W_EMAIL} type='text' className='text_input_DataWeb' disabled style={{ textAlign: 'center' }} />
+                        <input value={W_EMAIL} type='text' className='text_input_DataWeb' disabled style={{ textAlign: 'center',backgroundColor:'#ffffff55'}}/>
 
                         <p className='label_text_DataWeb'> เกี่ยวกับเรา </p>
                         <textarea value={ABOUT_WEB} onChange={(event) => setABOUT_WEB(event.target.value)} className='textarea_input_DataWeb' />

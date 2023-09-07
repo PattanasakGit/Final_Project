@@ -408,7 +408,7 @@
 }
 
 /* ***********************  Fraud Report  ************************* */
-.container_fraud_report{
+.container_fraud_report {
     display: flex;
 }
 
@@ -492,40 +492,69 @@ textarea {
         display: block;
     }
 
+    .TP_text_product {
+        background-color: rgba(0, 0, 0, 0.32);
+        padding: 20px;
+        border-radius: 15px;
+        width: 85%;
+    }
+
     .TP_main_img_product {
-        width: 100px !important;
+        /* width: 100px !important; */
+        height: 80% !important;
         border-radius: 20px;
 
     }
 
     .product_container_img {
         width: 100%;
+
     }
 
     .product_container_text {
-        width: 100%;
+        width: 80vw;
         padding-top: 20px;
         /* เพิ่มระยะห่างด้านบนของส่วนข้อความ */
     }
 
     .product_images {
         /* display: flex; */
+        /* margin-top: 1rem !important; */
         width: 90%;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(0px, 1fr));
-        gap: 8px;
-        margin-left: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(60px, 0.5fr));
+        gap: 5px;
+        margin-left: -2.5px !important;
+
     }
 
     .TP_IMG {
-        width: 50px !important;
-        height: 50px !important;
+        width: 60px !important;
+        height: 70px !important;
     }
 
     .text_space {
         width: 100% !important;
         /* margin: 0px !important; */
         padding: 0px !important;
+    }
+    .btn_want_to_buy{
+        display: flex !important;
+        margin-top: 50px !important;
+
+    }
+
+    .btn_product1,
+    .btn_product2 {
+        font-family: 'Noto Sans Thai', sans-serif;
+        font-size: 12px;
+        width: 30%;
+        height: 60px;
+        margin: 0px 5px 50px 0px;
+        border-radius: 15px;
+        border: 2px solid #ffd8d853;
+        transition: all 0.3s ease;
+        /* เพิ่ม transition สำหรับเอฟเฟคการเปลี่ยนแปลง */
     }
 
     .text_space input,
@@ -585,7 +614,7 @@ textarea {
 
     /* ***********************  Fraud Report  ************************* */
 
-    .container_fraud_report{
+    .container_fraud_report {
         display: block;
     }
 

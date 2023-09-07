@@ -30,8 +30,6 @@ import { useEffect } from "react";
 
 function App() {
   const role: string | null = localStorage.getItem('role'); // ควนรจาก LS
-
-
   return (
     <>
       <NavBar />

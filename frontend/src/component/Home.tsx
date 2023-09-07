@@ -30,8 +30,6 @@ function Home() {
         listAllData_SideBanner();
     }, []);
 
-    console.log('AllSideBanner --------------------> ',IMG_Side_Banner);
-
     return (
         <div >
             <center>
@@ -39,9 +37,9 @@ function Home() {
                 <div className="pigture_Carousel">
                     <Carousel autoplay >
                         {IMG_Banner.map((oneBanner: any) => (
-                            <a href={oneBanner.TB_LINK}>
-                                <img src={oneBanner.TB_IMG} />
-                            </a>
+                            // <a href={oneBanner.TB_LINK}>
+                                <img src={oneBanner.TB_IMG} onClick={()=>window.location.href=oneBanner.TB_LINK} />
+                            // </a>
                         ))}
                     </Carousel>
                 </div>

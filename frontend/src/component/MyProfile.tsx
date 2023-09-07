@@ -341,8 +341,8 @@ function MyProfile() {
                 </div>
                 <div style={{ marginTop: '30px' }}>
                     {CheckEdit_btn === false && <button className="btn_edit" style={{ width: '50%' }} onClick={() => setCheckEdit_btn(true)}> แก้ไข Profile </button>}
-                    {CheckEdit_btn === true && <button className="btn_edit" style={{ width: '10%', backgroundColor: 'red' }} onClick={() => setCheckEdit_btn(false)}>ยกเลิก </button>}
-                    {CheckEdit_btn === true && <button className="btn_edit" style={{ width: '40%', backgroundColor: 'green' }} onClick={handleUpdate}> อัพเดตข้อมูลของคุณ </button>}
+                    {CheckEdit_btn === true && <button className="btn_edit" style={{ width: '30%', backgroundColor: 'red' }} onClick={() => setCheckEdit_btn(false)}>ยกเลิก </button>}
+                    {CheckEdit_btn === true && <button className="btn_edit" style={{ width: '50%', backgroundColor: 'green' }} onClick={handleUpdate}> อัพเดตข้อมูลของคุณ </button>}
 
                 </div>
             </div>
