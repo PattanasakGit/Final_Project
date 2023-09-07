@@ -1,22 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { AppBar, Box, Toolbar, IconButton, Typography, Button, Menu, MenuItem, Avatar } from '@mui/material';
-import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, getUserByEmail } from './HTTP_Request ';
+import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, getUserByEmail, getDataWeb } from './HTTP_Request ';
 import MenuIcon from '@mui/icons-material/Menu';
 import '../../css/Navbar.css';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import CheckDataWeb from './Datawebsite';
 
 const NavBar = () => {
   const URL_backend = 'http://localhost:3000';
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [user, setUser] = React.useState<any>([]);
 
-  const Logo = CheckDataWeb().W_IMG ;
-  const W_NAME =CheckDataWeb().W_NAME ;
 
+  let blank_dataWeb = { W_NAME: "", W_ADDR: "", W_CONTACT: "", W_EMAIL: "", ABOUT_WEB: "" }
+  const [dataWeb, setDataWeb] = useState<any>(blank_dataWeb);
+  const fetchDataWeb = async () => {
+    const DataWeb_from_backend = await getDataWeb();
+    console.log('|---Navbar โหลดข้อมูลเว็ปไซต์---|');
+    if (DataWeb_from_backend) {
+      setDataWeb(DataWeb_from_backend)
+    }
+  }
+  useEffect(() => {
+    fetchDataWeb();
+  }, []);
 
+  const Logo = dataWeb.W_IMG;
+  const W_NAME = dataWeb.W_NAME;
 
   const handleMenuOpen = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -99,15 +110,6 @@ const NavBar = () => {
             open={Boolean(anchorEl)}
             onClose={handleMenuClose}
           >
-            <MenuItem>
-              <Typography className='TP_font' variant="body1">ทดสอบ</Typography>
-            </MenuItem>
-            <MenuItem >
-              <Typography className='TP_font' variant="body1">ทดสอบ</Typography>
-            </MenuItem>
-            <MenuItem>
-              <Typography className='TP_font' variant="body1">ทดสอบ</Typography>
-            </MenuItem>
             <MenuItem onClick={() => (window.location.href = URL_backend + '/CreateProduct')}>
               <Typography className='TP_font' variant="body1"><AddShoppingCartIcon /> ประกาศขาย</Typography>
             </MenuItem>

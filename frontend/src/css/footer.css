@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap');
+
+.containerFooter {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+    background: #0000009a;
+    height: 200px;
+    padding: 30px;
+    color: #b1b1b1;
+    font-size: 13px;
+    text-align: left;
+}
+.cover_content_footer{
+    width: 25%;
+}
+.logo_in_footer{
+    height: 25px;
+    border-radius: 100px;
+}
+.name_web_in_footer{
+    margin: 0px 10px;
+}
+.contain_contact_in_footer{
+    display: flex;
+    
+}
+@media (max-width: 765px) { 
+    .containerFooter {
+        height: fit-content;
+
+    }
+    .cover_content_footer{
+        width: 80%;
+    }
+    .contain_contact_in_footer{
+        display: block;
+    }
+  }
+

@@ -21,13 +21,13 @@ import AdminCheckProduct from "./component/Admin/AdminCheckProduct.tsx"
 import AdminCheckAds from "./component/Admin/AdminCheckAds.tsx"
 import AdminCategory from "./component/Admin/AdminCategory.tsx"
 import AdminTopBanner from "./component/Admin/AdminBanner.tsx"
-import DataWeb from "./component/Admin/DataWeb.tsx"
+import DataWeb from "./component/Admin/AdminUpdateDataWeb.tsx"
 import TestPage from "./component/Test2.tsx"
 import FraudReport from "./component/FraudReport.tsx"
-import './App.css'
-import { getDataWeb } from "./component/system/HTTP_Request .tsx";
-import { useEffect } from "react";
+import CheckFraudReport from "./component/Admin/AdminCheckFraudReport.tsx"
+import PrivacyPolicy from "./component/system/PrivacyPolicy.tsx"
 
+import './App.css'
 function App() {
   const role: string | null = localStorage.getItem('role'); // ควนรจาก LS
   return (
@@ -60,6 +60,8 @@ function App() {
               <Route path="/AdminCategory" element={<AdminCategory />} />
               <Route path="/AdminTopBanner" element={<AdminTopBanner />} />
               <Route path="/DataWeb" element={<DataWeb />} />
+              <Route path="/HomePage" element={<Home />} />
+              <Route path="/CheckFraudReport" element={<CheckFraudReport />} />
 
             </>
           )}
@@ -75,6 +77,7 @@ function App() {
           <Route path="/Product/:id" element={<Product />} />
           <Route path="/forget_password" element={<ForgetPassword />} />
           <Route path="/MyProduct" element={<MyProduct />} />
+          <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
 
 
         </Routes>
