@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 const { Schema } = mongoose;
-const { insertData, getData, updateData, deleteData, getDataById, getNextDataId } = require('../database/Database.js');
+const { insertData, updateData, deleteData, getDataById, getNextDataId } = require('../database/Database.js');
 var str_collection = "Advert";
 
 const { update_Ads } = require('./productController.js')
@@ -196,17 +196,3 @@ const deleteAdvert_not_need = async () => {
 
 
 module.exports = { addAdvert, listAdverts, updateAdvert, deleteAdvert, getAdvertById, getAdvertByProduct };
-
-
-
-// // ฟังก์ชันนี้จะตรวจสอบ วันหมดอายุของ การลงโฆษณาประกาศขาย และอัพเดตหากหมดอายุแล้ว
-// async function Check_Ads_Product() {
-
-//   const id = 4;
-
-//   const product_ID = await DataModel.findOne({ ID: id }, { P_ID: 1, _id: 0 }).exec();
-//   console.log('Ads_ID = '+ id +'------->',product_ID.P_ID);
-
-// }
-
-// setInterval(Check_Ads_Product, 1000);

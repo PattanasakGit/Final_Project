@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 const { Schema } = mongoose;
-const { insertData, getData, updateData, deleteData, getDataById, getNextDataId } = require('../database/Database.js');
+const { insertData, getNextDataId } = require('../database/Database.js');
 
 var str_collection = "TP_VerifyEmail";
 

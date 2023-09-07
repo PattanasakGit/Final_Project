@@ -223,10 +223,6 @@ async function getProductByMultipleConditions(req, res) {
     // const Product = await DataModel.find(conditions).exec();
     const Product = await DataModel.find(conditions).sort({ ID: -1 }).exec();
 
-    console.log('================================');
-    console.log(conditions);
-    console.log('================================');
-
     if (Product.length === 0) {
       return res.status(404).json({ error: 'ไม่พบรายการที่ตรงกับเงื่อนไขการค้นหา' });
     }
@@ -305,8 +301,6 @@ module.exports = {
   update_Ads
 
 };
-
-
 
 // ฟังก์ชันนี้จะตรวจสอบ วันหมดอายุของ การลงโฆษณาประกาศขาย และอัพเดตหากหมดอายุแล้ว 
 async function Check_Ads_Product() {

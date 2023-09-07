@@ -3,20 +3,19 @@ var cors = require('cors');
 const app = express();
 const port = 8000;
 
-const { changePassword, Every_Email} = require('./controllers/MailController');
 const { Token } = require('./controllers/Token');
-const { Login, resetPass, deleteLogin } = require('./controllers/LoginController');
 const { connectDatabase, closeDatabase } = require('./database/Database.js');
 const { TP_VerifyEmail_Check_Pass } = require('./controllers/TP_VerifyEmail');
-const { addAdvert, listAdverts, updateAdvert, deleteAdvert, getAdvertById, getAdvertByProduct } = require('./controllers/AdvertController');
+const { changePassword, Every_Email} = require('./controllers/MailController');
+const { Login, resetPass, deleteLogin } = require('./controllers/LoginController');
 const { addDataWeb, listDataWebs, updateDataWeb, deleteDataWeb, getDataWebById } = require('./controllers/datawebController');
-const { addUser, listUsers, updateUser, deleteUser, getUserById, getUserByEmail, User_Verify_Email, addReview, List_admin, addAdmin } = require('./controllers/userController');
 const { addTopBanner, listTopBanners, updateTopBanner, deleteTopBanner, getTopBannerById } = require('./controllers/TopBannerController');
+const { addAdvert, listAdverts, updateAdvert, deleteAdvert, getAdvertById, getAdvertByProduct } = require('./controllers/AdvertController');
 const { addSideBanner, listSideBanners, updateSideBanner, deleteSideBanner, getSideBannerById } = require('./controllers/SideBannerController');
-// const { addStatusProduct, listStatusProducts, updateStatusProduct, deleteStatusProduct, getStatusProductById } = require('./controllers/StatusProductController');
-const { addCategoryProduct, listCategoryProducts, updateCategoryProduct, deleteCategoryProduct, getCategoryProductById } = require('./controllers/CategoryProductController');
-const { addProduct, listProducts, updateProduct, deleteProduct, getProductById,  getProductByName, getProductByCATEGORY, getProductTYPE ,getProductByMultipleConditions, ListProduct_for_one_user,updateProductByAdmin} = require('./controllers/productController');
 const { addFRAUD_REPORT, listFRAUD_REPORT, updateFRAUD_REPORT, deleteFRAUD_REPORT, getFRAUD_REPORT_Id } = require('./controllers/Fraud_Report');
+const { addCategoryProduct, listCategoryProducts, updateCategoryProduct, deleteCategoryProduct, getCategoryProductById } = require('./controllers/CategoryProductController');
+const { addUser, listUsers, updateUser, deleteUser, getUserById, getUserByEmail, User_Verify_Email, addReview, List_admin, addAdmin } = require('./controllers/userController');
+const { addProduct, listProducts, updateProduct, deleteProduct, getProductById,  getProductByName, getProductByCATEGORY, getProductTYPE ,getProductByMultipleConditions, ListProduct_for_one_user,updateProductByAdmin} = require('./controllers/productController');
 
 app.use(express.json());
 app.use(cors());
@@ -91,14 +90,6 @@ app.put('/updateFRAUD_REPORT/:id', updateFRAUD_REPORT);
 app.delete('/deleteFRAUD_REPORT/:id', deleteFRAUD_REPORT);
 app.get('/getFRAUD_REPORT_Id/:id', getFRAUD_REPORT_Id);
 app.get('/listFRAUD_REPORT', listFRAUD_REPORT)
-
-//StatusProduct
-// app.post('/createStatusProduct', addStatusProduct);
-// app.put('/updateStatusProduct/:id', updateStatusProduct);
-// app.delete('/deleteStatusProduct/:id', deleteStatusProduct);
-// app.get('/getStatusProduct/:id', getStatusProductById);
-// app.get('/listStatusProduct', listStatusProducts)
-
 
 // Middleware สำหรับจัดการข้อผิดพลาดในรูปแบบ JSON response
 app.use((err, req, res, next) => {
