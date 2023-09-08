@@ -1,33 +1,33 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import './App.css'
+// นำเข้า หน้าต่าง ๆ ที่เป็นของ Web System
 import Login from './component/WebSystem/Login.tsx'
-import CreateUser from './component/CreateUser.tsx'
 import NavBar from "./component/WebSystem/NavBar.tsx";
 import Footer from "./component/WebSystem/Footer.tsx";
-import Home from "./component/Home.tsx";
-import Product from "./component/Product.tsx";
-import CreateProduct from "./component/CreateProduct.tsx";
-import FileUpload from './component/Test2.tsx'
-import MyProfile from "./component/MyProfile.tsx";
-import { ResetPasswordPage, ResetPasswordPage_canLogin } from "./component/WebSystem/NewPassword.tsx";
+import PrivacyPolicy from "./component/WebSystem/PrivacyPolicy.tsx"
 import ForgetPassword from "./component/WebSystem/foget_password.tsx"
-import MyProduct from "./component/MyProduct.tsx";
-import EditProduct from "./component/EditProduct.tsx";
-import Shop from "./component/Shop.tsx";
+import { ResetPasswordPage, ResetPasswordPage_canLogin } from "./component/WebSystem/NewPassword.tsx";
+// นำเข้า หน้าต่าง ๆ ที่เป็นของ User
+import Home from "./component/User/Home.tsx";
+import Shop from "./component/User/Shop.tsx";
 import Advert from "./component/User/Advert.tsx"
+import Product from "./component/User/Product.tsx";
+import MyProduct from "./component/User/MyProduct.tsx";
+import MyProfile from "./component/User/MyProfile.tsx";
+import CreateUser from './component/User/CreateUser.tsx'
+import FraudReport from "./component/User/FraudReport.tsx"
+import EditProduct from "./component/User/EditProduct.tsx";
+import CreateProduct from "./component/User/CreateProduct.tsx";
 // นำเข้า หน้าต่าง ๆ ที่เป็นของ admin
 import AdminHome from "./component/Admin/AdminHome.tsx"
+import DataWeb from "./component/Admin/AdminUpdateDataWeb.tsx"
+import AdminTopBanner from "./component/Admin/AdminBanner.tsx"
+import AdminCategory from "./component/Admin/AdminCategory.tsx"
+import AdminCheckAds from "./component/Admin/AdminCheckAds.tsx"
 import AdminManagement from "./component/Admin/AdminManagement.tsx"
 import AdminCheckProduct from "./component/Admin/AdminCheckProduct.tsx"
-import AdminCheckAds from "./component/Admin/AdminCheckAds.tsx"
-import AdminCategory from "./component/Admin/AdminCategory.tsx"
-import AdminTopBanner from "./component/Admin/AdminBanner.tsx"
-import DataWeb from "./component/Admin/AdminUpdateDataWeb.tsx"
-import TestPage from "./component/Test2.tsx"
-import FraudReport from "./component/FraudReport.tsx"
 import CheckFraudReport from "./component/Admin/AdminCheckFraudReport.tsx"
-import PrivacyPolicy from "./component/WebSystem/PrivacyPolicy.tsx"
 
-import './App.css'
 function App() {
   const role: string | null = localStorage.getItem('role'); // ควนรจาก LS
   return (
@@ -35,7 +35,6 @@ function App() {
       <NavBar />
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/test" element={<TestPage />} /> */}
           {role !== 'User' && role !== 'Admin' && (
               <Route path="/" element={<Login />} />
           )}
@@ -73,14 +72,10 @@ function App() {
           <Route path="/forget_password" element={<ForgetPassword />} />
           <Route path="/MyProduct" element={<MyProduct />} />
           <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
-
-
         </Routes>
       </BrowserRouter>
       <Footer />
     </>
-
   )
 }
-
 export default App

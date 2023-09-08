@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Borel&family=Krub&family=Noto+Sans+Thai&display=swap');
 
+
 .backgroundLogin {
   flex-direction: column;
   display: flex;
@@ -71,6 +72,7 @@
 
 .box_login input[type='text']:focus,
 .box_login input[type='password']:focus {
+  font-family: 'Noto Sans Thai', sans-serif;
   border: 1px solid #000000;
 }
 
@@ -84,6 +86,7 @@ a:hover {
 }
 
 label input[type='checkbox'] {
+  font-family: 'Noto Sans Thai', sans-serif;
   display: none;
 }
 
@@ -95,8 +98,13 @@ label span.slider {
   display: inline-block;
   position: relative;
   cursor: pointer;
-  float: left;
   left: 7.5%;
+}
+.cover_btn1_login{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
 }
 
 .btn1 {
@@ -107,9 +115,10 @@ label span.slider {
   width: 340px;
   height: 49px;
   font-size: 16px;
-  position: absolute;
+  /* position: absolute;
   top: 79%;
-  left: 12%;
+  left: 12%; */
+  outline: none;
   transition: 0.3s;
   cursor: pointer;
   box-shadow: 1px 1px 0.1px .5px rgba(0, 0, 0, 0.361);
@@ -163,22 +172,6 @@ label span.slider {
   color: #7f60eb;
 }
 
-.error {
-  background: #ff3333;
-  text-align: center;
-  width: 337px;
-  height: 20px;
-  padding: 2px;
-  border: 0;
-  border-radius: 5px;
-  margin: 10px auto 10px;
-  position: absolute;
-  top: 31%;
-  left: 7.2%;
-  color: white;
-  display: none;
-}
-
 .footer .fa {
   color: #7f5feb;
 }
@@ -195,6 +188,7 @@ label span.slider {
 }
 
 .text-containercheckbox {
+  font-family: 'Noto Sans Thai', sans-serif;
   flex: 0.5;
   text-align: left;
   font-size: 13px;

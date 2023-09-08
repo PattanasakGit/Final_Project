@@ -66,48 +66,46 @@ const NavBar = () => {
           </a>
         </Box>
         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          {/* <Button color="inherit">Home</Button>
-          <Button color="inherit">About</Button>
-          <Button color="inherit">Services</Button>
-          <Button color="inherit">Pricing</Button> */}
           {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => (window.location.href = URL_backend + '/MyProduct')}>ประกาศขายของฉัน</Button>}
           {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => window.location.href = URL_backend + "/MyProfile"}>  {user.U_NAME}</Button>}
-          {user.length === 0 && <Button color="inherit" onClick={handleLogout}>Login</Button>}
+          {user.length === 0 && <Button color="inherit" onClick={handleLogout} style={{marginRight:'1rem',fontSize:'18px'}}>Login</Button>}
         </Box>
-        <Box >
-          <button className='Btn_sell' onClick={() => (window.location.href = URL_backend + '/CreateProduct')} >ประกาศขาย</button>
-          <IconButton
-            color="inherit"
-            aria-label="open menu"
-            edge="end"
-            onClick={handleMenuOpen}
-            size="large"
-          >
-            <Avatar alt="user photo" src={user.U_IMG} />
-          </IconButton>
-          <Menu
-            className='avatar_container'
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-          >
-            <MenuItem onClick={() => (window.location.href = URL_backend + '/CreateProduct')}>
-              <Typography className='TP_font' variant="body1"><AddShoppingCartIcon /> ประกาศขาย</Typography>
-            </MenuItem>
-            <MenuItem onClick={() => (window.location.href = URL_backend + '/MyProduct')}>
-              <Typography className='TP_font' variant="body1"><StorefrontIcon /> ประกาศขายของฉัน</Typography>
-            </MenuItem>
-
-            {user.length !== 0 &&
-              <MenuItem onClick={() => (window.location.href = URL_backend + '/MyProfile')}>
-                <Typography className='TP_font' variant="body1"><ManageAccountsIcon /> โปรไฟล์ของฉัน</Typography>
+        {user.length !== 0 && (
+          <Box >
+            <button className='Btn_sell' onClick={() => (window.location.href = URL_backend + '/CreateProduct')} >ประกาศขาย</button>
+            <IconButton
+              color="inherit"
+              aria-label="open menu"
+              edge="end"
+              onClick={handleMenuOpen}
+              size="large"
+            >
+              <Avatar alt="user photo" src={user.U_IMG} />
+            </IconButton>
+            <Menu
+              className='avatar_container'
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+            >
+              <MenuItem onClick={() => (window.location.href = URL_backend + '/CreateProduct')}>
+                <Typography className='TP_font' variant="body1"><AddShoppingCartIcon /> ประกาศขาย</Typography>
               </MenuItem>
-            }<center>
-              {user.length !== 0 && <button style={{ margin: '10px' }} className='Nav_button' onClick={handleLogout} >LOGOUT</button>}
-              {user.length === 0 && <button style={{ margin: '10px' }} className='Nav_button' onClick={handleLogout} >LOGIN</button>}
-            </center>
-          </Menu>
-        </Box>
+              <MenuItem onClick={() => (window.location.href = URL_backend + '/MyProduct')}>
+                <Typography className='TP_font' variant="body1"><StorefrontIcon /> ประกาศขายของฉัน</Typography>
+              </MenuItem>
+
+              {user.length !== 0 &&
+                <MenuItem onClick={() => (window.location.href = URL_backend + '/MyProfile')}>
+                  <Typography className='TP_font' variant="body1"><ManageAccountsIcon /> โปรไฟล์ของฉัน</Typography>
+                </MenuItem>
+              }<center>
+                {user.length !== 0 && <button style={{ margin: '10px' }} className='Nav_button' onClick={handleLogout} >LOGOUT</button>}
+                {user.length === 0 && <button style={{ margin: '10px' }} className='Nav_button' onClick={handleLogout} >LOGIN</button>}
+              </center>
+            </Menu>
+          </Box>
+        )}
       </Toolbar>
     </div>
   );

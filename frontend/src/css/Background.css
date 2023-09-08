@@ -359,6 +359,10 @@
 }
 
 /* =============================== drawer ================================================== */
+.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+}
+
 .TP_Box_radio {
     margin: 1rem;
 }
