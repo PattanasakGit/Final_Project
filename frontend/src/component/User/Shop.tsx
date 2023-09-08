@@ -1,56 +1,44 @@
-import React, { SetStateAction, useEffect, useState, } from 'react';
-import '../css/Background.css';
-import '../css/Product.css';
-import { Image, Tag, Empty } from 'antd';
-import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, getUserByEmail, getProductBy_EmailUser, addReview } from './system/HTTP_Request ';
+import '../../css/Product.css';
+import '../../css/Background.css';
+import { Tag } from 'antd';
 import moment from 'moment';
-import { Avatar, Card, CardContent, Grid, Pagination, Rating, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
-import { bgcolor, width } from '@mui/system';
 import { deepOrange } from '@mui/material/colors';
 import CloseIcon from '@mui/icons-material/Close';
+import React, { useEffect, useState, } from 'react';
+import { Avatar, Card, CardContent, Grid, Pagination, Rating, Typography } from '@mui/material';
+import { Check_Token, getUserByEmail, getProductBy_EmailUser, addReview } from '../WebSystem/HTTP_Request ';
 
-const url = 'http://localhost:3000'
-
-function format_Price(number: number) {
+const URL_frontend = 'http://localhost:3000';
+interface DataType {
+    key: number;
+    ID: number;
+    P_NAME: string;
+    P_CATEGORY: string;
+    P_PRICE: number;
+    P_TYPE: string;
+    P_POST: string;
+    P_STATUS: string;
+}
+interface DataType_U_REVIEWS {
+    U_EMAIL: string;
+    EMAIL_RW: string;
+    RATE: number;
+    COMMENT: string;
+}
+function formatNumber(number: number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-
 function Shop() {
-    interface DataType {
-        key: number;
-        ID: number;
-        P_NAME: string;
-        P_CATEGORY: string;
-        P_PRICE: number;
-        P_TYPE: string;
-        P_POST: string;
-        P_STATUS: string;
-    }
-
     const userEmail = localStorage.getItem('UserEmail_for_Shop');
     const [products, setProducts] = useState<DataType[]>([]);
-    const [User_Seller_Data, setUser] = useState([]);
-
     const [userRating, setUserRating] = useState(0);
-
-    interface DataType_U_REVIEWS {
-        U_EMAIL: string;
-        EMAIL_RW: string;
-        RATE: number;
-        COMMENT: string;
-    }
     //user
-    const [User_ID, setUser_ID] = useState(0);
     const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
     const [Img, setImg] = useState('');
     const [about, setAbout] = useState('');
     const [U_REGISTER, set_U_REGISTER] = useState('');
     const [U_REVIEWS, set_U_REVIEWS] = useState<[DataType_U_REVIEWS] | undefined>();
-
     //date
     const dateString = U_REGISTER;
     const dateObject = moment(dateString, 'DD-MM-YYYY').toDate();
@@ -60,33 +48,23 @@ function Shop() {
     const remainingDays = new_d % 365;
     const M = Math.floor(remainingDays / 30);
     const D = remainingDays % 30;
-
-    function formatNumber(number: number) {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
     //----------------- ดึงสินค้าที่ตรงกับ User ----------------------------
     async function fetchUser() {
         try {
-            const response = await getUserByEmail({ email: userEmail });            
-            setUser(response);
-            setUser_ID(response.ID);
+            const response = await getUserByEmail({ email: userEmail });
             setName(response.U_NAME);
-            setPhone(response.U_PHONE);
             setImg(response.U_IMG);
             setAbout(response.ABOUT_ME);
             set_U_REGISTER(response.U_REGISTER);
             set_U_REVIEWS(response.U_REVIEWS);
-
         } catch (error) {
             console.error('พบข้อผิดพลาดในการดึงข้อมูลผู้ใช้:', error);
         }
     }
     //----------------------------------------------------------------
     const send_data_to_Product = (data: any) => {
-        // localStorage.setItem("Product", JSON.stringify(data));
         window.location.href = '/Product/' + data.ID;
     };
-
     useEffect(() => {
         fetchUser();
         filter_searchProducts(currentPage);
@@ -94,8 +72,6 @@ function Shop() {
     useEffect(() => {
         calculateAverageRating();
     }, [U_REVIEWS]);
-
-
 
     const [currentPage, setCurrentPage] = useState(1);
     const [TotalProducts, setTotalProducts] = useState(0);
@@ -110,15 +86,11 @@ function Shop() {
         setProducts(productsData);
         setTotalProducts(totalProducts);
     };
-
-
     const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
         setCurrentPage(page);
         filter_searchProducts(page); // เรียกใช้งานฟังก์ชัน filter_searchProducts เพื่ออัพเดตข้อมูลสินค้าในหน้าปัจจุบัน
         window.scrollTo(0, 0); // เมื่อกดเปลี่ยนหน้าให้เลื่อนขึ้นด้านบนของหน้าเพจ
     };
-
-
     //================ review =================================
     const [RATE, setRATE] = useState(0);
     const [COMMENT, setCOMMENT] = useState("");
@@ -150,6 +122,7 @@ function Shop() {
         await Check_Token();
         setShowPopup(true);
     };
+
     const POPUP_COMMENT = () => {
         return (
             <div >
@@ -170,22 +143,18 @@ function Shop() {
         );
     }
 
-    const fraud_repoet = () =>{
-        if (userEmail){
-            sessionStorage.setItem('User_Seller_Data_for_Report',userEmail);
-            window.location.href=url+'/FraudReport';
+    const fraud_repoet = () => {
+        if (userEmail) {
+            sessionStorage.setItem('User_Seller_Data_for_Report', userEmail);
+            window.location.href = URL_frontend + '/FraudReport';
         }
     }
-
     return (
         <center>
-
             <div style={{ height: '100%', width: '90%' }} className='contentPage'>
                 <div id='content_splace' className='content_splace_shop'>
-
-                <div className='container_shop'>
+                    <div className='container_shop'>
                         <Avatar style={{ height: '200px', width: '200px', border: '6px solid #33333367' }} src={Img} />
-                        {/* <img src={Img} style={{width:'50%', borderRadius:'20px'}} /> */}
                         <p> {name} </p>
                         <p> เป็นสมาชิกมาแล้ว : {Y} ปี {M} เดือน {D} วัน </p>
                         <p>" {about} "</p>
@@ -197,7 +166,6 @@ function Shop() {
                         </div>
                         <button className='btn_need_review' onClick={openPopup}>ฉันต้องการให้คะแนน</button>
                         <button className='btn_need_report' onClick={fraud_repoet} >รายงานการโกง</button>
-
 
                         {U_REVIEWS && U_REVIEWS.length > 0 ? (
                             <div>
@@ -211,7 +179,6 @@ function Shop() {
                                                 <div className="comment">{review.COMMENT}</div>
                                             </div>
                                         ))}
-
                                     </div>
                                 </div>
                             </div>
@@ -219,10 +186,6 @@ function Shop() {
                             <h3>ยังไม่มีผู้รีวิวผู้ขาย/ร้านค้า</h3>
                         )}
                     </div>
-
-
-
-
 
                     <div id='product_splace' className='container_product_in_shop'>
                         <div style={{ height: '100%', width: '88%', marginTop: '0px', padding: 0 }} >
@@ -258,10 +221,8 @@ function Shop() {
                                 <Pagination
                                     count={Math.ceil(TotalProducts / 9)}
                                     page={currentPage}
-                                    onChange={handlePageChange} // ใช้ handlePageChange ในการจัดการการเปลี่ยนหน้า
+                                    onChange={handlePageChange}
                                     color="primary"
-                                    // showFirstButton
-                                    // showLastButton
                                     siblingCount={1}
                                     boundaryCount={1}
                                     shape="rounded"
@@ -269,22 +230,12 @@ function Shop() {
                                 />
                             </div>
                             <hr style={{ backgroundColor: '#3333334e', border: 'none', height: '1px' }} />
-
-
                         </div>
                     </div>
-
-
-                    
-
-
                 </div>
             </div>
             {POPUP_COMMENT()}
-
         </center>
-
     );
 }
-
 export default Shop;

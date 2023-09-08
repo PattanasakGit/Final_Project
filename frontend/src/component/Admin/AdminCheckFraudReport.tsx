@@ -6,7 +6,7 @@ import '../../css/AdminManageTable.css';
 
 import { Space, Table, Image } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { listData } from '../system/HTTP_Request ';
+import { listData } from '../WebSystem/HTTP_Request ';
 
 function CheckFraudReport() {
     interface Category { ID: number, SELLER: string, EMAIL_REPORTER: string ,INFORMATIONS: string,IMG_FRAUD_REPORT: string}

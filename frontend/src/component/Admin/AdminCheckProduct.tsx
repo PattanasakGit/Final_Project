@@ -11,7 +11,7 @@ import { Space, Table, Tag, Image, Empty } from 'antd';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
-import { Check_Token, update, listProduct } from '../system/HTTP_Request ';
+import { Check_Token, update, listProduct } from '../WebSystem/HTTP_Request ';
 
 const url = 'http://localhost:3000'
 

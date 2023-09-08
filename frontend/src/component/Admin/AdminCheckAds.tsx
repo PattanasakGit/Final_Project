@@ -10,7 +10,7 @@ import { Button, Input, Segmented, } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
-import { update, ListAllAds, DeleteByID } from '../system/HTTP_Request ';
+import { update, ListAllAds, DeleteByID } from '../WebSystem/HTTP_Request ';
 
 interface DataType {
     key: number;

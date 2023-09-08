@@ -6,8 +6,8 @@ import '../../css/AdminCheckProduct.css';
 import '../../css/Admin_DataWeb.css';
 
 import Swal from 'sweetalert2';
-import { storage } from '../system/firebase';
-import { getDataWeb, update } from '../system/HTTP_Request ';
+import { storage } from '../WebSystem/firebase';
+import { getDataWeb, update } from '../WebSystem/HTTP_Request ';
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
 
 function DataWeb() {

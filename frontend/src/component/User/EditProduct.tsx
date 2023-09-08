@@ -1,24 +1,16 @@
-import React, { useEffect, useState, } from 'react';
-import '../css/Background.css';
-import '../css/Product.css';
-import { Image, Tag } from 'antd';
-import { submit, fetchCategories, fillter_product, getProductByID, Check_Token, update } from './system/HTTP_Request ';
-import moment from 'moment';
-import { Button, Card, CardContent, Grid, MenuItem, Select, Typography } from '@mui/material';
+import '../../css/Product.css';
+import '../../css/Background.css';
+import Swal from 'sweetalert2';
+import { useEffect, useState, } from 'react';
 import { useParams } from 'react-router-dom';
-import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
-import { ChangeEvent, useRef } from 'react';
-import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
-import { storage } from './system/firebase';
-import { validateCreateProduct } from "./Validateinput";
-
+import { validateCreateProduct } from "../WebSystem/Validateinput";
+import { Button, MenuItem, Select } from '@mui/material';
+import { fetchCategories, getProductByID, Check_Token, update } from '../WebSystem/HTTP_Request ';
 
 function EditProduct() {
     Check_Token();
     const { id } = useParams<{ id: any }>();
     const [product, setProduct] = useState<any>({}); // ข้อมูลสินค้าที่ดึงมาจาก API
-    console.log('email:', product);
-
     const [categories, setCategories] = useState([]);
     const [type, settype] = useState("");
     const [category, setcategory] = useState("");
@@ -27,10 +19,8 @@ function EditProduct() {
     const [nameProduct, setnameProduct] = useState("");
     const [text, setText] = useState("");
     const [PhoneNumber, setPhoneNumber] = useState("");
-
     // สำหรับการอัพโหลลด รูปภาพเข้า FireBase
     const [URL_IMG, setURL_IMG] = useState<any>([]);
-
     let data = {
         'P_NAME': nameProduct,
         'P_CATEGORY': category,
@@ -41,7 +31,6 @@ function EditProduct() {
         'P_TYPE': type,
         'U_EMAIL': localStorage.getItem('email')
     }
-
     useEffect(() => {
         const fetchCategoriesData = async () => {
             const fetchedCategories: any = await fetchCategories(); // ดึงรายการหมวดหมู่จาก backend
@@ -51,11 +40,8 @@ function EditProduct() {
 
         const fetchData = async () => {
             const productData = await getProductByID(id);
-            // setProduct(productData);
             setProduct(productData);
-            // setCategories();
             settype(productData.P_TYPE);
-            // setcategory(productData.P_CATEGORY);
             setOldcategory(productData.P_CATEGORY);
             setPrice(productData.P_PRICE);
             setnameProduct(productData.P_NAME);
@@ -67,17 +53,14 @@ function EditProduct() {
     }, [id]);
 
     const handleEditSubmit = async () => {
-
         if (validateCreateProduct(data).isValid) {  //ผ่าน ไม่มี errors
-            // submit(data,Path) //ส่งข้อมูลไป fetch  เพื่อส่งข้อมูลผ่าน api ไป backend 
             update(data, 'updateProduct/' + id);
-          } else { //ตรวจพบ errors
+        } else { //ตรวจพบ errors
             Swal.fire({
-              titleText: validateCreateProduct(data).messageErrors[0],
-              icon: 'warning',
+                titleText: validateCreateProduct(data).messageErrors[0],
+                icon: 'warning',
             })
-          }
-       
+        }
     };
     const handleSetTextParam = (value: string) => {
         setcategory(value);
@@ -85,13 +68,9 @@ function EditProduct() {
     const handleTypeChange = (event: any) => {
         settype(event.target.value);
     };
-
-
-
     function output_can_edit_product() {
         return (
             <center>
-
                 <div className='contentPage' style={{ height: '100%', width: '90%', padding: '20px' }}>
                     <div style={{ display: 'flex' }} className='subcontentPage'>
                         <div style={{ width: '50%' }} className='img_space'>
@@ -110,7 +89,6 @@ function EditProduct() {
                                 ))}
                             </div>
                         </div>
-
 
                         <div style={{ width: '50%', justifyContent: 'flex-end' }} className='text_space'>
                             <h1 style={{ textShadow: '-1px -1px 0 rgb(114, 114, 114), 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black' }}> แก้ไขประกาศขายสินค้า </h1>
@@ -171,9 +149,6 @@ function EditProduct() {
                                     style={{ width: '60%', backgroundColor: '#fff', margin: '5px 5% 5px 1%' }}
                                 />
                             </div>
-
-
-
                         </div>
                     </div>
                     <div style={{ marginTop: '30px' }}>
@@ -182,7 +157,6 @@ function EditProduct() {
                         </Button>
                     </div>
                 </div>
-
             </center>
         );
     }
@@ -191,13 +165,11 @@ function EditProduct() {
             <center>
                 <div className='contentPage' style={{ height: '85vh', width: '90%', padding: '20px' }}>
                     <div className='subcontentPage'>
-
                         <h1>ขออภัยครับ</h1>
                         <h1>คุณไม่สามารถแก้ไขรายการนี้ได้ เนื่องจากคุณไม่ใช่เจ้าของประกาศนี้</h1>
                         <img src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FaleartPage.svg?alt=media&token=1be2b5db-b1fc-4663-b56e-02fdee7dc13c'
-                        style={{ height:'700px'}}
+                            style={{ height: '700px' }}
                         />
-
                     </div>
                 </div>
             </center>
@@ -205,17 +177,14 @@ function EditProduct() {
     }
 
     const user_logint_email: any = localStorage.getItem('email');
-
     function check_output() {
         if (user_logint_email === product.U_EMAIL) { return output_can_edit_product(); }
         else return output_no_edit_product();
     }
-
     return (
         <>
             {check_output()}
         </>
     );
 }
-
 export default EditProduct;

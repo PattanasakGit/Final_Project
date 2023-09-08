@@ -1,19 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from './component/system/Login.tsx'
+import Login from './component/WebSystem/Login.tsx'
 import CreateUser from './component/CreateUser.tsx'
-import NavBar from "./component/system/NavBar.tsx";
-import Footer from "./component/system/Footer.tsx";
+import NavBar from "./component/WebSystem/NavBar.tsx";
+import Footer from "./component/WebSystem/Footer.tsx";
 import Home from "./component/Home.tsx";
 import Product from "./component/Product.tsx";
 import CreateProduct from "./component/CreateProduct.tsx";
 import FileUpload from './component/Test2.tsx'
 import MyProfile from "./component/MyProfile.tsx";
-import { ResetPasswordPage, ResetPasswordPage_canLogin } from "./component/system/NewPassword.tsx";
-import ForgetPassword from "./component/system/foget_password.tsx"
+import { ResetPasswordPage, ResetPasswordPage_canLogin } from "./component/WebSystem/NewPassword.tsx";
+import ForgetPassword from "./component/WebSystem/foget_password.tsx"
 import MyProduct from "./component/MyProduct.tsx";
 import EditProduct from "./component/EditProduct.tsx";
 import Shop from "./component/Shop.tsx";
-import Advert from "./component/Advert.tsx"
+import Advert from "./component/User/Advert.tsx"
 // นำเข้า หน้าต่าง ๆ ที่เป็นของ admin
 import AdminHome from "./component/Admin/AdminHome.tsx"
 import AdminManagement from "./component/Admin/AdminManagement.tsx"
@@ -25,7 +25,7 @@ import DataWeb from "./component/Admin/AdminUpdateDataWeb.tsx"
 import TestPage from "./component/Test2.tsx"
 import FraudReport from "./component/FraudReport.tsx"
 import CheckFraudReport from "./component/Admin/AdminCheckFraudReport.tsx"
-import PrivacyPolicy from "./component/system/PrivacyPolicy.tsx"
+import PrivacyPolicy from "./component/WebSystem/PrivacyPolicy.tsx"
 
 import './App.css'
 function App() {

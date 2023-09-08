@@ -1,12 +1,9 @@
-import { useState, useEffect, SetStateAction } from 'react';
-import { Grid, Card, CardContent, Typography, Pagination } from '@mui/material';
-import '../css/Background.css';
-import { listProduct, fetchCategories, fillter_product } from './system/HTTP_Request ';
-import { Button, Drawer, Radio, Collapse, Tag, Empty } from 'antd'
+import '../../css/Background.css';
+import { Drawer,Tag, Empty } from 'antd'
 import { Select, MenuItem } from '@mui/material';
-import { margin, padding } from '@mui/system';
-const { Panel } = Collapse;
-import Product from "./Product"
+import { useState, useEffect, SetStateAction } from 'react';
+import { fetchCategories, fillter_product } from '../WebSystem/HTTP_Request ';
+import { Grid, Card, CardContent, Typography, Pagination } from '@mui/material';
 
 const colors = ["FF8C32", "D7A86E", "A64B2A", "8E3200"];
 
@@ -14,21 +11,15 @@ const ProductsGrid = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [TotalProducts, setTotalProducts] = useState(0);
-
   const [type, settype] = useState("");
   const [category, setcategory] = useState("");
   const [minPrice, setminPrice] = useState(0);
   const [maxPrice, setmaxPrice] = useState(0);
   const [nameProduct, setnameProduct] = useState("");
-
-  const [categories, setCategories] = useState([]);
-  // const [selectedValue, setSelectedValue] = useState("");
-  // const type_new = () => { settype('new') };
-  // const type_old = () => { settype('old') };
+  const [categories, setCategories] = useState([]); //categories ทั้งหมดที่มีในฐานข้อมูล
   const handleTypeChange = (event: any) => {
     settype(event.target.value);
   };
-
   let data_fiter = {
     "nameProduct": nameProduct,
     "category": category,
@@ -36,7 +27,6 @@ const ProductsGrid = () => {
     "minPrice": minPrice,
     "maxPrice": maxPrice
   }
-
   //================== สำหรับ Drawer ==============================
   const [open, setOpen] = useState(false);
   const showDrawer = () => { setOpen(true); };
@@ -50,7 +40,7 @@ const ProductsGrid = () => {
     fetchCategoriesData();
     filter_searchProducts();
   }, [currentPage, category]);
-
+  
   const filter_searchProducts = async () => {
     const pageSize = 24;
     const data = await fillter_product(data_fiter);
@@ -61,12 +51,10 @@ const ProductsGrid = () => {
     setProducts(productsData);
     setTotalProducts(totalProducts);
   };
-
   //============================================================================
   const Search = () => { //เมื่อกดปุ่มค้นหา
     filter_searchProducts();
     onClose(); //เมื่อกดยืนยัให้ปิด drawer
-
   };
 
   const handleKeyPress = (event: any) => {
@@ -76,28 +64,17 @@ const ProductsGrid = () => {
   };
 
   const send_data_to_Product = (data: any) => {
-    // localStorage.setItem("Product", JSON.stringify(data));
     window.location.href = '/Product/' + data.ID;
   };
-
   const handlePageChange = (event: any, newPage: SetStateAction<number>) => {
     setCurrentPage(newPage);
     window.scrollTo(0, 515); // เมื่อกดเปลี่ยนหน้าให้เลื่อนขึ้นด้านบนของหน้าเพจ
   };
-
   const handleSetTextParam = (value: string) => {
-    // setParam_for_search('getProductByCATEGORY/' + value);
-    // setSelectedValue(value);
     setcategory(value);
     setCurrentPage(1);
     setnameProduct("");
   }
-
-  const btn_for_filter = () => {
-
-
-  };
-
   const clear_all_filter = async () => {
     settype('');
     setcategory('');
@@ -131,20 +108,13 @@ const ProductsGrid = () => {
     }
   }
 
-  // const [selectedCategory, setSelectedCategory] = useState('');
-  // const handleCategoryClick = (categoryName:any) => {
-  //   setSelectedCategory(categoryName);
-  //   handleSetTextParam(categoryName);
-  // };
-
   //------------------------ สำหรับแสดงหมวดหมู่ --------------------------
   const [showAllItems, setShowAllItems] = useState(false);
   const [itemsPerPage_CP, setItemsPerPage_CP] = useState(15);
-  // const itemsPerPage_CP = 13;
+
   useEffect(() => {
     const handleResize = () => {
       const windowWidth = window.innerWidth;
-
       if (windowWidth < 576) { // หน้าจอมือถือ (mobile)
         setItemsPerPage_CP(3);
       } else if (windowWidth >= 576 && windowWidth < 992) { // หน้าจอ iPad
@@ -153,8 +123,6 @@ const ProductsGrid = () => {
         setItemsPerPage_CP(14);
       }
     };
-
-
     // ตอนที่โหลดหน้าหรือปรับขนาดหน้าจอ
     window.addEventListener('load', handleResize);
     window.addEventListener('resize', handleResize);
@@ -164,17 +132,6 @@ const ProductsGrid = () => {
     };
   }, []);
   //----------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
   const handleCategoryClick = (categoryName: any) => {
     handleSetTextParam(categoryName);
     setShowAllItems(false);
@@ -192,18 +149,10 @@ const ProductsGrid = () => {
   function format_Price(number: number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
-
-
   //============================================================================
-
   return (
     <div>
-      {/* <Button onClick={Drawer_for_search}> ตรวจสอบข้อมูล </Button> */}
-      {/* <Button type="primary" onClick={showDrawer}>
-        Open
-      </Button> */}
       <Drawer title="Filter การค้นหา" placement="left" onClose={onClose} visible={open} style={{ backgroundColor: 'rgba(255, 255, 255, 0.425)', backdropFilter: 'blur(70px)' }} className='TP_header_drawer'>
-        {/* <center><Button onClick={clear_all_filter} > ล้าง filter ค้นหา </Button></center> */}
         <h2 className='TP_Text_in_Drawer'> เลือกหมวดหมู่สินค้า </h2>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Select value={category} onChange={(event) => handleSetTextParam(event.target.value as string)} className='TP_combobox_search'>
@@ -221,13 +170,12 @@ const ProductsGrid = () => {
         <div style={{ display: 'flex', justifyContent: 'center' }} className='TP_Box_radio'>
           <label className="TP_label"> <input type="radio" value="สินค้ามือ 1" checked={type === 'สินค้ามือ 1'} onChange={handleTypeChange} />
             <span className="TP_span">มือ1</span>
-
           </label>
           <label className="TP_label"> <input type="radio" value="สินค้ามือ 2" checked={type === 'สินค้ามือ 2'} onChange={handleTypeChange} />
             <span className="TP_span">มือ2</span>
-
           </label>
         </div>
+
         <div>
           <label style={{ fontSize: '18px', marginBottom: '6px', color: '#333' }}> เงินขั้นต่ำ : </label>
           <input type="number" id="minAmount" placeholder="กรอกเงินขั้นต่ำ" className='ThepatforInput'
@@ -243,6 +191,7 @@ const ProductsGrid = () => {
             value={check_price(maxPrice)} onChange={(event) => setmaxPrice(parseInt(event.target.value))}
           />
         </div>
+
         <center>
           {Object.values(data_fiter).every((value) => !value) ? (<h1></h1>) : (
             <>
@@ -261,7 +210,6 @@ const ProductsGrid = () => {
             </>
           )}
         </center>
-        {/* <center><Button onClick={clear_all_filter} > ล้าง filter ค้นหา </Button></center> */}
         <button onClick={clear_all_filter} className="button-clear-filter">
           🗑️ ล้าง filter ค้นหา
         </button>
@@ -270,10 +218,8 @@ const ProductsGrid = () => {
         </button>
       </Drawer>
 
-
       {/* --------------------------------------- หมวดหมู่ --------------------------------------------------------- */}
       <div className="table_show_products" >
-        {/* <div style={{ fontSize: '25px', color: '#333', marginBottom: '1rem' }}>หมวดหมู่สินค้า</div> */}
         <div className="tp-category-container">
           <Card className={`tp-category-card`} onClick={() => handleCategoryClick('')}>
             <img src={'https://img.icons8.com/?size=512&id=IJNt9jGwqy9N&format=png'} className="tp-category-card-image" />
@@ -285,7 +231,6 @@ const ProductsGrid = () => {
               <div className="tp-category-name">{category.CP_NAME}</div>
             </Card>
           ))}
-
         </div>
 
         {categories.length > itemsPerPage_CP && (
@@ -297,8 +242,6 @@ const ProductsGrid = () => {
         )}
       </div>
       {/* -------------------------------------------------------------------------------------------------------- */}
-
-
       <center>
         {Object.keys(data_fiter).every((key) => key === "nameProduct" || !data_fiter[key as keyof unknown]) ? (<h1></h1>) : (
           <>
@@ -372,7 +315,6 @@ const ProductsGrid = () => {
               {products
                 .filter((product: any) => product.P_ADS !== true)
                 .map((product: any) => (
-                  // <Grid item xs={6} sm={6} md={3} lg={2} key={product.ID}>
                   <Grid item xs={6} sm={4} md={3} lg={2} key={product.ID}>
                     <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
                       <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
@@ -399,10 +341,6 @@ const ProductsGrid = () => {
                             <Tag color="gold" className='TP_font'> {product.P_TYPE} </Tag>
                           )}
                         </Typography>
-
-                        {/* <Button style={{marginRight:'1rem'}}>ดูสินค้า</Button>
-                <Button>ดูสินค้า</Button> */}
-
                       </CardContent>
                     </Card>
                   </Grid>
@@ -423,27 +361,20 @@ const ProductsGrid = () => {
               />
             </div>
           </div>
-
           // ถ้าไม่มีสินค้าแสดง เพื่อแจ้ลูกค้าว่าไม่พบรายการ
         ) : (
           <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
             <Empty description={false} />
-            {/* <img src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2Fno%20data.svg?alt=media&token=86f4f77a-4b0c-4a72-9bd6-177665c66bbd'  style={{height:'300px'}}/> */}
             <h2 style={{ color: '#454545' }}>ไม่พบรายการที่ค้นหา</h2>
-
           </div>
         )}
       </div>
-
-
     </div >
   );
 };
-
 export default ProductsGrid;
 
 //====================================  ส่วนของการเลือกหมวดหมู่ ===================================================
-
 //ถ้ามีใช้ filter จะ return ค่าออกมา
 const checkFilter = (data: any) => {
   const data_for_filter_check = { nameProduct: "", type: "", category: "", minPrice: 0, maxPrice: 0, };
@@ -453,11 +384,5 @@ const checkFilter = (data: any) => {
       result.push({ [key]: data[key] });
     }
   });
-  // console.log('================================');
-  // console.log('================================');
-  // console.log(result);
-  // console.log('================================');
-  // console.log('================================');
   return result;
 };
-

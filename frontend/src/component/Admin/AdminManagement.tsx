@@ -11,7 +11,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { SearchOutlined } from '@ant-design/icons';
 import DeleteIcon from '@mui/icons-material/Delete';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
-import { listAdmins, DeleteByID } from '../system/HTTP_Request ';
+import { listAdmins, DeleteByID } from '../WebSystem/HTTP_Request ';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 
 const url = 'http://localhost:3000'

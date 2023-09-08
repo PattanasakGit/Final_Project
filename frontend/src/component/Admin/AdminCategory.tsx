@@ -9,7 +9,7 @@ import { Space, Table, Image } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DeleteOutlined } from '@mui/icons-material';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
-import { submit, fetchCategories, DeleteByID } from '../system/HTTP_Request ';
+import { submit, fetchCategories, DeleteByID } from '../WebSystem/HTTP_Request ';
 
 function AdminCategory() {
     interface Category { ID: number, CP_NAME: string, CP_ICON: string }

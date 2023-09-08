@@ -4,8 +4,8 @@ import '../../css/MyProduct.css';
 import '../../css/Admin_Home.css';
 
 import Swal from 'sweetalert2';
-import { validateForm } from '../Validateinput';
-import { submit } from '../system/HTTP_Request ';
+import { validateForm } from '../WebSystem/Validateinput';
+import { submit } from '../WebSystem/HTTP_Request ';
 import { Grid, FormControl, Button, Box } from '@mui/material';
 
 const CreateAdmin = () => {

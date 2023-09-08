@@ -1,17 +1,10 @@
-
-import NavBar from "./system/NavBar";
-import '../css/Background.css'
+import '../../css/Background.css'
 import Swal from 'sweetalert2'
-import { bgcolor, border, color, height, margin } from "@mui/system";
 import React, { useState } from 'react';
-import { Grid, TextField, FormControl, FormControlLabel, Radio, RadioGroup, Button, Typography, Box } from '@mui/material';
-import { validateForm } from "./Validateinput";
-import { TP_VerifyEmail, submit } from "./system/HTTP_Request ";
+import { validateForm } from "../WebSystem/Validateinput";
+import { TP_VerifyEmail } from "../WebSystem/HTTP_Request ";
+import { Grid, FormControl, Button, Box } from '@mui/material';
 
-
-//============================
-const Path = 'createUser'
-//============================
 const CreateUser = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
@@ -40,21 +33,17 @@ const CreateUser = () => {
     }
 
     if (validateForm(data).isValid) {  //ผ่าน ไม่มี errors
-      // submit(data,Path) //ส่งข้อมูลไป fetch  เพื่อส่งข้อมูลผ่าน api ไป backend 
       TP_VerifyEmail(data, 'User_Verify_Email');
-
     } else { //ตรวจพบ errors
       Swal.fire({
         titleText: validateForm(data).messageErrors[0],
         icon: 'warning',
       })
     }
-
   };
 
   return (
     <div className="pageSignUp">
-      {/* <NavBar /> */}
       <div className="contentPage">
         <Grid container spacing={3}>
 
@@ -66,13 +55,7 @@ const CreateUser = () => {
                 style={{ maxWidth: '100%', height: '600px', marginTop: '1rem', borderRadius: '70px' }}
               />
             </Box>
-            <Box>
-              {/* <Button variant="contained" color="primary" onClick={handleSubmit} size="large">
-                upload
-              </Button> */}
-            </Box>
           </Grid>
-
 
           <Grid item xs={12} sm={5.6}>
             <div className="backform">
@@ -100,7 +83,7 @@ const CreateUser = () => {
               <Box mb={2} marginLeft={5} marginRight={3}>
                 <div style={{ display: 'flex', justifyContent: 'center' }} className='TP_Box_radio_create_user'>
                   <label className="TP_label_create_user"> <input type="radio" value="ชาย" checked={gender === 'ชาย'} onChange={handleChange} />
-                    <span className="TP_span_create_user" style={{ width: '90px'}}> ชาย </span>
+                    <span className="TP_span_create_user" style={{ width: '90px' }}> ชาย </span>
                   </label>
                   <label className="TP_label_create_user"> <input type="radio" value="หญิง" checked={gender === 'หญิง'} onChange={handleChange} />
                     <span className="TP_span_create_user" style={{ width: '90px' }}> หญิง </span>
@@ -109,20 +92,6 @@ const CreateUser = () => {
                     <span className="TP_span_create_user" style={{ width: '90px' }}> อื่นๆ </span>
                   </label>
                 </div>
-
-                {/* <RadioGroup value={gender} onChange={handleChange} >
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm={4}>
-                      <FormControlLabel value="ชาย" control={<Radio />} label="ชาย" className="Thepatradio" />
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                      <FormControlLabel value="หญิง" control={<Radio />} label="หญิง" className="Thepatradio" />
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                      <FormControlLabel value="อื่น ๆ" control={<Radio />} label="อื่น ๆ" className="Thepatradio" />
-                    </Grid>
-                  </Grid>
-                </RadioGroup> */}
               </Box>
               <Box mb={2} marginLeft={-2.5}>
                 <FormControl sx={{ width: '90%' }}>
@@ -144,7 +113,7 @@ const CreateUser = () => {
                     rows={2}
                     value={about}
                     maxLength={20000}
-                    style={{ minHeight: '100px',  resize: 'none', width: '100%' }}
+                    style={{ minHeight: '100px', resize: 'none', width: '100%' }}
                     onChange={(event) => setAbout(event.target.value)}
                   />
                 </FormControl>
@@ -199,5 +168,4 @@ const CreateUser = () => {
     </div>
   );
 };
-
 export default CreateUser;

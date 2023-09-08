@@ -1,27 +1,16 @@
-
-import React, { useEffect, useState, } from 'react';
-import '../css/Background.css';
-import '../css/Product.css';
-import { Image, Tag } from 'antd';
-import { submit, fetchCategories, fillter_product, getProductByID, Check_Token } from './system/HTTP_Request ';
-import moment from 'moment';
-import { Button, Card, CardContent, Grid, MenuItem, Select, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import { validateCreateProduct } from "./Validateinput";
-import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
-
-
-
-import { ChangeEvent, useRef } from 'react';
+import '../../css/Product.css';
+import '../../css/Background.css';
+import { Image } from 'antd';
+import Swal from 'sweetalert2';
+import { storage } from '../WebSystem/firebase';
+import { validateCreateProduct } from "../WebSystem/Validateinput";
+import { Button, MenuItem, Select } from '@mui/material';
+import { ChangeEvent, useRef,useEffect, useState, } from 'react';
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
-import { storage } from './system/firebase';
-
-
-
+import { submit, fetchCategories, Check_Token } from '../WebSystem/HTTP_Request ';
 
 function CreateProduct() {
     Check_Token();
-
     const Email_User = localStorage.getItem('email');
     const [categories, setCategories] = useState([]);
     const [type, settype] = useState("");
@@ -30,7 +19,6 @@ function CreateProduct() {
     const [nameProduct, setnameProduct] = useState("");
     const [text, setText] = useState("");
     const [PhoneNumber, setPhoneNumber] = useState("");
-
     // สำหรับการอัพโหลลด รูปภาพเข้า FireBase
     const [URL_IMG, setURL_IMG] = useState<any>([]);
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
@@ -50,7 +38,6 @@ function CreateProduct() {
         'P_TYPE': type,
         'U_EMAIL': localStorage.getItem('email')
     }
-
     useEffect(() => {
         const fetchCategoriesData = async () => {
             const fetchedCategories: any = await fetchCategories(); // ดึงรายการหมวดหมู่จาก backend
@@ -67,9 +54,7 @@ function CreateProduct() {
     };
 
     const submit_btn = async () => {
-
         if (validateCreateProduct(data).isValid) {  //ผ่าน ไม่มี errors
-            // submit(data,Path) //ส่งข้อมูลไป fetch  เพื่อส่งข้อมูลผ่าน api ไป backend 
             if (URL_IMG.length === 0) {
                 Swal.fire({
                     icon: 'warning',
@@ -86,16 +71,7 @@ function CreateProduct() {
                 })
             } else {
                 await submit(data, 'createProduct');
-                // settype('')
-                // setcategory('')
-                // setPrice('')
-                // setnameProduct('')
-                // setText('')
-                // setPhoneNumber('')
-                // URL_IMG([])
-                // window.location.reload();
             }
-
         } else { //ตรวจพบ errors
             Swal.fire({
                 titleText: validateCreateProduct(data).messageErrors[0],
@@ -103,14 +79,6 @@ function CreateProduct() {
             })
         }
     }
-
-
-    // // สำหรับการอัพโหลดรูปภาพ เมื่ออัพโหลดแล้ว  จะบันทึก Path ไว้ใน photos
-    // const handleUploadSuccess = (downloadUrl: string) => {
-    //     console.log('Uploaded successfully:', downloadUrl);
-    //     // ใส่โค้ดที่ต้องการทำเมื่ออัปโหลดรูปภาพสำเร็จในส่วนนี้
-    // };
-
     //------------------------------------------------------------------------------------------------------------------------------------------
     const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -121,18 +89,14 @@ function CreateProduct() {
         if (inputRef.current) {
             inputRef.current.value = '';
         }
-
     };
-
     const onUploadSelectedImages = async () => {
         setlock_bnt(true);
         setIsLoading(true);
         const uploadedImageUrls: string[] = [];
-
         for (const selectedImage of selectedImages) {
             const storageRef = ref(storage, `/images/Users/${Email_User}/products/${Date.now()}`);
             const uploadTask = uploadBytesResumable(storageRef, selectedImage);
-
             await new Promise<void>((resolve, reject) => {
                 uploadTask.on(
                     'state_changed',
@@ -160,12 +124,9 @@ function CreateProduct() {
                 );
             });
         }
-
-        // onUploadSuccess(uploadedImageUrls); // url ของภาพ  ที่อัพโหลดเสร็จ
         setURL_IMG(uploadedImageUrls);
         setIsLoading(false);
         setOder_img_in_list(1);
-        // setSelectedImages([]);
     };
 
     const onRemoveImage = (index: number) => {
@@ -209,7 +170,6 @@ function CreateProduct() {
         }
     };
 
-
     function alert_before_upload() {
         return (
             Swal.fire({
@@ -227,10 +187,8 @@ function CreateProduct() {
         )
     }
     //------------------------------------------------------------------------------------------------------------------------------------------
-
     return (
         <center>
-
             <div className='contentPage' style={{ height: '100%', width: '90%', padding: '20px' }}>
                 <div style={{ display: 'flex' }} className='subcontentPage'>
                     <div style={{ width: '40%' }} className='img_space'>
@@ -259,7 +217,6 @@ function CreateProduct() {
                                     <p>กำลังอัพโหลดไฟล์ที่ {oder_img_in_list}: <b>{progress}%</b></p>
                                 </div>
                             </div>
-
                         )}
                     </div>
 
@@ -273,7 +230,6 @@ function CreateProduct() {
                                 style={{ width: '60%', backgroundColor: '#fff', margin: '5px 5% 5px 1%' }}
                             />
                         </div>
-
 
                         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                             <label style={{ fontSize: '16px' }}>หมวดหมู่ :</label>
@@ -323,8 +279,6 @@ function CreateProduct() {
                             />
                         </div>
 
-
-
                     </div>
                 </div>
                 <div style={{ marginTop: '30px' }}>
@@ -333,10 +287,7 @@ function CreateProduct() {
                     </Button>
                 </div>
             </div>
-
         </center>
-
     );
 }
-
 export default CreateProduct;

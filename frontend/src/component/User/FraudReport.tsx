@@ -1,16 +1,13 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
-import '../css/Background.css';
+import '../../css/Background.css';
 import moment from 'moment';
-import { Check_Token, addFRAUD_REPORT, getUserByEmail } from './system/HTTP_Request ';
-import { Avatar, Rating } from '@mui/material';
 import { Image, } from 'antd';
-
-import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
-import { storage } from './system/firebase';
 import Swal from 'sweetalert2';
-const url_frontend = 'http://localhost:3000';
-
+import { storage } from '../WebSystem/firebase';
+import { Avatar, Rating } from '@mui/material';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 const Seller_Email = sessionStorage.getItem('User_Seller_Data_for_Report');
+import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
+import { Check_Token, addFRAUD_REPORT, getUserByEmail } from '../WebSystem/HTTP_Request ';
 
 function FraudReport() {
     interface DataType_User_Seller {
@@ -30,18 +27,14 @@ function FraudReport() {
         SELLER: Seller_Email,
         EMAIL_REPORTER: localStorage.getItem('email'),
     };
-
     //user
     const [data_user_for_check, set_data_user_for_check] = useState([]);
     const [userRating, setUserRating] = useState(0);
-    const [User_ID, setUser_ID] = useState(0);
     const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
     const [Img, setImg] = useState('');
     const [about, setAbout] = useState('');
     const [U_REGISTER, set_U_REGISTER] = useState('');
     const [U_REVIEWS, set_U_REVIEWS] = useState<[DataType_User_Seller] | undefined>();
-
     //date
     const dateString = U_REGISTER;
     const dateObject = moment(dateString, 'DD-MM-YYYY').toDate();
@@ -52,27 +45,20 @@ function FraudReport() {
     const M = Math.floor(remainingDays / 30);
     const D = remainingDays % 30;
 
-    function formatNumber(number: number) {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
     //----------------- ดึงข้อมูล User ----------------------------
     async function fetchUser() {
         try {
             const response = await getUserByEmail({ email: Seller_Email });
             set_data_user_for_check(response);
-            setUser_ID(response.ID);
             setName(response.U_NAME);
-            setPhone(response.U_PHONE);
             setImg(response.U_IMG);
             setAbout(response.ABOUT_ME);
             set_U_REGISTER(response.U_REGISTER);
             set_U_REVIEWS(response.U_REVIEWS);
-
         } catch (error) {
             console.error('พบข้อผิดพลาดในการดึงข้อมูลผู้ใช้:', error);
         }
     }
-
     const calculateAverageRating = () => {
         if (U_REVIEWS && U_REVIEWS.length > 0) {
             const totalRating = U_REVIEWS.reduce((sum, review) => sum + review.RATE, 0);
@@ -105,10 +91,9 @@ function FraudReport() {
             console.log('data_to_backend ', data_to_backend);
         }
     }
-
-    //--------------------------------------       // ฟังก์ชันอัปโหลดรูปภาพที่เลือก    ---------------------------------------
+    //-------------------------------------------- ฟังก์ชันอัปโหลดรูปภาพที่เลือก  -----------------------------------------
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
-    const [Img_Select, set_Img_Select] = useState<string | null>(null); // URL.createObjectURL(selectedImage)
+    const [Img_Select, set_Img_Select] = useState<string | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null); // Ref สำหรับ input file element
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
@@ -124,7 +109,6 @@ function FraudReport() {
         }
     };
     const onUploadSelectedImage = async () => {
-
         const currentDate = new Date();
         const day = String(currentDate.getDate()).padStart(2, '0');
         const month = String(currentDate.getMonth() + 1).padStart(2, '0');
@@ -151,8 +135,6 @@ function FraudReport() {
                     setIsLoading(false);
                     setSelectedImages([]);
                     setIMG_FRAUD_REPORT(downloadUrl);
-                    // Create_Ads(data_to_backend);
-
                     return true;
                 } catch (error: any) {
                     console.error('Error getting download URL:', error);
@@ -161,7 +143,6 @@ function FraudReport() {
                         title: 'พบข้อผิดพลาด',
                         text: error.message,
                         showCancelButton: false,
-                        // showConfirmButton: false,
                     })
                     return false;
                 }
@@ -178,24 +159,16 @@ function FraudReport() {
     function alert_before_upload() {
         onUploadSelectedImage();
     }
-
-
-
     return (
         <center>
             <div className='contentPage' style={{ height: '100%', width: '90%', padding: '20px' }}>
-
                 {data_user_for_check.length !== 0 ? (
                     <>
-                        <h1 className='topic_main_Fraud_Report' >
-                            รายงานการโกง
-                        </h1>
-
+                        <h1 className='topic_main_Fraud_Report' >รายงานการโกง</h1>
                         <div className='container_fraud_report'>
                             <div className='container_profile_seller_Fraud_Report' id='container_profile_seller_Fraud_Report'>
                                 <div className='container_shop' style={{ width: '100%', height: '90%', backgroundColor: '#00000095', border: '5px solid #00000025' }}>
                                     <Avatar style={{ height: '200px', width: '200px', border: '6px solid #33333367' }} src={Img} />
-                                    {/* <img src={Img} style={{width:'50%', borderRadius:'20px'}} /> */}
                                     <p> {name} </p>
                                     <p> เป็นสมาชิกมาแล้ว : {Y} ปี {M} เดือน {D} วัน </p>
                                     <p>" {about} "</p>
@@ -255,28 +228,15 @@ function FraudReport() {
                                     <div>
                                         <button onClick={handleSubmit} type="submit" className='btn_FraudReport'> รายงาน </button>
                                     </div>
-
                                 </div>
-
                             </div>
-
                         </div>
                     </>
                 ) : (
                     <h1> กำลังโหลดข้อมูล ขอภัยหากไม่สามารถใช้งานหน้านี้ได้<br />โปรดติดต่อเราโดยตรงหากคุณต้องการความช่วยเหลือ </h1>
                 )}
-
-
-
-
-
-
-
-
-
             </div>
         </center>
     );
 }
-
 export default FraudReport;

@@ -1,25 +1,22 @@
-import React, { useEffect, useState, } from 'react';
-import '../css/Background.css';
-import '../css/Product.css';
-import { Image, Tag, Empty } from 'antd';
-import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, getUserByEmail, Every_Email } from './system/HTTP_Request ';
+import '../../css/Product.css';
+import '../../css/Background.css';
 import moment from 'moment';
-import { Card, CardContent, Grid, Typography } from '@mui/material';
+import Swal from 'sweetalert2'
+import { Image, Tag, Empty } from 'antd';
+import { useEffect, useState, } from 'react';
 import { useParams } from 'react-router-dom';
-import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
-import Shop from './Shop';
+import { Card, CardContent, Grid, Typography } from '@mui/material';
+import { fillter_product, getProductByID, Check_Token, getUserByEmail, Every_Email } from '../WebSystem/HTTP_Request ';
 
 let Data_seller_out: any = {};
 let PhoneNumber_in_product: any = '';
-const url_backend = 'http://localhost:3000'
+const url_frontend = 'http://localhost:3000'
 
 function format_Price(number: number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
 function Product() {
-    // const data_str: any = localStorage.getItem('Product');
-    // const data = JSON.parse(data_str);
     const { id } = useParams();
     const [data, setData] = useState<any>({});
     const [Data_seller, setDataSeller] = useState<any>({});
@@ -49,7 +46,6 @@ function Product() {
                 const seller = await getUserByEmail({ email: data.U_EMAIL });
                 setDataSeller(seller);
                 Data_seller_out = seller;
-
             } catch (error) {
                 console.error('พบบข้อผิดพลาดไม่สามารถดึงข้อมูลผู้ขายได้ ', error);
             }
@@ -66,15 +62,13 @@ function Product() {
     };
 
     const send_data_to_Product = (data: any) => {
-        // localStorage.setItem("Product", JSON.stringify(data));
         window.location.href = '/Product/' + data.ID;
     };
-
     function go_to_shop_page() {
         localStorage.setItem("UserEmail_for_Shop", Data_seller.U_EMAIL);
-        window.location.href = url_backend + '/Shop';
+        window.location.href = url_frontend + '/Shop';
     };
-
+    // ส่วนของการจัดการวันเวลา
     const dateString = Data_seller.U_REGISTER;
     const dateObject = moment(dateString, 'DD-MM-YYYY').toDate();
     const currentDate = new Date();
@@ -83,12 +77,10 @@ function Product() {
     const remainingDays = new_d % 365;
     const M = Math.floor(remainingDays / 30);
     const D = remainingDays % 30;
-
-    // แสดงข้อขัดข้องแ่ผู้ใช้งาน
+    // แสดงข้อขัดข้องแก่ผู้ใช้งาน
     if (!data.P_NAME || !data.P_IMG || !data.P_TYPE) {
         return <div> <br /><br /><br /><br /><br />Loading...<br /><br /><br /><br /><br /></div>;
     }
-
     return (
         <center>
             <div style={{ height: '100%', width: '90%' }} className='contentPage'>
@@ -108,11 +100,8 @@ function Product() {
                                 <p>ผู้ขายไม่ได้อัพโหลดภาพสินค้า</p>
                                 <Empty />
                             </div>
-
-
                         )}
                     </div>
-
 
                     <div className='product_container_text'>
                         <h1 style={{ margin: 0 }}> {data.P_NAME}</h1>
@@ -152,56 +141,45 @@ function Product() {
                 </div>
             </div>
 
-
-
-
             <center> <h2 className='TP_font' style={{ color: '#2d1400' }}>สินค้าเพิ่มเติมที่คุณอาจสนใจ</h2> </center>
             <div style={{ height: '100%', width: '88%' }} className="table_show_products">
                 <Grid container spacing={2} >
                     {products.map((product: any) => (
                         <Grid item xs={6} sm={4} md={3} lg={2} key={product.ID}>
-                    <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
-                      <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
-                        <div className='container_show_img_in_card'>
-                          {product.P_IMG.length > 0 ? (
-                            <img src={product.P_IMG[0]}  />
-                          ) : (
-                            <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
-                              <p>ผู้ขายไม่ได้อัพโหลด<br />ภาพสินค้า</p>
-                              <Empty />
-                            </div>
-                          )}
-                        </div>
-                        <p   className='TP_font_in_card' >
-                          {product.P_NAME}
-                        </p>
-                        <Typography variant="body1" component="div" className='TP_font'>
-                          ราคา: {format_Price(product.P_PRICE)} บาท
-                        </Typography>
-                        <Typography variant="body1" component="div" fontSize={'13px'} marginTop={1}>
-                          {product.P_TYPE === "สินค้ามือ 1" ? (
-                            <Tag color="green" className='TP_font'> {product.P_TYPE} </Tag>
-                          ) : (
-                            <Tag color="gold" className='TP_font'> {product.P_TYPE} </Tag>
-                          )}
-                        </Typography>
-
-                        {/* <Button style={{marginRight:'1rem'}}>ดูสินค้า</Button>
-                <Button>ดูสินค้า</Button> */}
-
-                      </CardContent>
-                    </Card>
-                  </Grid>
+                            <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
+                                <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
+                                    <div className='container_show_img_in_card'>
+                                        {product.P_IMG.length > 0 ? (
+                                            <img src={product.P_IMG[0]} />
+                                        ) : (
+                                            <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
+                                                <p>ผู้ขายไม่ได้อัพโหลด<br />ภาพสินค้า</p>
+                                                <Empty />
+                                            </div>
+                                        )}
+                                    </div>
+                                    <p className='TP_font_in_card' >
+                                        {product.P_NAME}
+                                    </p>
+                                    <Typography variant="body1" component="div" className='TP_font'>
+                                        ราคา: {format_Price(product.P_PRICE)} บาท
+                                    </Typography>
+                                    <Typography variant="body1" component="div" fontSize={'13px'} marginTop={1}>
+                                        {product.P_TYPE === "สินค้ามือ 1" ? (
+                                            <Tag color="green" className='TP_font'> {product.P_TYPE} </Tag>
+                                        ) : (
+                                            <Tag color="gold" className='TP_font'> {product.P_TYPE} </Tag>
+                                        )}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
                     ))}
                 </Grid>
             </div>
-
-
         </center>
-
     );
 }
-
 export default Product;
 
 interface interface_Product { P_NAME: string, P_IMG: string, P_PRICE: number, SEND_TO: string, SUBJECT: string, CusttomerTel: string, CustomerName: string };
@@ -214,8 +192,6 @@ async function need_to_buy(product: interface_Product) {
             CustomerEmail: response.U_EMAIL,
             CusttomerTel: response.U_PHONE
         }
-        console.log(product);
-
         Swal.fire({
             html:
                 `<center>
@@ -227,10 +203,8 @@ async function need_to_buy(product: interface_Product) {
                     <h4 style="margin: 0;" >ชื่อสินค้า: ${product.P_NAME}</h4>
                     <h4 style="margin: 0;" >ราคา: ${format_Price(product.P_PRICE)} บาท</h4>
                     <img style="height:200px; border-radius: 15px;" src=${product.P_IMG[0]}>
-                    
                 <center>
                 `,
-            // icon: 'success',
             showConfirmButton: true,
             showCancelButton: true,
             // width: '70%',
@@ -263,7 +237,6 @@ async function need_to_buy(product: interface_Product) {
         window.location.href = "http://localhost:3000/";
     }
 }
-
 
 function Tell() {
     Swal.fire({
