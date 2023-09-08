@@ -1,15 +1,5 @@
-
-import React, { useEffect, useState, } from 'react';
 import '../../css/Background.css';
 import '../../css/Admin_Home.css';
-
-import { Image, Tag } from 'antd';
-import { getUserByID, fetchCategories, fillter_product, getProductByID } from '../system/HTTP_Request ';
-import moment from 'moment';
-import { Card, CardContent, Grid, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
-import { bgcolor } from '@mui/system';
 
 const url = 'http://localhost:3000';
 
@@ -31,12 +21,10 @@ function AdminHome() {
                     <div id="menu_admin_3" className='menu_admin' onClick={() => window.location.href = url + '/CheckFraudReport'}>
                         <img src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/ICON%2FIconFraud.png?alt=media&token=fd40b98f-6af8-4da1-a398-28012047095f'  />
                         <p>ตรวจสอบรายงานการโกง</p>
-
                     </div>
                     <div id="menu_admin_3" className='menu_admin' onClick={() => window.location.href = url + '/AdminManagement'}>
                         <img src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/ICON%2Fadmin.png?alt=media&token=1245bfe8-d8f8-4154-bd7f-0b0004199a3e' />
                         <p>ผู้ดูแลระบบ</p>
-
                     </div>
 
 
@@ -60,10 +48,7 @@ function AdminHome() {
 
                 </div>
             </div>
-
-
         </center>
-
     );
 }
 

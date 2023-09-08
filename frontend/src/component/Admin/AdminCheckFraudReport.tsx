@@ -1,36 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
-import '../../css/Login.css';
-import '../../css/checkbox.css';
+import { useEffect, useState } from 'react';
 import '../../css/MyProduct.css';
 import '../../css/Admin_Home.css';
 import '../../css/AdminCheckProduct.css';
 import '../../css/AdminManageTable.css';
 
-import { Space, Table, Image, Empty } from 'antd';
+import { Space, Table, Image } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { listData } from '../system/HTTP_Request ';
-
-const url = 'http://localhost:3000'
 
 function CheckFraudReport() {
     interface Category { ID: number, SELLER: string, EMAIL_REPORTER: string ,INFORMATIONS: string,IMG_FRAUD_REPORT: string}
     const [AllFraudReport, setAllFraudReport] = useState<Category[]>([]);
-    const [SELLER, setSELLER] = useState('');
-    const [EMAIL_REPORTER, setEMAIL_REPORTER] = useState('');
-    const [INFORMATIONS, setINFORMATIONS] = useState('');
-    const [IMG_FRAUD_REPORT, setIMG_FRAUD_REPORT] = useState('');
 
     const listAllData = async () => {
         const dataFraudReport = await listData('listFRAUD_REPORT');
         if (dataFraudReport) {
             setAllFraudReport(dataFraudReport);
-            setSELLER(dataFraudReport.SELLER);
-            setEMAIL_REPORTER(dataFraudReport.EMAIL_REPORTER);
-            setINFORMATIONS(dataFraudReport.INFORMATIONS);
-            setIMG_FRAUD_REPORT(dataFraudReport.IMG_FRAUD_REPORT);
         }
     }
-
     useEffect(() => {
         listAllData();
     }, [AllFraudReport]);
@@ -52,7 +39,6 @@ function CheckFraudReport() {
             align: 'center',
             dataIndex: 'SELLER',
             key: 'SELLER',
-
         },
         {
             title: 'ผู้รายงาน',
@@ -60,7 +46,6 @@ function CheckFraudReport() {
             align: 'center',
             dataIndex: 'EMAIL_REPORTER',
             key: 'EMAIL_REPORTER',
-
         },
         {
             title: 'ข้อมูลเพิ่มเติม',
@@ -69,7 +54,6 @@ function CheckFraudReport() {
             dataIndex: 'INFORMATIONS',
             key: 'INFORMATIONS',
             width: '800px',
-
         },
         {
             title: 'หลักฐานประกอบ',
@@ -84,7 +68,6 @@ function CheckFraudReport() {
             )
         },
     ];
-
     return (
         <center>
             <div style={{ height: 'auto', width: '98%' }} className='contentPage'>
@@ -108,5 +91,4 @@ function CheckFraudReport() {
         </center >
     );
 }
-
 export default CheckFraudReport;

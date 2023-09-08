@@ -1,19 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
-import '../../css/Login.css';
-import '../../css/checkbox.css';
+import { useEffect, useState } from 'react';
+
 import '../../css/MyProduct.css';
 import '../../css/Admin_Home.css';
-import '../../css/AdminCheckProduct.css';
 import '../../css/AdminManageTable.css';
+import '../../css/AdminCheckProduct.css';
 
-import { Space, Table, Image } from 'antd';
-import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
-import type { ColumnsType } from 'antd/es/table';
-import { submit, DeleteByID, listData } from '../system/HTTP_Request ';
 import Swal from 'sweetalert2';
+import { Space, Table, Image } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 import { DeleteOutlined } from '@mui/icons-material';
-
-const url = 'http://localhost:3000'
+import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
+import { submit, DeleteByID, listData } from '../system/HTTP_Request ';
 
 function AdminSideBanner() {
     interface SideBanner { ID: number, SB_LINK: string, SB_IMG: string }
@@ -63,7 +60,6 @@ function AdminSideBanner() {
             align: 'center',
             dataIndex: 'SB_LINK',
             key: 'SB_LINK',
-
         },
         {
             title: <>
@@ -79,8 +75,6 @@ function AdminSideBanner() {
             )
         },
     ];
-
-
     const handleDelete = (data: SideBanner) => {
         Swal.fire({
             title: 'คุณกำลังลบรายการสำคัญ',
@@ -92,7 +86,6 @@ function AdminSideBanner() {
         }).then((result) => {
             if (result.isConfirmed) {
                 DeleteByID(data.ID, 'deleteSideBanner');
-
             }
         })
     };
@@ -116,7 +109,6 @@ function AdminSideBanner() {
             setSB_IMG('');
             setSB_LINK('');
         }
-
     }
 
     return (
@@ -161,5 +153,4 @@ function AdminSideBanner() {
         </center >
     );
 }
-
 export default AdminSideBanner;
