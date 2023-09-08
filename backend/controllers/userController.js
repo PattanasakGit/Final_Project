@@ -67,15 +67,14 @@ async function addUser(req, res) {
         .exec();
       if (data) {// ถ้าเจอ
         return data.IS_VERIFY; // เก็บค่ารหัสผ่าน
-        // console.log('Password:', IS_VERIFY);
       } else {
         console.log('เกิดข้อผิดพลาดกับการค้นหาสถานะ verify เพื่อบันทึก User');
         return false;
       }
     } catch (error) {
       // กรณีเกิดข้อผิดพลาดในการค้นหา
-      return false;
       console.error('เกิดข้อผิดพลาดกับการค้นหาสถานะ verify เพื่อบันทึก User', error);
+      return false;
     }
   }
   try {
