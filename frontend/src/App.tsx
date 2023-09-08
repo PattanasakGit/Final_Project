@@ -37,21 +37,16 @@ function App() {
         <Routes>
           {/* <Route path="/test" element={<TestPage />} /> */}
           {role !== 'User' && role !== 'Admin' && (
-            <>
               <Route path="/" element={<Login />} />
-            </>
           )}
           {role === 'User' && (
             <>
               <Route path="/" element={<Home />} />
               <Route path="/MyProfile" element={<MyProfile />} />
-              <Route path="/EditProduct/:id" element={<EditProduct />} />
-              {/* <Route path="/MyProduct" element={<MyProduct />} /> */}
             </>
           )}
           {role === 'Admin' && (
             <>
-
               <Route path="/" element={<AdminHome />} />
               <Route path="/AdminManagement" element={<AdminManagement />} />
               <Route path="/AdminCheckProduct" element={<AdminCheckProduct />} />
@@ -62,11 +57,11 @@ function App() {
               <Route path="/DataWeb" element={<DataWeb />} />
               <Route path="/HomePage" element={<Home />} />
               <Route path="/CheckFraudReport" element={<CheckFraudReport />} />
-
             </>
           )}
 
           <Route path="/" element={<Home />} />
+          <Route path="/EditProduct/:id" element={<EditProduct />} />
           <Route path="/FraudReport" element={<FraudReport />} />
           <Route path="/Shop" element={<Shop />} />
           <Route path="/Advert" element={<Advert />} />

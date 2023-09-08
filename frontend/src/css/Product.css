@@ -438,8 +438,8 @@
     color: #333;
 }
 
-.container_information_Fraud_Report input,
-textarea {
+.normal_input,
+.textarea_input {
     font-family: 'Noto Sans Thai', sans-serif !important;
     height: 50px;
     width: 95%;

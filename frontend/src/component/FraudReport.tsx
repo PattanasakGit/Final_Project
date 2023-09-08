@@ -213,11 +213,11 @@ function FraudReport() {
                                     <p> โปรดแจ้งข้อมูลเพิ่มเติมให้เราทราบ ทีมงานจะตรวจสอบและดำเนินการต่อไป ขอบคุณครับ </p>
                                     <div>
                                         <p style={{ margin: '10px 0px', textAlign: 'left' }} >หัวข้อเรื่อง *</p>
-                                        <input type="text" id="title" name="title" value={Title} onChange={(event) => setTitle(event.target.value)} required />
+                                        <input className='normal_input' type="text" id="title" name="title" value={Title} onChange={(event) => setTitle(event.target.value)} required />
                                     </div>
                                     <div>
                                         <p style={{ margin: '10px 0px', textAlign: 'left' }}> รายละเอียดเพิ่มเติม *</p>
-                                        <textarea id="information" name="information" value={Information} onChange={(event) => setInformation(event.target.value)} required />
+                                        <textarea className='textarea_input' id="information" name="information" value={Information} onChange={(event) => setInformation(event.target.value)} required />
                                     </div>
 
                                     <div>
@@ -229,7 +229,7 @@ function FraudReport() {
                                                     <Image src={Img_Select} alt="Selected" style={{ height: '150px' }} />
                                                     <p style={{ color: '#333', fontSize: '12px' }}> *กดที่รูปเพื่อดูรายละเอียด </p>
                                                 </div>}
-                                            <input type="file" accept="image/*" style={{ display: 'none' }} onChange={onFileChange} ref={inputRef} />
+                                            <input className='normal_input' type="file" accept="image/*" style={{ display: 'none' }} onChange={onFileChange} ref={inputRef} />
                                             {selectedImages.length === 0 && (
                                                 <button onClick={handleUploadButtonClick} className='btn_select_file' style={{ margin: 0 }}>เลือกภาพเพื่ออัปโหลด</button>
                                             )}
