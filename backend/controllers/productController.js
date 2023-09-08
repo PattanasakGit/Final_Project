@@ -185,7 +185,6 @@ async function ListProduct_for_one_user(req, res,) {
   }
 }
 
-
 async function getProductByMultipleConditions(req, res) {
   try {
     const { nameProduct, category, type, minPrice, maxPrice } = req.body;
@@ -282,7 +281,6 @@ async function update_Ads(id, status) {
   }
 }
 
-
 //==================================== สำหรับการค้นหาข้อมูล  ===================================================
 
 module.exports = {
@@ -301,7 +299,6 @@ module.exports = {
   update_Ads
 
 };
-
 // ฟังก์ชันนี้จะตรวจสอบ วันหมดอายุของ การลงโฆษณาประกาศขาย และอัพเดตหากหมดอายุแล้ว 
 async function Check_Ads_Product() {
   console.log('----------- รายการผลตรวจสอบโฆษณา ----------------');
@@ -328,4 +325,4 @@ async function Check_Ads_Product() {
 }
 
 setInterval(Check_Ads_Product, 1000 * 60 * 60 * 24);
-// setInterval(Check_Ads_Product, 1000 * 5);
+// setInterval(Check_Ads_Product, 1000 * 3);

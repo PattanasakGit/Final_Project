@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 const { Schema } = mongoose;
-const { insertData, updateData, deleteData, getDataById, getNextDataId } = require('../database/Database.js');
+const { insertData, updateData, deleteData, getDataById, getNextDataId, getData } = require('../database/Database.js');
 var str_collection = "Advert";
 
 const { update_Ads } = require('./productController.js')
@@ -41,37 +41,9 @@ async function addAdvert(req, res) {
 
 
 async function listAdverts(req, res) {
-  const command_for_get_Data = [
-    {
-      $lookup: {
-        from: "products",
-        localField: "P_ID",
-        foreignField: "ID",
-        as: "product_in_ADS"
-      }
-    },
-    {
-      $unwind: "$product_in_ADS"
-    },
-    {
-      $match: {
-        "product_in_ADS.P_ADS": true
-      }
-    },
-    {
-      $project: {
-        ID: 1,
-        Ad_IMG: 1,
-        Ad_CREATE_BILL: 1,
-        Ad_CHECKED: 1,
-        P_ID: 1
-      }
-    }
-  ];
-
   try {
     await deleteAdvert_not_need();
-    const data = await DataModel.aggregate(command_for_get_Data).exec();
+    const data = await getData(DataModel);
 
     res.status(200).json(data);
   } catch (error) {
@@ -79,7 +51,6 @@ async function listAdverts(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
-
 
 async function updateAdvert(req, res) {
   try {
@@ -176,7 +147,8 @@ const deleteAdvert_not_need = async () => {
     },
     {
       $match: {
-        "product_in_ADS.P_ADS": false
+        "product_in_ADS.P_ADS": false, //สินค้าไม่โฆษณาแล้ว
+        "Ad_CHECKED": true //แต่ admin ยังเห็นอยู่
       }
     }
   ];
@@ -185,7 +157,7 @@ const deleteAdvert_not_need = async () => {
     const data = await DataModel.aggregate(command_for_get_Data_NotNeed).exec();
     if(data){
       for(let OneData of data){
-        await deleteData(OneData.ID, DataModel);
+        await deleteData(OneData.ID, DataModel); //ให้ลบรายการออกจากฝั่ง admin
         console.log('ลบรายการ ADS ที่ไม่จำเป็นเสร็จสิ้น Ad_ID = ',OneData.ID);
       }
     }
@@ -193,6 +165,5 @@ const deleteAdvert_not_need = async () => {
     console.error('พบข้อผิดพลาดในการลบรายการที่ไม่จำเป็น', error);
   }
 }
-
 
 module.exports = { addAdvert, listAdverts, updateAdvert, deleteAdvert, getAdvertById, getAdvertByProduct };

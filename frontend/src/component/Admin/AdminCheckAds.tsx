@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import '../../css/Login.css';
-import '../../css/checkbox.css';
+import { useEffect, useRef, useState } from 'react';
 import '../../css/MyProduct.css';
 import '../../css/Admin_Home.css';
 import '../../css/AdminCheckProduct.css';
@@ -8,19 +6,12 @@ import '../../css/AdminCheckProduct.css';
 import type { InputRef } from 'antd';
 import { Button, Input, Segmented, } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { CloseOutlined } from '@mui/icons-material';
-import { Space, Table, Tag, Image, Empty } from 'antd';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Space, Table, Tag, Image } from 'antd';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
-import { Check_Token, update, getProductBy_EmailUser, listProduct, getUserByEmail, ListAllAds, DeleteByID } from '../system/HTTP_Request ';
+import { update, ListAllAds, DeleteByID } from '../system/HTTP_Request ';
 import Swal from 'sweetalert2';
 
-const url = 'http://localhost:3000'
-
-function format_Price(number: number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
 interface DataType {
     key: number;
     ID: number;
@@ -31,10 +22,8 @@ interface DataType {
 }
 type DataIndex = keyof DataType;
 
-
 function AdminCheckAds() {
-    // Check_Token();
-
+    // Check_Token(); //admin ไม่จำเป็นจะต้องตรวจสอบก็ได้
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     const searchInput = useRef<InputRef>(null);
     const handleSearch = (selectedKeys: string[], confirm: (param?: FilterConfirmProps) => void, dataIndex: DataIndex,) => { confirm(); };
@@ -61,9 +50,7 @@ function AdminCheckAds() {
         filterIcon: (filtered: boolean) => (<SearchOutlined style={{ color: filtered ? '#1677ff' : undefined, fontSize: filtered ? '25px' : undefined }} />),
         onFilter: (value, record) => record[dataIndex].toString().toLowerCase().includes((value as string).toLowerCase()),
     });
-
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    // const [ID_when_click, setID_when_click] = useState<number>();
     const columns: ColumnsType<DataType> = [
         {
             title: 'ID',
@@ -73,9 +60,7 @@ function AdminCheckAds() {
             key: 'ID',
             width: '80px',
             fixed: 'left',
-            // render: (text) => <a>{text}</a>,
             sorter: (a, b) => a.ID - b.ID,
-            // defaultSortOrder: 'descend', // ค่าเริ่มต้นให้แสดงใหม่กว่าไว้ด้านบน
         },
         {
             title: 'ID ของประกาศขาย',
@@ -86,7 +71,6 @@ function AdminCheckAds() {
             // fixed: 'left',
             ...getColumnSearchProps('P_ID'),
             sorter: (a, b) => a.P_ID - b.P_ID,
-
         },
         {
             title: 'วันที่ทำรายการ',
@@ -105,7 +89,6 @@ function AdminCheckAds() {
             width: '200px',
             align: 'center',
             render: (_, record) => (
-
                 record.Ad_CHECKED === true ? (
                     <Tag color="green" className='TP_font'> ได้รับการตรวจสอบแล้ว </Tag>
                 ) : (
@@ -130,8 +113,6 @@ function AdminCheckAds() {
             key: 'action',
             width: '190px',
             render: (_, record) => (
-
-
                 record.Ad_CHECKED === false ? (
                     <>
                         <button className='btn_ads_true' onClick={() => btn_action(true, record.ID)} style={{ height: '50px', width: '80px' }} > อนุมัติ </button>
@@ -140,11 +121,9 @@ function AdminCheckAds() {
                 ) : (
                     <button className='btn_delete' onClick={() => btn_action(false, record.ID)} style={{ height: '50px', width: '100%' }} > ยกเลิกการโฆษณา </button>
                 )
-
             )
         },
     ];
-
     const btn_action = (action: Boolean, id: number) => {
         if (action === true) {
             update({ Ad_CHECKED: true }, 'updateAdvert/' + id)
@@ -171,7 +150,6 @@ function AdminCheckAds() {
             })
         }
     }
-
 
     const [DataAds, setAds] = useState<DataType[]>([]);
     const [selectedTab, setSelectedTab] = useState<string>('รายการที่ยังไม่ตรวจสอบ');
