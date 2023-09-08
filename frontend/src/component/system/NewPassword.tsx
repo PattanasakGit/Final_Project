@@ -1,16 +1,11 @@
 
-import React, { useEffect, useState, } from 'react';
+import React, { useState, } from 'react';
 import '../../css/Login.css';
 import '../../css/checkbox.css';
-import { Image, Tag } from 'antd';
-import { getUserByID, fetchCategories, fillter_product, getProductByID, update } from './HTTP_Request ';
-import moment from 'moment';
-import { Card, CardContent, Grid, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
-
-import { useLocation } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+import {update } from './HTTP_Request ';
+import { useLocation } from 'react-router-dom';
+import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
 
 // reset รหัสผ่าน เมื่อจำรหัสผ่านไม่ได้ (กรณีที่ยังไม่ได้เข้าสู่ระบบ --> ส่งไปยัง email)
 export const ResetPasswordPage: React.FC = () => {
@@ -19,18 +14,13 @@ export const ResetPasswordPage: React.FC = () => {
   const decoded: any = jwt_decode(token);
   const email = decoded.User_Email;
   const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [password, setPassword] = useState('');
-  // const [message, setMessage] = useState('');
-
+  const [confirmPassword, setConfirmPassword] = useState('')
   let data = {
     email: email,
     new_password: newPassword,
     token: token,
     usetoken: true
   }
-
-
   const handleSubmit = () => {
     if (newPassword !== confirmPassword) {
       Swal.fire({
@@ -40,9 +30,7 @@ export const ResetPasswordPage: React.FC = () => {
       });
       return;
     }
-
     update(data, 'resetPass');
-
     setNewPassword('');
     setConfirmPassword('');
   };
@@ -52,7 +40,6 @@ export const ResetPasswordPage: React.FC = () => {
         <div className="reset-password-container">
           <h1 className="reset-password-title">Reset Password</h1>
           <p className="reset-password-info">คุณกำลังเปลี่ยนรหัสผ่านของบัญชี: {email}</p>
-
           <div className="input_resetpass_container">
             <label htmlFor="new_password">รหัสผ่านใหม่</label>
             <input
@@ -87,21 +74,16 @@ export const ResetPasswordPage: React.FC = () => {
   );
 };
 
-
 // reset รหัสผ่าน เมื่อสามารถเข้าสู่ระบบได้
 export const ResetPasswordPage_canLogin: React.FC = () => {
-
   const email = localStorage.getItem('email');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
   let data = {
     email: email,
     new_password: newPassword,
     usetoken: false
   }
-
-
   const handleSubmit = () => {
     if (newPassword !== confirmPassword) {
       Swal.fire({
@@ -111,9 +93,7 @@ export const ResetPasswordPage_canLogin: React.FC = () => {
       });
       return;
     }
-
     update(data, 'resetPass');
-
     setNewPassword('');
     setConfirmPassword('');
   };
@@ -123,7 +103,6 @@ export const ResetPasswordPage_canLogin: React.FC = () => {
         <div className="reset-password-container">
           <h1 className="reset-password-title">Reset Password</h1>
           <p className="reset-password-info">คุณกำลังเปลี่ยนรหัสผ่านของบัญชี: {email}</p>
-
           <div className="input_resetpass_container">
             <label htmlFor="new_password">รหัสผ่านใหม่</label>
             <input

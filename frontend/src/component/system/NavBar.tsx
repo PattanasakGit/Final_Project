@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { AppBar, Box, Toolbar, IconButton, Typography, Button, Menu, MenuItem, Avatar } from '@mui/material';
-import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, getUserByEmail, getDataWeb } from './HTTP_Request ';
-import MenuIcon from '@mui/icons-material/Menu';
 import '../../css/Navbar.css';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import React, { useEffect, useState } from 'react';
 import StorefrontIcon from '@mui/icons-material/Storefront';
+import { getUserByEmail, getDataWeb } from './HTTP_Request ';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { Box, Toolbar, IconButton, Typography, Button, Menu, MenuItem, Avatar } from '@mui/material';
 
 const NavBar = () => {
   const URL_backend = 'http://localhost:3000';
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [user, setUser] = React.useState<any>([]);
-
-
   let blank_dataWeb = { W_NAME: "", W_ADDR: "", W_CONTACT: "", W_EMAIL: "", ABOUT_WEB: "" }
   const [dataWeb, setDataWeb] = useState<any>(blank_dataWeb);
+
   const fetchDataWeb = async () => {
     const DataWeb_from_backend = await getDataWeb();
     console.log('|---Navbar โหลดข้อมูลเว็ปไซต์---|');
@@ -50,13 +48,6 @@ const NavBar = () => {
     fetchUser(); // เรียกฟังก์ชัน fetchUser เมื่อ component โหลดหรือค่าใน localStorage เปลี่ยนแปลง
   }, []);
 
-
-  function show_name_user() {
-    console.log(user);
-
-  }
-
-
   function handleLogout() {
     localStorage.clear();
     sessionStorage.clear();
@@ -64,9 +55,6 @@ const NavBar = () => {
   }
 
   return (
-    // <AppBar className="NavBar">
-
-
     <div className="NavBar">
       <Toolbar>
         <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
@@ -77,8 +65,6 @@ const NavBar = () => {
             </div>
           </a>
         </Box>
-
-
         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           {/* <Button color="inherit">Home</Button>
           <Button color="inherit">About</Button>
@@ -88,9 +74,6 @@ const NavBar = () => {
           {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => window.location.href = URL_backend + "/MyProfile"}>  {user.U_NAME}</Button>}
           {user.length === 0 && <Button color="inherit" onClick={handleLogout}>Login</Button>}
         </Box>
-
-
-        {/* sx={{ display: { xs: 'block', md: 'none' } }} */}
         <Box >
           <button className='Btn_sell' onClick={() => (window.location.href = URL_backend + '/CreateProduct')} >ประกาศขาย</button>
           <IconButton
@@ -99,9 +82,7 @@ const NavBar = () => {
             edge="end"
             onClick={handleMenuOpen}
             size="large"
-
           >
-            {/* <MenuIcon /> */}
             <Avatar alt="user photo" src={user.U_IMG} />
           </IconButton>
           <Menu
@@ -127,18 +108,7 @@ const NavBar = () => {
             </center>
           </Menu>
         </Box>
-
-        {/* <IconButton
-          color="inherit"
-          aria-label="user menu"
-          edge="end"
-          size="large"
-          onClick={() => { }}
-        >
-          <Avatar alt="user photo" src='frontend\src\component\1.jpg' />
-        </IconButton> */}
       </Toolbar>
-      {/* </AppBar> */}
     </div>
   );
 };

@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import '../../css/Login.css';
 import '../../css/checkbox.css';
-// import submit from '../component/FetchData';
 import { submitLogin } from "./HTTP_Request ";
-const Path = 'Login';
 
 function Login() {
   localStorage.clear();
   sessionStorage.clear();
-
   const [showPassword, setShowPassword] = useState(false);
   const [emailInput, setEmail] = useState('');
   const [passwordInput, setPassword] = useState('');
@@ -29,10 +26,8 @@ function Login() {
 
   const handleClick = (): void => {
     submitLogin(data, 'Login')
-    // console.log(data);
   };
   return (
-
     <div className='backgroundLogin'>
       <div>
         <div className="Login_Container">
@@ -93,7 +88,6 @@ function Login() {
     </div>
 
   );
-
 }
 
 export default Login;

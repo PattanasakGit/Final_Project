@@ -4,11 +4,9 @@ import '../../css/AdminCheckProduct.css';
 import '../../css/AdminManageTable.css';
 
 function PrivacyPolicy() {
-
     return (
         <center>
             <div style={{ height: 'auto', width: '90%', color: '#111', backgroundColor: '#fff' }} className='contentPage'>
-
                 <div style={{ padding: '0 2rem 2rem 2rem'  }}>
 
                     <h1>นโยบายความเป็นส่วนตัว</h1>
@@ -43,11 +41,8 @@ function PrivacyPolicy() {
 
                     โดยการใช้งานเว็บไซต์ของเรา คุณยินยอมและยอมรับนโยบายความเป็นส่วนตัวของเรา เราขอขอบคุณที่เลือกใช้ Yakkai และเราหวังว่าคุณจะมีประสบการณ์ที่ยอดเยี่ยมในการซื้อขายสินค้ามือสองกับเรา!"
                 </div>
-
-
             </div>
         </center>
     )
 }
-
 export default PrivacyPolicy;

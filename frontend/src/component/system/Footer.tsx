@@ -1,9 +1,6 @@
-import { Row, Col, Input, QRCode, Space } from 'antd';
-import React, { useEffect, useState } from 'react';
 import '../../css/footer.css'
+import { useEffect, useState } from 'react';
 import { getDataWeb } from './HTTP_Request ';
-import { Await } from 'react-router-dom';
-import { margin } from '@mui/system';
 
 const URL_front = 'http://localhost:3000';
 
@@ -53,5 +50,4 @@ const Footer = () => {
     </footer>
   );
 }
-
 export default Footer;
