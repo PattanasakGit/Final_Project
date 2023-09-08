@@ -110,7 +110,8 @@ function MyProduct() {
                 ) : (
                     <Tag color="gold" className='TP_font'> {record.P_TYPE} </Tag>
                 )
-            )
+            ),
+            ...getColumnSearchProps('P_STATUS'),
         },
         {
             title: 'วันที่ประกาศขาย',
@@ -142,7 +143,7 @@ function MyProduct() {
                 ) : record.P_STATUS === "ยกเลิกประกาศขาย" ? (
                     <Tag className='TP_font' color="red" > 🔴 {record.P_STATUS} </Tag>
                 ) : (<Tag className='TP_font' color="purple" >  {record.P_STATUS} </Tag>)
-            )
+            )            
         },
         {
             title: '',

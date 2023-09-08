@@ -120,7 +120,8 @@ function AdminCheckProduct() {
                 ) : (
                     <Tag color="gold" className='TP_font'> {record.P_TYPE} </Tag>
                 )
-            )
+            ),
+            ...getColumnSearchProps('P_TYPE'),
 
         },
         {
@@ -155,6 +156,7 @@ function AdminCheckProduct() {
                     <Tag className='TP_font' color="red" > 🔴 {record.P_STATUS} </Tag>
                 ) : (<Tag className='TP_font' color="purple" >  {record.P_STATUS} </Tag>)
             )
+
 
         },
         {
@@ -349,7 +351,7 @@ const showDataTicket = (data: any) => {
                             ) : (<Tag className='TP_font' color="purple" > {data.P_STATUS} </Tag>)
                         }
                         <center> <h2>รายละเอียดสินค้า</h2> </center>
-                        <div className='TP_text_product' style={{ backgroundColor: '#00000015' }}>
+                        <div className='TP_text_product' style={{ backgroundColor: '#00000015', whiteSpace: 'pre-line' }}>
                             {data.P_TEXT}
                         </div>
                         <div className='TP_text_product_seller'>

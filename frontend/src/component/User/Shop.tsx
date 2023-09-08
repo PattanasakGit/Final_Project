@@ -41,7 +41,7 @@ function Shop() {
     const [U_REVIEWS, set_U_REVIEWS] = useState<[DataType_U_REVIEWS] | undefined>();
     //date
     const dateString = U_REGISTER;
-    const dateObject = moment(dateString, 'DD-MM-YYYY').toDate();
+    const dateObject = moment(dateString, 'YYYY/MM/DD').toDate();
     const currentDate = new Date();
     const new_d = moment(currentDate).diff(dateObject, 'days');
     const Y = Math.floor(new_d / 365);
@@ -130,7 +130,7 @@ function Shop() {
                     <div className="popup_comment">
                         <div className="popup_content_comment">
                             <button className="close_button_popup_comment" onClick={togglePopup}> <CloseIcon /> </button>
-                            <h3 style={{ margin: '0px ' }}>รีวิวร้านค้า</h3>
+                            <h3 style={{ margin: '0px ' }}>รีวิวผู้ขาย</h3>
                             <div className="popup_reviews">
                                 <Rating value={RATE} className='star_review_comment' onChange={(_event, newValue: any) => { setRATE(newValue) }} /><br />
                                 <textarea value={COMMENT} onChange={(event) => { setCOMMENT(event.target.value) }} className='textarea_comment' /><br />

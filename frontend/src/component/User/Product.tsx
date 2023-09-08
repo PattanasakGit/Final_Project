@@ -70,7 +70,7 @@ function Product() {
     };
     // ส่วนของการจัดการวันเวลา
     const dateString = Data_seller.U_REGISTER;
-    const dateObject = moment(dateString, 'DD-MM-YYYY').toDate();
+    const dateObject = moment(dateString, 'YYYY/MM/DD').toDate();
     const currentDate = new Date();
     const new_d = moment(currentDate).diff(dateObject, 'days');
     const Y = Math.floor(new_d / 365);
@@ -117,7 +117,7 @@ function Product() {
                             ) : (<Tag className='TP_font' color="purple" > {data.P_STATUS} </Tag>)
                         }
                         <center> <h2>รายละเอียดสินค้า</h2> </center>
-                        <div className='TP_text_product'>
+                        <div className='TP_text_product' style={{ whiteSpace: 'pre-line' }}>
                             {data.P_TEXT}
                         </div>
                         <div className='TP_text_product_seller'>

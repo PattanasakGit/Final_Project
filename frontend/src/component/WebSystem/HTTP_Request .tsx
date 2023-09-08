@@ -183,6 +183,8 @@ export const update = (data: any, part: string) => {
             },
             willClose: () => {
               clearInterval(timerInterval)
+              localStorage.clear();
+              sessionStorage.clear();
               window.location.href = PortFrontend;
             }
           })
@@ -191,6 +193,9 @@ export const update = (data: any, part: string) => {
             title: 'บันทึกรายการอัพเดตสำเร็จ',
             icon: 'success',
           })
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         }
 
       } else {
@@ -306,12 +311,11 @@ export const TP_VerifyEmail = (data: any, part: string) => {
       if (res.status === true) {
         Swal.fire({
           title: 'กรุณาใส่รหัส',
-          text: `เราทำการส่ง รหัสยืนยันไปยัง ${data.U_EMAIL}`,
-          input: 'text',
+          text: `เราทำการส่งรหัสยืนยันไปยัง ${data.U_EMAIL} แล้ว`,
+          input: 'number',
           inputAttributes: {
             autocapitalize: 'off'
           },
-          // showCancelButton: true,
           confirmButtonText: 'ตรวจสอบ',
           showLoaderOnConfirm: true,
           preConfirm: async (verifyCode) => {
@@ -402,7 +406,7 @@ export const listProduct = () => {
 };
 //==============================================================================================================================================================================================================
 // type Category = {  id: string;  name: string;};
-type Category = {ID:number,CP_NAME:string,CP_ICON:string};
+type Category = { ID: number, CP_NAME: string, CP_ICON: string };
 export const fetchCategories = async (): Promise<Category[]> => {
   const apiUrl = `${PortBackend}/listCategoryProduct`;
   return axios.get(apiUrl)
@@ -635,7 +639,7 @@ export const listAdmins = async () => {
   }
 };
 //============================ Banner  ======================================
-export const listData = async (path:string) => {
+export const listData = async (path: string) => {
   const apiUrl = `${PortBackend}/${path}`;
   try {
     const response = await axios.get(apiUrl);
