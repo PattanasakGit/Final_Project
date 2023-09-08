@@ -66,7 +66,7 @@ const ProductsGrid = () => {
   const send_data_to_Product = (data: any) => {
     window.location.href = '/Product/' + data.ID;
   };
-  const handlePageChange = (event: any, newPage: SetStateAction<number>) => {
+  const handlePageChange = (_event: any, newPage: SetStateAction<number>) => {
     setCurrentPage(newPage);
     window.scrollTo(0, 515); // เมื่อกดเปลี่ยนหน้าให้เลื่อนขึ้นด้านบนของหน้าเพจ
   };

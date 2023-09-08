@@ -1,13 +1,13 @@
-// import React, { useEffect, useState } from "react";
-import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
 import axios from 'axios';
+import Swal from 'sweetalert2'
 import jwt_decode from 'jwt-decode';
 
-const port = 8000; // พรอตหลังบ้าน
+const PortBackend = 'http://localhost:8000'
+const PortFrontend = 'http://localhost:3000'
 
 //==============================================================================================================================================================================================================
 export const submit = (data: any, part: string) => {
-  const apiUrl = `http://localhost:${port}/${part}`;
+  const apiUrl = `${PortBackend}/${part}`;
 
   axios
     .post(apiUrl, data)
@@ -25,12 +25,6 @@ export const submit = (data: any, part: string) => {
             }
           });
           return true;
-          // } else if (part === 'createAdmin') {
-          //   Swal.fire({
-          //     title: 'บันทึกสำเร็จ',
-          //     icon: 'success',
-          //   });
-          //   return true;
         } else {
           Swal.fire({
             title: 'บันทึกสำเร็จ',
@@ -83,7 +77,7 @@ export const sendEmaiChangePassword = (email: any) => {
     }
   })
 
-  const apiUrl = `http://localhost:${port}/sendEmaiChangePassword/${email}`;
+  const apiUrl = `${PortBackend}/sendEmaiChangePassword/${email}`;
   axios
     .post(apiUrl)
     .then((response) => {
@@ -123,9 +117,7 @@ export const sendEmaiChangePassword = (email: any) => {
 };
 //==============================================================================================================================================================================================================
 export const Every_Email = (dataInput: {}) => {
-  console.log('------------>', dataInput);
-
-  const apiUrl = `http://localhost:${port}/Every_Email`;
+  const apiUrl = `${PortBackend}/Every_Email`;
   axios
     .post(apiUrl, dataInput)
     .then((response) => {
@@ -141,7 +133,6 @@ export const Every_Email = (dataInput: {}) => {
                   <img style="height:400px; border-radius: 15px;" src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FsendMessege.jpg?alt=media&token=9cd19af8-1813-41ad-a648-1594add57ada'>
               <center>
               `,
-          // icon: 'success',
           showConfirmButton: true,
           showCancelButton: true,
           width: '60%',
@@ -172,7 +163,7 @@ export const Every_Email = (dataInput: {}) => {
 };
 //======================================================== Update  Data  ==========================================================================================================================================
 export const update = (data: any, part: string) => {
-  const apiUrl = `http://localhost:${port}/${part}`;
+  const apiUrl = `${PortBackend}/${part}`;
   let timerInterval: number
 
   axios
@@ -192,7 +183,9 @@ export const update = (data: any, part: string) => {
             },
             willClose: () => {
               clearInterval(timerInterval)
-              window.location.href = 'http://localhost:3000/';
+              localStorage.clear();
+              sessionStorage.clear();
+              window.location.href = PortFrontend;
             }
           })
         } else {
@@ -200,6 +193,9 @@ export const update = (data: any, part: string) => {
             title: 'บันทึกรายการอัพเดตสำเร็จ',
             icon: 'success',
           })
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         }
 
       } else {
@@ -232,14 +228,13 @@ export const update = (data: any, part: string) => {
 //==============================================================================================================================================================================================================
 export const Check_Token = async () => {
   const Token = localStorage.getItem('token');
-  const apiUrl = `http://localhost:${port}/Check_Token`;
+  const apiUrl = `${PortBackend}/Check_Token`;
   try {
     const response = await axios.get(apiUrl, {
       headers: {
         Authorization: Token
       }
     });
-    // console.log('Check_Token',response.data);
     return response.data;
 
   } catch (error) {
@@ -247,7 +242,7 @@ export const Check_Token = async () => {
     localStorage.removeItem('token');
     localStorage.removeItem('email');
     localStorage.removeItem('role');
-    window.location.href = "http://localhost:3000/";
+    window.location.href = PortFrontend;
     return false;
   }
 };
@@ -255,18 +250,15 @@ export const Check_Token = async () => {
 //==============================================================================================================================================================================================================
 // ฟังก์ชันสำหรับอ่านข้อมูลจาก token และคืนค่าเป็น object ของข้อมูล
 export const submitLogin = (data: any, part: string) => {
-  const apiUrl = `http://localhost:${port}/${part}`;
+  const apiUrl = `${PortBackend}/${part}`;
   axios
     .post(apiUrl, data)
     .then((response) => {
       const res = response.data;
-      // console.log(res);
-
       if (res.status === true) {
 
         localStorage.setItem('token', response.data.token);
         console.log(localStorage.getItem('token'));
-        // console.log(response);
         interface DecodedToken { email: string; role: string; }
         const decoded: DecodedToken = jwt_decode(response.data.token);
 
@@ -275,12 +267,11 @@ export const submitLogin = (data: any, part: string) => {
 
         Swal.fire({
           title: 'เข้าสู่ระบบสำเร็จ',
-          // text: 'เรากำลังนำท่า',
           icon: 'success',
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
-          window.location.href = 'http://localhost:3000/'; // เมื่อหมดเวลา 1 วินาที จะเปลี่ยนหน้าไปที่ Home
+          window.location.href = PortFrontend; // เมื่อหมดเวลา 1 วินาที จะเปลี่ยนหน้าไปที่ Home
         });
       }
     })
@@ -311,7 +302,7 @@ export const submitLogin = (data: any, part: string) => {
 };
 //==============================================================================================================================================================================================================
 export const TP_VerifyEmail = (data: any, part: string) => {
-  const apiUrl = `http://localhost:${port}/${part}`;
+  const apiUrl = `${PortBackend}/${part}`;
 
   axios
     .post(apiUrl, data)
@@ -320,18 +311,17 @@ export const TP_VerifyEmail = (data: any, part: string) => {
       if (res.status === true) {
         Swal.fire({
           title: 'กรุณาใส่รหัส',
-          text: `เราทำการส่ง รหัสยืนยันไปยัง ${data.U_EMAIL}`,
-          input: 'text',
+          text: `เราทำการส่งรหัสยืนยันไปยัง ${data.U_EMAIL} แล้ว`,
+          input: 'number',
           inputAttributes: {
             autocapitalize: 'off'
           },
-          // showCancelButton: true,
           confirmButtonText: 'ตรวจสอบ',
           showLoaderOnConfirm: true,
           preConfirm: async (verifyCode) => {
             const email = data.U_EMAIL;
             try {
-              const response = await axios.post(`http://localhost:8000/TP_VerifyEmail`, { //ส่ง email กับ รหัสยืนยันไปตรวจสอบ หลังบ้าน
+              const response = await axios.post(`${PortBackend}/TP_VerifyEmail`, { //ส่ง email กับ รหัสยืนยันไปตรวจสอบ หลังบ้าน
                 email: email,
                 CODE_VERIFY: verifyCode
               });
@@ -349,12 +339,11 @@ export const TP_VerifyEmail = (data: any, part: string) => {
         }).then(async (result) => {
           if (result.isConfirmed) {
             try {
-              const response = await axios.post(`http://localhost:8000/createUser`, data); //ที่ backend จะตรวจสถานะ Verify ก่อนเพิ่มผู้ใช้
+              const response = await axios.post(`${PortBackend}/createUser`, data); //ที่ backend จะตรวจสถานะ Verify ก่อนเพิ่มผู้ใช้
               if (!response.status) {
                 throw new Error('บันทึกข้อมูลบุคคลไม่สำเร็จ');
               }
 
-              // return response.data;
             } catch (error) {
               Swal.fire({
                 title: 'เกิดข้อผิดพลาด บันทึกข้อมูลบุคคลไม่สำเร็จ'
@@ -369,9 +358,9 @@ export const TP_VerifyEmail = (data: any, part: string) => {
               confirmButtonText: 'ไปยังหน้า Login',
             }).then((result) => {
               if (result.isConfirmed) {
-                window.location.href = 'http://localhost:3000/';
+                window.location.href = PortFrontend;
               }
-              setTimeout(() => { window.location.href = 'http://localhost:3000/'; }, 1500);
+              setTimeout(() => { window.location.href = PortFrontend; }, 1500);
             });
 
           }
@@ -404,9 +393,7 @@ export const TP_VerifyEmail = (data: any, part: string) => {
 };
 //==============================================================================================================================================================================================================
 export const listProduct = () => {
-  const apiUrl = `http://localhost:${port}/listProduct`;
-  // const apiUrl = `http://localhost:${port}/${part}`;
-  // const apiUrl = `http://localhost:8000/getProduct/1`;
+  const apiUrl = `${PortBackend}/listProduct`;
 
   return axios.get(apiUrl)
     .then((response) => {
@@ -419,9 +406,9 @@ export const listProduct = () => {
 };
 //==============================================================================================================================================================================================================
 // type Category = {  id: string;  name: string;};
-type Category = {ID:number,CP_NAME:string,CP_ICON:string};
+type Category = { ID: number, CP_NAME: string, CP_ICON: string };
 export const fetchCategories = async (): Promise<Category[]> => {
-  const apiUrl = `http://localhost:${port}/listCategoryProduct`;
+  const apiUrl = `${PortBackend}/listCategoryProduct`;
   return axios.get(apiUrl)
     .then((response) => {
       return response.data;
@@ -433,8 +420,7 @@ export const fetchCategories = async (): Promise<Category[]> => {
 };
 //==============================================================================================================================================================================================================
 export const fillter_product = async (filterData: any) => {
-  const apiUrl = `http://localhost:${port}/getProductByMultipleConditions`;
-  // console.log(filterData);
+  const apiUrl = `${PortBackend}/getProductByMultipleConditions`;
   try {
     const response = await axios.post(apiUrl, filterData);
     return response.data;
@@ -446,7 +432,7 @@ export const fillter_product = async (filterData: any) => {
 
 //============================ product  ======================================
 export const getProductByID = async (ID: any) => {
-  const apiUrl = `http://localhost:${port}/getProduct/${ID}`;
+  const apiUrl = `${PortBackend}/getProduct/${ID}`;
   try {
     const response = await axios.get(apiUrl, ID);
     return response.data;
@@ -456,7 +442,7 @@ export const getProductByID = async (ID: any) => {
   }
 };
 export const getProductBy_EmailUser = async (data: any) => {
-  const apiUrl = `http://localhost:${port}/ListProductByUser`;
+  const apiUrl = `${PortBackend}/ListProductByUser`;
   try {
     const response = await axios.post(apiUrl, data);
     return response.data;
@@ -468,7 +454,7 @@ export const getProductBy_EmailUser = async (data: any) => {
 
 //============================ user  ======================================
 export const getUserByID = async (ID: any) => {
-  const apiUrl = `http://localhost:${port}/getUser/${ID}`;
+  const apiUrl = `${PortBackend}/getUser/${ID}`;
   try {
     const response = await axios.get(apiUrl, ID);
     return response.data;
@@ -478,7 +464,7 @@ export const getUserByID = async (ID: any) => {
   }
 };
 export const getUserByEmail = async (email: any) => {
-  const apiUrl = `http://localhost:${port}/getUserByEmail`;
+  const apiUrl = `${PortBackend}/getUserByEmail`;
   try {
     const response = await axios.post(apiUrl, email);
     return response.data;
@@ -490,7 +476,7 @@ export const getUserByEmail = async (email: any) => {
 
 //============================ Review  ======================================
 export const addReview = async (data: any) => {
-  const apiUrl = `http://localhost:${port}/addReview`;
+  const apiUrl = `${PortBackend}/addReview`;
   try {
     const response = await axios.post(apiUrl, data);
     Swal.fire({
@@ -527,7 +513,7 @@ export const addReview = async (data: any) => {
 };
 //============================ Fraud Report  ======================================
 export const addFRAUD_REPORT = async (data: any) => {
-  const apiUrl = `http://localhost:${port}/addFRAUD_REPORT`;
+  const apiUrl = `${PortBackend}/addFRAUD_REPORT`;
   try {
     const response = await axios.post(apiUrl, data);
     Swal.fire({
@@ -551,7 +537,7 @@ export const addFRAUD_REPORT = async (data: any) => {
   }
 };
 export const listFRAUD_REPORT = async () => {
-  const apiUrl = `http://localhost:${port}/listFRAUD_REPORT`;
+  const apiUrl = `${PortBackend}/listFRAUD_REPORT`;
   try {
     const response = await axios.get(apiUrl);
     return response.data;
@@ -563,7 +549,7 @@ export const listFRAUD_REPORT = async () => {
 
 //============================ Adverts  ======================================
 export const Create_Ads = async (data: any) => {
-  const apiUrl = `http://localhost:${port}/createAdvert`;
+  const apiUrl = `${PortBackend}/createAdvert`;
   try {
     const response = await axios.post(apiUrl, data);
     Swal.fire({
@@ -591,7 +577,7 @@ export const Create_Ads = async (data: any) => {
 };
 
 export const ListAllAds = async () => {
-  const apiUrl = `http://localhost:${port}/listAdvert`;
+  const apiUrl = `${PortBackend}/listAdvert`;
   try {
     const response = await axios.get(apiUrl);
     return response.data;
@@ -602,7 +588,7 @@ export const ListAllAds = async () => {
 };
 
 export const getAdvertByProduct = async (ID: number | string) => {
-  const apiUrl = `http://localhost:${port}/getAdvertByProduct/${ID}`;
+  const apiUrl = `${PortBackend}/getAdvertByProduct/${ID}`;
   try {
     const response = await axios.get(apiUrl);
     return response.data;
@@ -615,7 +601,7 @@ export const getAdvertByProduct = async (ID: number | string) => {
 
 //============================ อื่น ๆ  ======================================
 export const DeleteByID = async (ID: number, path: string) => {
-  const apiUrl = `http://localhost:${port}/${path}/${ID}`;
+  const apiUrl = `${PortBackend}/${path}/${ID}`;
   try {
     const response = await axios.delete(apiUrl);
     const res = response.data;
@@ -643,7 +629,7 @@ export const DeleteByID = async (ID: number, path: string) => {
 
 //============================ admin  ======================================
 export const listAdmins = async () => {
-  const apiUrl = `http://localhost:${port}/List_admin`;
+  const apiUrl = `${PortBackend}/List_admin`;
   try {
     const response = await axios.get(apiUrl);
     return response.data;
@@ -653,8 +639,8 @@ export const listAdmins = async () => {
   }
 };
 //============================ Banner  ======================================
-export const listData = async (path:string) => {
-  const apiUrl = `http://localhost:${port}/${path}`;
+export const listData = async (path: string) => {
+  const apiUrl = `${PortBackend}/${path}`;
   try {
     const response = await axios.get(apiUrl);
     return response.data;
@@ -666,7 +652,7 @@ export const listData = async (path:string) => {
 
 //============================ Banner  ======================================
 export const getDataWeb = async () => {
-  const apiUrl = `http://localhost:${port}/getDataWeb/1`;
+  const apiUrl = `${PortBackend}/getDataWeb/1`;
   try {
     const response = await axios.get(apiUrl);
     return response.data;

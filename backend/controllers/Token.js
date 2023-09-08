@@ -31,21 +31,9 @@ async function addToken(Token_input, email, role) {
     }
 }
 
-// ฟังก์ชันตรวจสอบและแยก payload จาก JWT
-function decodeJwtToken(token) {
-    try {
-        const decodedToken = jwt.verify(token, 'TP_KEY_login'); // Replace 'YOUR_SECRET_KEY' with your actual secret key used to sign the token
-        return decodedToken;
-    } catch (error) {
-        console.error('Failed to decode JWT token:', error);
-        throw error;
-    }
-}
-
 async function Token(req, res) {
     try {
         const token = req.headers.authorization;
-        // console.log(token);
 
         // ตรวจสอบและแยก payload จาก JWT เพื่อดึงค่าเวลาหมดอายุของ token
         let decodedToken = "";

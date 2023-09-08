@@ -39,7 +39,7 @@ function MyProduct() {
     type DataIndex = keyof DataType;
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     const searchInput = useRef<InputRef>(null);
-    const handleSearch = (selectedKeys: string[], confirm: (param?: FilterConfirmProps) => void, dataIndex: DataIndex,) => { confirm(); };
+    const handleSearch = (_selectedKeys: string[], confirm: (param?: FilterConfirmProps) => void, _dataIndex: DataIndex,) => { confirm(); };
     const handleReset = (clearFilters: () => void) => { clearFilters(); };
     const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<DataType> => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -110,7 +110,8 @@ function MyProduct() {
                 ) : (
                     <Tag color="gold" className='TP_font'> {record.P_TYPE} </Tag>
                 )
-            )
+            ),
+            ...getColumnSearchProps('P_STATUS'),
         },
         {
             title: 'วันที่ประกาศขาย',
@@ -142,7 +143,7 @@ function MyProduct() {
                 ) : record.P_STATUS === "ยกเลิกประกาศขาย" ? (
                     <Tag className='TP_font' color="red" > 🔴 {record.P_STATUS} </Tag>
                 ) : (<Tag className='TP_font' color="purple" >  {record.P_STATUS} </Tag>)
-            )
+            )            
         },
         {
             title: '',

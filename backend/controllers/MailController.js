@@ -73,7 +73,7 @@ function html_in_mail(Code_verify_Email) {
             <div class="verification-code">
                 ${Code_verify_Email.split('').join(' ')}
             </div>
-            <img class="image-block" src="https://img.freepik.com/free-vector/my-password-concept-illustration_114360-6924.jpg?w=1060&t=st=1689826034~exp=1689826634~hmac=7edeb5bf7c1839ec3c8de26aefdad3c5699f27487238b4c0f4567081c1c0d78d" alt="email verification" />
+            <img class="image-block" src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2Fstand_passworld.jpg?alt=media&token=81dd14da-c306-4206-9e5a-b5b3882c80f7" />
         </center>
     </div>
 </body>

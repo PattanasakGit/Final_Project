@@ -39,6 +39,7 @@ function CheckFraudReport() {
             align: 'center',
             dataIndex: 'SELLER',
             key: 'SELLER',
+            width: '250px',
         },
         {
             title: 'ผู้รายงาน',
@@ -46,20 +47,28 @@ function CheckFraudReport() {
             align: 'center',
             dataIndex: 'EMAIL_REPORTER',
             key: 'EMAIL_REPORTER',
+            width: '250px',
         },
         {
-            title: 'ข้อมูลเพิ่มเติม',
+            title: 'เรื่อง',
             className: 'TP_font',
             align: 'center',
-            dataIndex: 'INFORMATIONS',
-            key: 'INFORMATIONS',
-            width: '800px',
+            dataIndex: 'INFORMATION',
+            key: 'INFORMATION',
+            width: '300px',
+        },
+        {
+            title: 'รายละเอียด',
+            className: 'TP_font',
+            align: 'center',
+            dataIndex: 'INFORMATION',
+            key: 'INFORMATION',
         },
         {
             title: 'หลักฐานประกอบ',
             className: 'TP_font',
             align: 'center',
-            width: '300px',
+            width: '200px',
             key: 'action',
             render: (_, record) => (
                 <Space size="small">
