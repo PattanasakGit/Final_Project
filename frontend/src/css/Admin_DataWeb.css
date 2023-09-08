@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap');
 
-
 .DataWeb_container {
     display: flex;
 }
@@ -8,8 +7,6 @@
 .DataWeb_left {
     padding: 1rem;
     width: 40%;
-    /* background-color: #ff0000; */
-
 }
 
 .DataWeb_right {
@@ -17,48 +14,47 @@
     padding: 1rem 5rem;
     border-radius: 10px;
     background-color: #00000030;
-
 }
 
 .IMG_DataWeb {
     height: 500px !important;
     max-width: 500px;
     object-fit: cover;
-    
     border-radius: 1000px;
-    /* border: 4px solid #000000; */
-
 }
+
 .text_input_DataWeb {
     font-family: 'Noto Sans Thai', sans-serif !important;
-    padding-left: 1rem;
     font-size: 16px;
     height: 40px;
     width: 100%;
-    border-radius: 10px;
     border: 0;
     color: #333;
+    border-radius: 10px;
+    padding-left: 1rem;
     background-color: #fff;
     outline: 2px solid #EACDA3;
 }
+
 .textarea_input_DataWeb {
     font-family: 'Noto Sans Thai', sans-serif !important;
     padding-left: 1rem;
     font-size: 16px;
     height: 100px;
     width: 98%;
-    border-radius: 10px;
     border: 0;
+    resize: none;
     color: #333;
+    border-radius: 10px;
     background-color: #fff;
     outline: 2px solid #EACDA3;
-    resize: none;
 }
 
 .label_text_DataWeb {
     margin: 25px 0 5px 0;
     text-align: start;
 }
+
 .btn_upload_logo {
     font-family: 'Noto Sans Thai', sans-serif !important;
     height: 50px;
@@ -72,15 +68,16 @@
 .btn_upload_logo:hover {
     background-color: #ff7b00;
 }
+
 .btn_submit_dataWeb {
     font-family: 'Noto Sans Thai', sans-serif !important;
+    background-color: #28982e;
     margin-top: 10px;
     height: 50px;
     width: 50%;
+    font-size: 18px;
     border-radius: 10px;
     border: 3px solid #00000028;
-    background-color: #28982e;
-    font-size: 18px;
 }
 
 .btn_submit_dataWeb:hover {

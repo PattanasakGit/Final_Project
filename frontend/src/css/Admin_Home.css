@@ -1,29 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap');
 
-
 .container_admin_home {
+    width: 90%;
+    padding: 2%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     border-radius: 20px;
-    width: 90%;
-    /* max-width: 1200px; */
-    padding: 2%;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.4);
-    /* background-color: #ffffff9b; */
     background: radial-gradient(circle, rgba(147, 147, 147, 0) 0%, rgb(255, 198, 111) 100%);
-
 }
 
 .menu_admin {
-    /* background-color: #f55d5d; */
-    background: radial-gradient(circle, rgb(255, 119, 0) 0%, rgb(255, 198, 111) 100%);
     flex: 1;
     margin: 1rem;
-    border-radius: 20px;
-    min-width: 300px;
-    max-width: 300px;
     height: 300px;
+    max-width: 300px;
+    min-width: 300px;
+    border-radius: 20px;
+    background: radial-gradient(circle, rgb(255, 119, 0) 0%, rgb(255, 198, 111) 100%);
 }
 
 .menu_admin:hover {
@@ -42,7 +37,6 @@
     margin-top: 0;
     font-size: 20px;
     color: #333;
-    
 }
 
 .btn_add_admin{
@@ -60,16 +54,4 @@
     background-color:rgb(102, 100, 100);
     color: #fff;
 }
-
-@media (max-width: 768px) { 
-    /* .ant-table td {
-      white-space: nowrap; 
-      overflow: hidden;
-      text-overflow: ellipsis; 
-      max-width: 100px;
-      width: auto;
-      
-    } */
-  }
-
   

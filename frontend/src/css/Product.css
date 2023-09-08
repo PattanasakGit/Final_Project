@@ -12,13 +12,9 @@
 
 /* CSS สำหรับ desktop */
 .product_container_img {
-    /* display: grid; */
-    /* grid-template-columns: 1fr 1fr; */
-    /* gap: 16px; */
-    text-align: left;
     width: 40%;
+    text-align: left;
     text-align: center;
-
 }
 
 .product_container_text {
@@ -34,9 +30,8 @@
 }
 
 .TP_text_product_seller {
-    margin-top: 2rem;
     background-color: rgba(0, 0, 0, 0);
-    /* padding: 20px; */
+    margin-top: 2rem;
     border-radius: 15px;
     color: #2d1400;
     font-size: 16px;
@@ -44,15 +39,14 @@
 
 .text_space {
     background: #00000033;
-    padding: 2%;
     border-radius: 15px;
+    padding: 2%;
 }
 
 /* ========================== IMG ============================ */
 .TP_main_img_product {
     width: 95% !important;
     border-radius: 20px;
-
 }
 
 .product_images {
@@ -60,11 +54,9 @@
     display: grid;
     grid-template-rows: repeat(auto-fill, minmax(80px, 1fr));
     grid-auto-rows: 100px;
-    /* กำหนดความสูงของแต่ละ row เป็น 80px */
     gap: 8px;
     margin-left: 1rem;
 }
-
 
 .product_images img {
     width: 100%;
@@ -78,8 +70,6 @@
     object-fit: cover !important;
 }
 
-
-
 /* ================================================================ */
 .btn_product,
 .btn_product1,
@@ -92,7 +82,6 @@
     border-radius: 15px;
     border: 2px solid #ffd8d853;
     transition: all 0.3s ease;
-    /* เพิ่ม transition สำหรับเอฟเฟคการเปลี่ยนแปลง */
 }
 
 .btn_product1 {
@@ -103,21 +92,18 @@
     background-color: rgb(43, 117, 255);
 }
 
-/* เพิ่ม box-shadow เพื่อให้มีเงาเมื่อเวลากดปุ่ม */
+
 .btn_product:active,
 .btn_product1:active,
 .btn_product2:active {
-
     background-color: rgb(48, 124, 17);
 }
 
-/* ปรับขนาดเป็นเล็กน้อยเมื่อ hover */
 .btn_product:hover,
 .btn_product1:hover,
 .btn_product2:hover {
     box-shadow: 8px 5px 10px rgba(0, 0, 0, 0.477);
 }
-
 
 .btn_select_file,
 .Btn_upload {
@@ -211,7 +197,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* จัดส่วนที่อยู่ภายในตรงกลางในแกนแนวนอน */
     gap: 25px;
     text-align: center;
     width: 100%;
@@ -240,7 +225,6 @@
     width: 60%;
     margin-top: 0 !important;
     padding-top: 0 !important;
-
 }
 
 .container_shop {
@@ -249,33 +233,23 @@
     border-radius: 20px;
     margin-left: 1rem;
     padding-top: 1rem;
-
 }
 
 .card_review_in_shop {
     background-color: #ffffffb8;
-    /* box-shadow: 8px 5px 8px rgba(0, 0, 0, 0.477) ; */
     color: #333;
-
     width: 90%;
-
     padding: 10px;
     margin: 0rem 0.5rem 0.5rem 0.5rem;
     border-radius: 20px;
-
     max-height: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-
 }
 
 .card_review_in_shop:hover {
-    /* background-color:#00000038; */
-    /* width: 60%; */
-    /* height: 100%; */
     padding: 10px;
     border-radius: 20px;
-
 }
 
 /* ***********************  show reviews  ************************* */
@@ -284,7 +258,6 @@
     height: 500px;
     padding: 20px;
     border-radius: 10px;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -312,12 +285,11 @@
 .btn_need_report,
 .btn_submit_review {
     font-family: 'Noto Sans Thai', sans-serif !important;
-    margin: 1rem 0.5rem 0.5rem 0rem;
-    height: 50px;
     border: 2px solid rgba(0, 0, 0, 0.325);
-    /* border: 2px solid rgb(252, 156, 2); */
+    margin: 1rem 0.5rem 0.5rem 0rem;
     border-radius: 15px;
     font-size: 16px;
+    height: 50px;
 }
 
 .btn_need_review {
@@ -350,7 +322,6 @@
     width: 100%;
     height: 100%;
     transform: translateY(-50%);
-    /* background-color: rgba(0, 0, 0, 0); */
     backdrop-filter: blur(40px);
     display: flex;
     justify-content: center;
@@ -364,16 +335,12 @@
 
 .popup_content_comment {
     background-color: rgba(0, 0, 0, 0.338);
-    /* backdrop-filter: blur(500px); */
     width: 60%;
     height: 700px;
     padding: 20px;
     border-radius: 20px;
-    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); */
-
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between;  */
 }
 
 .close_button_popup_comment {
@@ -396,11 +363,11 @@
 
 .textarea_comment {
     font-family: 'Noto Sans Thai', sans-serif !important;
+    background-color: #ffffff6b;
     resize: none;
     height: 300px;
     width: 60%;
     margin-top: 2rem;
-    background-color: #ffffff6b;
     border-radius: 20px;
     font-size: 18px;
     color: #333;
@@ -416,7 +383,6 @@
     background-color: #00000025;
     border-radius: 15px;
     padding: 10px;
-    /* width: 100%; */
     color: #ffffff;
     border: 5px solid #00000009;
 }
@@ -482,7 +448,6 @@
 }
 
 /* ================================================================ */
-/* CSS สำหรับ mobile */
 @media (max-width: 768px) {
     .subcontentPage {
         display: block !important;
@@ -500,32 +465,25 @@
     }
 
     .TP_main_img_product {
-        /* width: 100px !important; */
         height: 80% !important;
         border-radius: 20px;
-
     }
 
     .product_container_img {
         width: 100%;
-
     }
 
     .product_container_text {
         width: 80vw;
         padding-top: 20px;
-        /* เพิ่มระยะห่างด้านบนของส่วนข้อความ */
     }
 
     .product_images {
-        /* display: flex; */
-        /* margin-top: 1rem !important; */
         width: 90%;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(60px, 0.5fr));
         gap: 5px;
         margin-left: -2.5px !important;
-
+        grid-template-columns: repeat(auto-fill, minmax(60px, 0.5fr));
     }
 
     .TP_IMG {
@@ -535,13 +493,12 @@
 
     .text_space {
         width: 100% !important;
-        /* margin: 0px !important; */
         padding: 0px !important;
     }
-    .btn_want_to_buy{
+
+    .btn_want_to_buy {
         display: flex !important;
         margin-top: 50px !important;
-
     }
 
     .btn_product1,
@@ -554,19 +511,13 @@
         border-radius: 15px;
         border: 2px solid #ffd8d853;
         transition: all 0.3s ease;
-        /* เพิ่ม transition สำหรับเอฟเฟคการเปลี่ยนแปลง */
     }
 
     .text_space input,
     Textarea {
-        /* width: 70% !important; */
         margin: 2px !important;
         padding: 2px !important;
         margin-right: 20px !important;
-    }
-
-    .text_space label {
-        /* display: none; */
     }
 
     /* ========================== shop =================================== */
@@ -583,7 +534,6 @@
     .container_shop {
         margin: 0;
         width: 100%;
-
     }
 
     .star_review_comment {
@@ -611,9 +561,7 @@
         width: 90%;
     }
 
-
     /* ***********************  Fraud Report  ************************* */
-
     .container_fraud_report {
         display: block;
     }
@@ -632,12 +580,12 @@
     .btn_FraudReport {
         font-family: 'Noto Sans Thai', sans-serif !important;
         font-size: 20px;
-        margin: 2rem 0 0 0;
-        height: 50px;
+        border: 0;
         width: 100%;
+        height: 50px;
+        margin: 2rem 0 0 0;
         border-radius: 10px;
         background-color: #ff0808;
-        border: 0;
         box-shadow: 4px 4px 5px #00000055;
     }
 
@@ -645,13 +593,5 @@
         scale: 1.1;
         box-shadow: 4px 4px 5px #00000055;
     }
-
-
-
     /* ================================================================ */
-
-
-
-
-
 }

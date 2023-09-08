@@ -1,36 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Borel&family=Krub&family=Noto+Sans+Thai&display=swap');
 
-.backgroundLogin{
-    min-height: 100vh;
-    /* height: 130px; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* background: linear-gradient(90deg, rgba(250, 0, 0, 0.109) 0%, rgba(255, 255, 255, 0.056) 100%); */
-    background-color: rgb(255, 255, 255);
-    /* background-image: url('https://img.freepik.com/free-photo/top-view-paper-bags-with-copy-space_23-2148305923.jpg?w=1800&t=st=1689949634~exp=1689950234~hmac=6032e483a502eabff6c79555d9b11ae184dcc62f2e179230ab7307799ec874e2'); */
-    background-image: url('https://images.unsplash.com/photo-1513568917837-e5be8262f18f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2566&q=80');
-    background-size: cover;
-    background-position: center;
-    /* backdrop-filter: blur(70px); */
-    background-attachment: fixed;
+.backgroundLogin {
+  flex-direction: column;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-color: rgb(255, 255, 255);
+  background-image: url('https://images.unsplash.com/photo-1513568917837-e5be8262f18f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2566&q=80');
 }
+
 .Login_Container {
   margin: 0;
   top: 150px;
   left: 50%;
   position: absolute;
-  text-align: center;
-  transform: translateX(-50%);
-  background-color: rgba(254, 254, 254, 0.6);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  border-top: 10px solid #ff4304;
-  border-bottom: 10px solid #ff4304;
   width: 450px;
   height: 550px;
-  /* box-shadow: 1px 1px 108.8px 19.2px rgb(255, 255, 255); */
+  text-align: center;
+  transform: translateX(-50%);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border-top: 10px solid #ff4304;
+  border-bottom: 10px solid #ff4304;
+  background-color: rgba(254, 254, 254, 0.6);
 }
 
 .box_login h4 {
@@ -53,10 +49,10 @@
 
 .box_login input[type='text'],
 .box_login input[type='password'] {
+  border: 1px solid #00000057;
   display: block;
   margin: 20px auto;
   background: #fafafa73;
-  border: 1px solid #00000057;
   border-radius: 5px;
   padding: 14px 10px;
   width: 320px;
@@ -121,7 +117,6 @@ label span.slider {
 
 .btn1:hover {
   background: #b40900;
-  /* background: #5d33e6; */
 }
 
 .rmb {
@@ -188,9 +183,7 @@ label span.slider {
   color: #7f5feb;
 }
 
-
-
-/* บันทด checkbox */
+/* บันทัด checkbox */
 .containercheckbox {
   display: flex;
   align-items: center;
@@ -205,13 +198,12 @@ label span.slider {
   flex: 0.5;
   text-align: left;
   font-size: 13px;
-  color:#464d64;
+  color: #464d64;
 }
 
 .link-containercheckbox {
   flex: 1;
 }
-
 
 @media (max-width: 768px) {
   .Login_Container {
@@ -219,14 +211,13 @@ label span.slider {
     top: 100px;
     position: absolute;
     text-align: center;
-    transform: translateX(-50%);
-    background-color: rgba(254, 254, 254, 0.6);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border-top: 10px solid #ff4304;
-    border-bottom: 10px solid #ff4304;
     width: 100%;
     height: 550px;
-    /* box-shadow: 1px 1px 108.8px 19.2px rgb(255, 255, 255); */
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    transform: translateX(-50%);
+    border-top: 10px solid #ff4304;
+    border-bottom: 10px solid #ff4304;
+    background-color: rgba(254, 254, 254, 0.6);
   }
 }
