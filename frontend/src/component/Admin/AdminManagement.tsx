@@ -1,38 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
-import '../../css/Login.css';
-import '../../css/checkbox.css';
+import { useEffect, useRef, useState } from 'react';
 import '../../css/MyProduct.css';
 import '../../css/Admin_Home.css';
 
-import { Check_Token, listAdmins, DeleteByID } from '../system/HTTP_Request ';
-import CreateAdmin from '../Admin/CreateAdmin'
-
-import moment from 'moment';
-import { Card, CardContent, Grid, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import Swal from 'sweetalert2'; // Alert text --> npm install sweetalert2
-import { Space, Table, Tag, Segmented, Image } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import Swal from 'sweetalert2';
+import { Space, Table } from 'antd';
 import type { InputRef } from 'antd';
 import { Button, Input, } from 'antd';
-import type { ColumnType, ColumnsType } from 'antd/es/table';
-import type { FilterConfirmProps } from 'antd/es/table/interface';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CreateAdmin from '../Admin/CreateAdmin'
 import EditIcon from '@mui/icons-material/Edit';
-import CampaignIcon from '@mui/icons-material/Campaign';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import { fontSize } from '@mui/system';
+import { SearchOutlined } from '@ant-design/icons';
+import DeleteIcon from '@mui/icons-material/Delete';
+import type { ColumnType, ColumnsType } from 'antd/es/table';
+import { listAdmins, DeleteByID } from '../WebSystem/HTTP_Request ';
+import type { FilterConfirmProps } from 'antd/es/table/interface';
 
 const url = 'http://localhost:3000'
 const Root_Email = "yakkai.th@gmail.com"
 
-function format_Price(number: number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
-
 function AdminManagement() {
     // Check_Token();
-
     interface DataType {
         key: number,
         ID: number,
@@ -71,9 +57,7 @@ function AdminManagement() {
         filterIcon: (filtered: boolean) => (<SearchOutlined style={{ color: filtered ? '#1677ff' : undefined, fontSize: filtered ? '25px' : undefined }} />),
         onFilter: (value, record) => record[dataIndex].toString().toLowerCase().includes((value as string).toLowerCase()),
     });
-
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    // const [ID_when_click, setID_when_click] = useState<number>();
     const columns: ColumnsType<DataType> = [
         {
             title: 'ID',
@@ -90,7 +74,6 @@ function AdminManagement() {
             key: 'U_IMG',
             width: '80px',
             render: (_, record) => (<img src={record.U_IMG} style={{ width: '50px' }} />)
-
         },
         {
             title: 'ชื่อ',
@@ -98,7 +81,6 @@ function AdminManagement() {
             dataIndex: 'U_NAME',
             key: 'U_NAME',
             ...getColumnSearchProps('U_NAME'),
-
         },
         {
             title: 'Email',
@@ -106,7 +88,6 @@ function AdminManagement() {
             dataIndex: 'U_EMAIL',
             key: 'U_EMAIL',
             ...getColumnSearchProps('U_EMAIL'),
-
         },
         {
             title: 'ติดต่อ',
@@ -114,7 +95,6 @@ function AdminManagement() {
             dataIndex: 'U_PHONE',
             key: 'U_PHONE',
             ...getColumnSearchProps('U_PHONE'),
-
         },
         {
             title: 'วันที่ลงทะเบียน',
@@ -122,16 +102,12 @@ function AdminManagement() {
             dataIndex: 'U_REGISTER',
             key: 'U_REGISTER',
             ...getColumnSearchProps('U_REGISTER'),
-
         },
         {
             title: '',
             key: 'action',
             width: '80px',
             render: (_, record: any) => (
-
-
-
                 localStorage.getItem('email') === Root_Email ? (
                     record.U_EMAIL === localStorage.getItem("email") ? (
                         <Space size="small" style={{ textAlign: 'center' }}>
@@ -142,35 +118,21 @@ function AdminManagement() {
                             <button className='btn_delete' onClick={() => handleDelete(record)}><DeleteIcon /></button>
                         </Space>
                     )
-
                 ) : (
                     record.U_EMAIL === localStorage.getItem("email") ? (
                         <Space size="small" style={{ textAlign: 'center' }}>
                             <button className='btn_edit_table' onClick={() => window.location.href = url + '/MyProfile'}><EditIcon /></button>
-
                         </Space>
                     ) : (
                         <Space size="small">
-
                         </Space>
                     )
                 )
-
-
             ),
         },
     ];
 
     function handleDelete(data: any) {
-        interface dataType {
-            ID: number;
-            userLogins: {
-                ID: number;
-            };
-        }
-        console.log('userID --->', data.ID);
-        console.log('LoginID -->', data.userLogins.ID);
-
         Swal.fire({
             title: 'คุณต้องการลบข้อมูลผู้ใช้ใช่ไหม',
             text: "เมื่อลบข้อมูล จะไม่สามารถกู้คืนข้อมูลได้อีก",
@@ -205,7 +167,6 @@ function AdminManagement() {
     function show_addAdmin() {
         setOpenAddAdmin(prevState => !prevState);
     }
-
     return (
         <center>
             <div style={{ height: 'fit-content', width: '90%', marginBottom: HeightPage }} className='contentPage'>
@@ -225,19 +186,12 @@ function AdminManagement() {
                             className: 'TP_pagination_table'
                         }}
                     />
-
                 </div>
-
-
-
-
                 {OpenAddAdmin && (
                     <div style={{ width: '95%', marginTop: '2rem', borderRadius: '20px' }}>
                         <CreateAdmin />
                     </div>
                 )}
-
-
                 {localStorage.getItem('email') === Root_Email && (
                     < button onClick={show_addAdmin} className='btn_add_admin' style={{ marginTop: '2rem' }}>
                         {OpenAddAdmin === false ? (
@@ -250,10 +204,8 @@ function AdminManagement() {
                         )}
                     </button>
                 )}
-
             </div>
         </center >
     );
 }
-
 export default AdminManagement;

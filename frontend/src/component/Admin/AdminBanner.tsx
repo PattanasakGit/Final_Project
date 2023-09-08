@@ -1,20 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
-import '../../css/Login.css';
+import { useEffect, useState } from 'react';
 import '../../css/checkbox.css';
 import '../../css/MyProduct.css';
 import '../../css/Admin_Home.css';
 import '../../css/AdminCheckProduct.css';
 import '../../css/AdminManageTable.css';
 
-import { Space, Table, Image, Empty } from 'antd';
-import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
-import type { ColumnsType } from 'antd/es/table';
-import { Check_Token, submit, fetchCategories, DeleteByID, listData } from '../system/HTTP_Request ';
 import Swal from 'sweetalert2';
-import { DeleteOutlined } from '@mui/icons-material';
+import { Space, Table, Image } from 'antd';
 import AdminSideBanner from './AdminSideBanner';
-
-const url = 'http://localhost:3000'
+import type { ColumnsType } from 'antd/es/table';
+import { DeleteOutlined } from '@mui/icons-material';
+import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
+import { submit, DeleteByID, listData } from '../WebSystem/HTTP_Request ';
 
 function AdminTopBanner() {
     interface TopBanner { ID: number, TB_LINK: string, TB_IMG: string }
@@ -29,7 +26,6 @@ function AdminTopBanner() {
             setTopBanner(dataCategory);
         }
     }
-
     useEffect(() => {
         listAllData();
     }, [AllTopBanner]);
@@ -51,7 +47,6 @@ function AdminTopBanner() {
             align: 'center',
             width: '300px',
             key: 'action',
-            // width: '60px',
             render: (_, record) => (
                 <Space size="small">
                     <Image src={record.TB_IMG} style={{ height: '50px', width: '150px', objectFit: 'cover', borderRadius: '10px' }} />
@@ -80,7 +75,6 @@ function AdminTopBanner() {
             )
         },
     ];
-
 
     const handleDelete = (data: TopBanner) => {
         Swal.fire({
@@ -146,7 +140,6 @@ function AdminTopBanner() {
                         // scroll={{ x: 1300 }}
                         columns={columns}
                         dataSource={AllTopBanner.map(item => ({ ...item, key: item.ID }))}
-                        // scroll={{ y: 750 }}
                         size='middle'
                         bordered
                         pagination={{
@@ -164,5 +157,4 @@ function AdminTopBanner() {
         </center >
     );
 }
-
 export default AdminTopBanner;

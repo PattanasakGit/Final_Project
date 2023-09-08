@@ -1,17 +1,14 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
-import '../../css/Login.css';
-import '../../css/checkbox.css';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+
 import '../../css/MyProduct.css';
 import '../../css/Admin_Home.css';
 import '../../css/AdminCheckProduct.css';
 import '../../css/Admin_DataWeb.css';
 
-import { getDataWeb, update } from '../system/HTTP_Request ';
 import Swal from 'sweetalert2';
+import { storage } from '../WebSystem/firebase';
+import { getDataWeb, update } from '../WebSystem/HTTP_Request ';
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
-import { storage } from '../system/firebase';
-
-const url = 'http://localhost:3000';
 
 function DataWeb() {
     interface DataWebType {
@@ -33,7 +30,6 @@ function DataWeb() {
 
     const listAllData = async () => {
         const DataWeb_from_backend = await getDataWeb();
-
         if (DataWeb_from_backend) {
             setDataWeb(DataWeb_from_backend);
             setW_NAME(DataWeb_from_backend.W_NAME || '');
@@ -89,10 +85,8 @@ function DataWeb() {
             inputRef.current.value = '';
         }
     };
-
     // ฟังก์ชันอัปโหลดรูปภาพที่เลือก
     const onUploadSelectedImage = async () => {
-
         const currentDate = new Date();
         const day = String(currentDate.getDate()).padStart(2, '0');
         const month = String(currentDate.getMonth() + 1).padStart(2, '0');
@@ -127,7 +121,6 @@ function DataWeb() {
                         title: 'พบข้อผิดพลาด',
                         text: error.message,
                         showCancelButton: false,
-                        // showConfirmButton: false,
                     })
                     return false;
                 }
@@ -145,15 +138,12 @@ function DataWeb() {
         onUploadSelectedImage();
     }
     //==========================================================================================================================
-
     return (
         <center>
             <div style={{ width: '90%', padding: '1rem' }} className='contentPage'>
-
                 <div className='DataWeb_container'>
                     <div className='DataWeb_left'>
                         <img src={W_IMG} className='IMG_DataWeb' />
-
                         <div id='upload_logo'>
                             <input type="file" accept="image/*" style={{ display: 'none' }} onChange={onFileChange} ref={inputRef} />
                             {selectedImages.length === 0 && (
@@ -177,7 +167,6 @@ function DataWeb() {
                                 </div>
                             )}
                         </div>
-
                     </div>
                     <div className='DataWeb_right'>
                         <h1 className='topics_table'>  จัดกการข้อมูลเว็ปไซต์ </h1>
@@ -191,7 +180,7 @@ function DataWeb() {
                         <textarea value={W_CONTACT} onChange={(event) => setW_CONTACT(event.target.value)} className='textarea_input_DataWeb' />
 
                         <p className='label_text_DataWeb'> Email ระบบ </p>
-                        <input value={W_EMAIL} type='text' className='text_input_DataWeb' disabled style={{ textAlign: 'center',backgroundColor:'#ffffff55'}}/>
+                        <input value={W_EMAIL} type='text' className='text_input_DataWeb' disabled style={{ textAlign: 'center', backgroundColor: '#ffffff55' }} />
 
                         <p className='label_text_DataWeb'> เกี่ยวกับเรา </p>
                         <textarea value={ABOUT_WEB} onChange={(event) => setABOUT_WEB(event.target.value)} className='textarea_input_DataWeb' />
@@ -204,5 +193,4 @@ function DataWeb() {
         </center >
     );
 }
-
 export default DataWeb;

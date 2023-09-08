@@ -31,7 +31,6 @@ async function addRole(req, res) {
   }
 }
 
-
 async function listRoles(req, res) {
   try {
     const data = await getData(DataModel); 

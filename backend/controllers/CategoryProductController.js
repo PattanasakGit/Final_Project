@@ -31,7 +31,6 @@ async function addCategoryProduct(req, res) {
   }
 }
 
-
 async function listCategoryProducts(req, res) {
   try {
     const data = await getData(DataModel);

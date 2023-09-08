@@ -1,19 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import '../../css/Login.css';
-import '../../css/checkbox.css';
+import { useEffect, useState } from 'react';
 import '../../css/MyProduct.css';
 import '../../css/Admin_Home.css';
 import '../../css/AdminCheckProduct.css';
 import '../../css/AdminManageTable.css';
 
-import { Space, Table, Image, Empty } from 'antd';
-import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
-import type { ColumnsType } from 'antd/es/table';
-import { Check_Token, submit, fetchCategories, DeleteByID } from '../system/HTTP_Request ';
 import Swal from 'sweetalert2';
+import { Space, Table, Image } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 import { DeleteOutlined } from '@mui/icons-material';
-
-const url = 'http://localhost:3000'
+import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
+import { submit, fetchCategories, DeleteByID } from '../WebSystem/HTTP_Request ';
 
 function AdminCategory() {
     interface Category { ID: number, CP_NAME: string, CP_ICON: string }
@@ -79,7 +75,6 @@ function AdminCategory() {
             )
         },
     ];
-
 
     const handleDelete = (data: Category) => {
         Swal.fire({

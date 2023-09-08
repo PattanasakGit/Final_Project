@@ -7,95 +7,78 @@
 .pageSignUp {
     font-family: 'Noto Sans Thai', sans-serif;
     min-height: 100vh;
-    /* height: 130px; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* background: linear-gradient(90deg, rgba(250, 0, 0, 0.109) 0%, rgba(255, 255, 255, 0.056) 100%); */
     background-color: rgb(255, 255, 255);
     background-image: url('https://images.unsplash.com/photo-1620095198790-2f663d67677d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');
     background-size: cover;
     background-position: center;
-    /* backdrop-filter: blur(70px); */
     background-attachment: fixed;
 }
 
-
 .contentPage {
     font-family: 'Noto Sans Thai', sans-serif;
-    /* position: absolute; */
-    margin-top: 5rem;
     margin-bottom: 2rem;
-    padding-Top: 2rem;
     padding-bottom: 3rem;
+    padding-Top: 2rem;
+    margin-top: 5rem;
     width: 70%;
     height: auto;
     min-height: 80vh;
-    background-color: #ffffff2e;
-    /* background-image: url('https://images.unsplash.com/photo-1557682260-96773eb01377?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1429&q=80'); */
-    background-size: cover;
-    background-position: center;
     border-radius: 20px;
     backdrop-filter: blur(5px);
-    /* border-radius: 10px;
-    border: 1px solid rgba(15, 1, 1, 0.5); */
+    background-size: cover;
+    background-position: center;
+    background-color: #ffffff2e;
 }
 
 .formInput {
-    /* max-width: 600; */
     width: 95%;
     margin-top: 3rem;
-
 }
 
 .ThepatforInput {
-    border: 2px solid #5e5e5e53;
-    border-radius: 7px;
     width: 100%;
     height: 50px;
-    background-color: #ffffff0e;
     color: black;
     font-size: 20px;
-    /* font-family: 'Krub', sans-serif; */
-    font-family: 'Noto Sans Thai', sans-serif;
     text-align: left;
     padding-left: 15px;
-
+    border-radius: 7px;
+    border: 2px solid #5e5e5e53;
+    background-color: #ffffff0e;
+    font-family: 'Noto Sans Thai', sans-serif;
 }
 
 .ThepatforInput:focus {
+    outline: none;
     border-color: #ffcc00;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
-    outline: none;
 }
 
 .Thepatradio {
-    border: 2px solid #5e5e5e53;
-    border-radius: 80px;
     width: 100%;
     height: 50px;
-    background-color: #ffffff0e;
     color: black;
     font-size: 20px;
-    /* font-family: 'Krub', sans-serif; */
+    border-radius: 80px;
+    border: 2px solid #5e5e5e53;
+    background-color: #ffffff0e;
     font-family: 'Noto Sans Thai', sans-serif;
-
 }
 
-
-
 .backform {
-    font-family: 'Noto Sans Thai', sans-serif;
-    margin-top: 1rem;
     padding: 1rem;
-    background-color: #fefefee0;
-    backdrop-filter: blur(100px);
+    margin-top: 1rem;
     border-radius: 20px;
+    backdrop-filter: blur(100px);
+    background-color: #fefefee0;
+    font-family: 'Noto Sans Thai', sans-serif;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .Texttoppic {
-
     font-family: 'Noto Sans Thai', sans-serif;
     font-size: 35px;
     color: black;
@@ -106,13 +89,8 @@
     font-family: 'Noto Sans Thai', sans-serif !important;
 }
 
-
-
-
 /* ===================================================================== */
 /* ส่วนของปุ่มกด */
-
-/* relevant portion */
 .TP_fun_button {
     border: 2.5px solid #ffc802 !important;
     font-family: 'Noto Sans Thai', sans-serif !important;
@@ -125,24 +103,19 @@
     height: 50px;
 }
 
-
 /* ================================================== home Page ======================================================== */
 .content_Home_Page {
     font-family: 'Noto Sans Thai', sans-serif;
-    /* position: absolute; */
-    margin-top: 0;
-    padding-Top: 2rem;
     padding-bottom: 3rem;
+    padding-Top: 2rem;
+    margin-top: 0;
     width: 100%;
     height: auto;
-    background-color: rgba(255, 255, 255, 0.18);
-    /* background-image: url('https://images.unsplash.com/photo-1557682260-96773eb01377?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1429&q=80'); */
-    background-size: cover;
-    background-position: center;
     border-radius: 20px;
     backdrop-filter: blur(5px);
-    /* border-radius: 10px;
-    border: 1px solid rgba(15, 1, 1, 0.5); */
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.18);
 }
 
 .pigture_Carousel {
@@ -151,9 +124,6 @@
     position: relative;
     border: 10px;
     margin-bottom: 6.5rem;
-
-
-    /* overflow: hidden; */
 }
 
 .pigture_Carousel img {
@@ -164,27 +134,21 @@
     object-fit: cover;
     object-position: center;
     border-radius: 20px;
-    /* box-shadow: 7px 7px 2px rgba(0, 0, 0, 0.199); */
 }
 
 .BannerSide {
     display: flex;
-    justify-content: center;
     align-items: center;
-    /* margin-top: 3rem; */
-    /* margin-bottom: 2rem; */
+    justify-content: center;
     height: fit-content;
-
 }
 
 .Img_SideBanner {
-
     border-radius: 15px;
     width: 600px;
     height: 600px;
     object-fit: cover;
     object-position: center;
-
 }
 
 .coverSideBar {
@@ -198,9 +162,6 @@
         position: relative;
         border: 10px;
         margin-bottom: 0rem;
-
-
-        /* overflow: hidden; */
     }
 
     .pigture_Carousel img {
@@ -211,7 +172,6 @@
         object-fit: cover;
         object-position: center;
         border-radius: 20px;
-        /* box-shadow: 7px 7px 2px rgba(0, 0, 0, 0.199); */
     }
 
     .coverSideBar {
@@ -222,47 +182,31 @@
         display: block;
         justify-content: center;
         align-items: center;
-        /* margin-top: 3rem; */
-        /* margin-bottom: 2rem; */
         height: fit-content;
-
     }
 
     .Img_SideBanner {
-
         border-radius: 15px;
         width: 100%;
         height: 600px;
         object-fit: cover;
         object-position: center;
-
     }
 }
 
 /* ======================================== ส่วนของการแสดง สินค้า ====================================================== */
-/* .TP_Frame_for_show_products{
-    font-family: 'Noto Sans Thai', sans-serif;
-} */
-
 .table_show_products {
-    cursor: pointer;
     font-family: 'Noto Sans Thai', sans-serif;
-    /* position: absolute; */
-    margin-top: 2rem;
-    margin-bottom: 2rem;
     padding: 1rem 1rem 1rem 1rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+    cursor: pointer;
     width: 92%;
     height: auto;
-    background-color: rgba(255, 255, 255, 0.425);
-    /* background-image: url('https://images.unsplash.com/photo-1557682260-96773eb01377?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1429&q=80');
-    background-size: cover;
-    background-position: center; */
     border-radius: 20px;
     backdrop-filter: blur(70px);
-    /* border-radius: 10px;
-    border: 1px solid rgba(15, 1, 1, 0.5); */
     justify-content: flex-start;
-
+    background-color: rgba(255, 255, 255, 0.425);
 }
 
 .product_cardContainer {
@@ -278,7 +222,6 @@
 
 .product_cardContainer:hover {
     transform: scale(1.06);
-    /* box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.589); */
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.9);
 }
 
@@ -292,48 +235,43 @@
     font-family: 'Noto Sans Thai', sans-serif !important;
     font-size: 20px;
     margin: 5px 0 0 0;
-
 }
 
 .TP_Box_for_search {
     display: flex;
     align-items: center;
-    border: 3;
+    align-content: center;
     padding: 0.5rem;
+    border: 3;
     width: 55%;
     height: 100%;
-    background: #ffffff9f;
-    align-content: center;
-    /* margin-top: 7rem; */
     border-radius: 15px;
+    background: #ffffff9f;
     box-shadow: 7px 7px 2px rgba(0, 0, 0, 0.199);
 
 }
 
 .TP_btn_s {
-    border: 2.5px solid #ffc802 !important;
     font-family: 'Noto Sans Thai', sans-serif !important;
+    border: 2.5px solid #ffc802 !important;
     background-color: #F86F03 !important;
-    color: #ffffff;
-    font-size: 20px !important;
     border-radius: 10px !important;
-    /* padding: 10px 20px; */
+    font-size: 20px !important;
     width: 100% !important;
-    height: 50px;
     margin-left: 1rem;
-
+    color: #ffffff;
+    height: 50px;
 }
 
 .TP_btn_sell {
-    border: 2.5px solid #ffffff !important;
     font-family: 'Noto Sans Thai', sans-serif !important;
+    border: 2.5px solid #ffffff !important;
     background-color: #00b3ff !important;
-    color: #ffffff;
-    font-size: 20px !important;
     border-radius: 10px !important;
-    /* padding: 10px 20px; */
+    font-size: 20px !important;
     width: 100% !important;
     height: 50px;
+    color: #ffffff;
     margin-right: 1rem;
 
 }
@@ -342,7 +280,6 @@
     .table_show_products {
         width: 90%;
         margin: 10px 0;
-
     }
 
     .product_cardContainer {
@@ -396,28 +333,23 @@
     }
 }
 
-
-
 .TP_combobox_search {
     font-family: 'Noto Sans Thai', sans-serif !important;
-    width: 90%;
-    border: 5px;
     background-color: rgba(255, 255, 255, 0.425);
     border-radius: 10px !important;
     backdrop-filter: blur(70px);
     color: #F86F03;
-
-
+    border: 5px;
+    width: 90%;
 }
 
 .TP_combobox_search MenuItem {
     font-family: 'Noto Sans Thai', sans-serif !important;
-    width: 90%;
-    border: 5px;
     background-color: rgba(255, 255, 255, 0.425) !important;
     border-radius: 10px !important;
     backdrop-filter: blur(70px);
-
+    border: 5px;
+    width: 90%;
 }
 
 .TP_Text_in_Drawer {
@@ -426,9 +358,11 @@
     color: #ffffff;
 }
 
-
-
 /* =============================== drawer ================================================== */
+.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+    font-family: 'Noto Sans Thai', sans-serif !important;
+}
+
 .TP_Box_radio {
     margin: 1rem;
 }
@@ -456,7 +390,6 @@
 
 .TP_label input:checked+.TP_span::before {
     box-shadow: inset 0 0 0 0.425em #ff7308;
-    /* กำหนดเงาสีแดง */
 }
 
 .TP_label .TP_span {
@@ -472,21 +405,18 @@
 }
 
 .TP_label .TP_span::before {
-    display: flex;
-    /* flex-shrink: 0; */
-    content: "";
     background-color: #ffffff;
+    display: flex;
+    content: "";
     width: 1.5em;
     height: 1.5em;
     border-radius: 40%;
     margin-right: 0.375em;
     transition: 0.25s ease;
-    /* box-shadow: inset 0 0 0 0.125em #a44d01; */
 }
 
 .TP_label .TP_span:hover::before {
     box-shadow: inset 0 0 0 0.125em #df8200;
-    /* กำหนดเงาสีแดงเมื่อชี้ pointer ไปที่ span */
 }
 
 /* ================================ */
@@ -519,7 +449,6 @@
     border: 0;
     cursor: pointer;
     transition: background-color 5s;
-    /* Add a transition for smooth effect */
 }
 
 .button-clear-filter {
@@ -543,10 +472,9 @@
     font-family: 'Noto Sans Thai', sans-serif !important;
     background-color: rgba(255, 255, 255, 0.425);
     border-radius: 5px;
+    margin-bottom: 5px;
     color: #F55353;
     font-size: 20px;
-    /* margin-top: 1px; */
-    margin-bottom: 5px;
     width: 400px;
 }
 
@@ -577,23 +505,22 @@
 
 /* ====================================================== */
 .tp-category-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
     font-family: 'Noto Sans Thai', sans-serif !important;
+    display: flex;
+    flex-wrap: wrap;
     font-size: 16px;
+    justify-content: center;
 }
 
 .tp-category-card {
     width: auto;
-    /* height: auto; */
     height: 60px;
+    margin: 5px;
     padding: 1%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 5px;
     border-radius: 20px !important;
     background-color: #ffffff5d !important;
 }
@@ -611,9 +538,7 @@
 
 .tp-category-card:hover {
     transform: scale(1.1);
-    /* ขยายขนาดเมื่อนำเมาส์ไปชี้ที่ card */
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.4);
-    /* เพิ่มเงาให้กับ card เมื่อนำเมาส์ไปชี้ที่ card */
 }
 
 .show_more_category {

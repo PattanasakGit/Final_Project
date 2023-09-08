@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../../css/Login.css';
 import '../../css/checkbox.css';
-import { Image, Tag } from 'antd';
-import { getUserByID, fetchCategories, fillter_product, getProductByID, sendEmaiChangePassword, getUserByEmail } from './HTTP_Request ';
-import moment from 'moment';
-import { Card, CardContent, Grid, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import Swal from 'sweetalert2'; // Alert text --> npm install sweetalert2
+
+import Swal from 'sweetalert2';
+import { sendEmaiChangePassword, getUserByEmail } from './HTTP_Request ';
 
 function ForgetPassword() {
     const [email, setEmail] = useState('');
-
     const handleSubmit = async () => {
         const check_user: [] = await getUserByEmail({ email: email });
         if (!/\S+@\S+\.\S+/.test(email)) {
@@ -39,7 +35,6 @@ function ForgetPassword() {
             };
         }
     }
-
     return (
         <center>
             <div style={{ height: '100%', width: '90%', display: 'flex', backgroundColor: '#fff' }} className='contentPage'>
@@ -72,5 +67,4 @@ function ForgetPassword() {
         </center>
     );
 }
-
 export default ForgetPassword;

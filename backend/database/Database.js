@@ -150,8 +150,6 @@ async function getToken_check(Token, DataModel) {
   }
 }
 
-
-
 module.exports = {
   connectDatabase,
   closeDatabase,

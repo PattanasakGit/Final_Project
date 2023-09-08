@@ -1,26 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
-import '../../css/Login.css';
-import '../../css/checkbox.css';
+import { useEffect, useRef, useState } from 'react';
 import '../../css/MyProduct.css';
 import '../../css/Admin_Home.css';
 import '../../css/AdminCheckProduct.css';
 
+import Swal from 'sweetalert2';
 import type { InputRef } from 'antd';
+import { Space, Table, Tag, Image } from 'antd';
 import { Button, Input, Segmented, } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { CloseOutlined } from '@mui/icons-material';
-import { Space, Table, Tag, Image, Empty } from 'antd';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
-import { Check_Token, update, getProductBy_EmailUser, listProduct, getUserByEmail, ListAllAds, DeleteByID } from '../system/HTTP_Request ';
-import Swal from 'sweetalert2';
+import { update, ListAllAds, DeleteByID } from '../WebSystem/HTTP_Request ';
 
-const url = 'http://localhost:3000'
-
-function format_Price(number: number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
 interface DataType {
     key: number;
     ID: number;
@@ -31,10 +22,8 @@ interface DataType {
 }
 type DataIndex = keyof DataType;
 
-
 function AdminCheckAds() {
-    // Check_Token();
-
+    // Check_Token(); //admin ไม่จำเป็นจะต้องตรวจสอบก็ได้
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     const searchInput = useRef<InputRef>(null);
     const handleSearch = (selectedKeys: string[], confirm: (param?: FilterConfirmProps) => void, dataIndex: DataIndex,) => { confirm(); };
@@ -61,9 +50,7 @@ function AdminCheckAds() {
         filterIcon: (filtered: boolean) => (<SearchOutlined style={{ color: filtered ? '#1677ff' : undefined, fontSize: filtered ? '25px' : undefined }} />),
         onFilter: (value, record) => record[dataIndex].toString().toLowerCase().includes((value as string).toLowerCase()),
     });
-
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    // const [ID_when_click, setID_when_click] = useState<number>();
     const columns: ColumnsType<DataType> = [
         {
             title: 'ID',
@@ -73,9 +60,7 @@ function AdminCheckAds() {
             key: 'ID',
             width: '80px',
             fixed: 'left',
-            // render: (text) => <a>{text}</a>,
             sorter: (a, b) => a.ID - b.ID,
-            // defaultSortOrder: 'descend', // ค่าเริ่มต้นให้แสดงใหม่กว่าไว้ด้านบน
         },
         {
             title: 'ID ของประกาศขาย',
@@ -86,7 +71,6 @@ function AdminCheckAds() {
             // fixed: 'left',
             ...getColumnSearchProps('P_ID'),
             sorter: (a, b) => a.P_ID - b.P_ID,
-
         },
         {
             title: 'วันที่ทำรายการ',
@@ -105,7 +89,6 @@ function AdminCheckAds() {
             width: '200px',
             align: 'center',
             render: (_, record) => (
-
                 record.Ad_CHECKED === true ? (
                     <Tag color="green" className='TP_font'> ได้รับการตรวจสอบแล้ว </Tag>
                 ) : (
@@ -130,8 +113,6 @@ function AdminCheckAds() {
             key: 'action',
             width: '190px',
             render: (_, record) => (
-
-
                 record.Ad_CHECKED === false ? (
                     <>
                         <button className='btn_ads_true' onClick={() => btn_action(true, record.ID)} style={{ height: '50px', width: '80px' }} > อนุมัติ </button>
@@ -140,11 +121,9 @@ function AdminCheckAds() {
                 ) : (
                     <button className='btn_delete' onClick={() => btn_action(false, record.ID)} style={{ height: '50px', width: '100%' }} > ยกเลิกการโฆษณา </button>
                 )
-
             )
         },
     ];
-
     const btn_action = (action: Boolean, id: number) => {
         if (action === true) {
             update({ Ad_CHECKED: true }, 'updateAdvert/' + id)
@@ -152,7 +131,6 @@ function AdminCheckAds() {
                 window.location.reload();
             }, 1000);
         } else {
-
             Swal.fire({
                 icon: 'warning',
                 title: 'คุณกำลังจะลบรายการโฆษณา',
@@ -171,23 +149,15 @@ function AdminCheckAds() {
             })
         }
     }
-
-
     const [DataAds, setAds] = useState<DataType[]>([]);
     const [selectedTab, setSelectedTab] = useState<string>('รายการที่ยังไม่ตรวจสอบ');
     const [filteredAds, setFilteredAds] = useState<DataType[]>(DataAds);
-
-    const [Data_ShowTicketPopup, setData_ShowTicketPopup] = useState<DataType>();
-    const [OpenPopup, setOpenPopup] = useState(false);
-
     const all_data_Ads = async () => {
         const data: any = await ListAllAds();
         setAds(data);
     }
-
     useEffect(() => {
         all_data_Ads();
-
     }, []);
     useEffect(() => {
         const filteredData = DataAds.filter(item => {
@@ -200,40 +170,11 @@ function AdminCheckAds() {
         });
         setFilteredAds(filteredData as any);
     }, [selectedTab, DataAds]);
-
     const data: DataType[] = filteredAds; //ขอมูลที่จะแสดงใน ตาราง
-
-    const hendle_btn_in_table = (data: DataType) => {
-        setData_ShowTicketPopup(data);
-        setOpenPopup(!OpenPopup)
-
-    }
-
     return (
         <center>
             <div style={{ height: '75vh', width: '90%', paddingBottom: '7rem' }} className='contentPage'>
                 <h1 className='topics_table'>  ตรวจสอบรายการโฆษณา </h1>
-
-                {/* <div className='container_btn_select'>
-                    <button onClick={() => setSelectedTab('รายการที่รออนุมัติ')} className='btn_Yellow'>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <img className='icon_in_btn' src='ICON/Icon_Padding.png' />
-                            <div style={{ display: 'block' }}>
-                                <p className='text_in_btn'> รายการที่รออนุมัติ </p>
-                            </div>
-                        </div>
-                    </button>
-                    <button onClick={() => setSelectedTab('รายการที่กำลังประกาศขาย')} className='btn_Green'>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <img className='icon_in_btn' src='ICON/Icon_Accepted.png' />
-                            <div style={{ display: 'block' }}>
-                                <p className='text_in_btn'>รายการที่กำลังประกาศขาย</p>
-                            </div>
-                        </div>
-                    </button>
-                </div> */}
-
-
                 <div className='div_cover_table_and_tab'>
                     <Segmented
                         block
@@ -241,7 +182,6 @@ function AdminCheckAds() {
                         onChange={newTab => setSelectedTab(newTab as string)}
                         className='tp_tab'
                     />
-
                     <Table
                         scroll={{ x: 1300 }}
                         columns={columns}
@@ -256,16 +196,9 @@ function AdminCheckAds() {
                             className: 'TP_pagination_table'
                         }}
                     />
-
                 </div>
-
-
             </div>
         </center>
-
-
-
     );
 }
-
 export default AdminCheckAds;

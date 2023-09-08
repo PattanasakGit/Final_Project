@@ -5,7 +5,6 @@ import jwt_decode from 'jwt-decode';
 
 const port = 8000; // พรอตหลังบ้าน
 
-
 //==============================================================================================================================================================================================================
 export const submit = (data: any, part: string) => {
   const apiUrl = `http://localhost:${port}/${part}`;
@@ -193,7 +192,7 @@ export const update = (data: any, part: string) => {
             },
             willClose: () => {
               clearInterval(timerInterval)
-              window.location.href = 'http://localhost:3000/Login';
+              window.location.href = 'http://localhost:3000/';
             }
           })
         } else {
@@ -248,7 +247,7 @@ export const Check_Token = async () => {
     localStorage.removeItem('token');
     localStorage.removeItem('email');
     localStorage.removeItem('role');
-    window.location.href = "http://localhost:3000/Login";
+    window.location.href = "http://localhost:3000/";
     return false;
   }
 };
@@ -370,9 +369,9 @@ export const TP_VerifyEmail = (data: any, part: string) => {
               confirmButtonText: 'ไปยังหน้า Login',
             }).then((result) => {
               if (result.isConfirmed) {
-                window.location.href = 'http://localhost:3000/Login';
+                window.location.href = 'http://localhost:3000/';
               }
-              setTimeout(() => { window.location.href = 'http://localhost:3000/Login'; }, 1500);
+              setTimeout(() => { window.location.href = 'http://localhost:3000/'; }, 1500);
             });
 
           }

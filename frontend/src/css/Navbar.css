@@ -15,22 +15,18 @@
   height: 65px;
   font-size: 1rem;
   font-weight: 700;
-  /* background: linear-gradient(90deg, rgba(0, 0, 0, 0.479) 0%, rgb(255, 255, 255, 0.9) 100%); */
-  background-color: rgba(0, 0, 0, 0.256);
-  backdrop-filter: blur(50px);
   border: 0;
-  cursor: pointer;
-  transition: opacity 0.25s ease-out;
-  background-size: cover;
   content: "";
-  /* background-color: rgba(255, 255, 255, 0.5); */
   z-index: 199;
+  cursor: pointer;
+  background-size: cover;
+  backdrop-filter: blur(50px);
+  transition: opacity 0.25s ease-out;
+  background-color: rgba(0, 0, 0, 0.256);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.452);
 }
 
 .avatar_container {
-  /* color: linear-gradient(90deg, rgba(0, 0, 0, 0.479) 0%, rgb(255, 255, 255, 0.9) 100%); */
-  /* background-color: rgba(255, 255, 255, 0.233); */
   backdrop-filter: blur(10px);
 }
 
@@ -46,26 +42,18 @@
 
 .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
   border-radius: 15px !important;
-  /* right: 100px !important; */
-  /* left: 150px !important; */
-  /* width: 100vh !important; */
-  
 }
 
 
 .band {
-  color: rgb(255, 255, 255);
+  margin: 0px;
   font-size: 30px;
   font-weight: 600;
+  color: rgb(255, 255, 255);
   padding: 20px 0px 0px 0px;
-  margin: 0px;
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.6));
-
   font-family: 'Borel', cursive, 'Krub', sans-serif, 'Noto Sans Thai', sans-serif;
 }
-
-
-
 
 .imgLogo {
   height: 50px;
@@ -77,15 +65,14 @@
 
 .Nav_button {
   font-family: 'Noto Sans Thai', sans-serif !important;
-  color: #fff;
   background-color: #000000e6;
+  color: #fff;
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
-
 }
 
 .Nav_button:hover {
@@ -93,18 +80,16 @@
 }
 
 .Btn_sell {
-  font-family: 'Noto Sans Thai', sans-serif !important;
-  margin: 0px 5px;
-  color: #fff;
-  /* background-color: #ff0000; */
   background: linear-gradient(90deg, #025821 0%, #2eb700 100%);
-  border: none;
+  font-family: 'Noto Sans Thai', sans-serif !important;
+  transition: background-color 2s;
   border-radius: 5px;
   padding: 5px 10px;
+  margin: 0px 5px;
   font-size: 20px;
   cursor: pointer;
-  transition: background-color 2s;
-
+  color: #fff;
+  border: none;
 }
 
 .Btn_sell:hover {
@@ -116,5 +101,4 @@
   .band {
     display: none;
   }
-
 }

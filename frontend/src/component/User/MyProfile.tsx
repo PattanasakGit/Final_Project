@@ -1,32 +1,19 @@
-
+import '../../css/Product.css';
+import '../../css/Profile.css';
+import '../../css/Background.css';
+import Swal from 'sweetalert2';
+import { Empty } from 'antd';
 import React, { ChangeEvent, useEffect, useRef, useState, } from 'react';
-import '../css/Background.css';
-import '../css/Product.css';
-import { Avatar, Empty, Image, Tag } from 'antd';
-import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, getUserByEmail, update, sendEmaiChangePassword } from './system/HTTP_Request ';
-import moment from 'moment';
-import { Card, CardContent, Grid, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
-import '../css/Profile.css';
-import { height, margin } from '@mui/system';
-import TransgenderIcon from '@mui/icons-material/Transgender';
-
-
+import { Check_Token, getUserByEmail, update } from '../WebSystem/HTTP_Request ';
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
-import { storage } from './system/firebase';
-const URL_backend = 'http://localhost:3000';
+import { storage } from '../WebSystem/firebase';
 
-
-
+const URL_frontend = 'http://localhost:3000';
 
 function MyProfile() {
     Check_Token();
     const Email_User = localStorage.getItem('email');
-    const [user, setUser] = React.useState<any>([]);
     const [CheckEdit_btn, setCheckEdit_btn] = useState(false);
-
-
     const [User_ID, setUser_ID] = useState(0);
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
@@ -37,19 +24,15 @@ function MyProfile() {
     const [about, setAbout] = useState('');
     const [old_IMG, setOld_IMG] = useState<any>([]);
     const [isImageLoaded, setIsImageLoaded] = useState(false);
-
     // สำหรับการอัพโหลลด รูปภาพเข้า FireBase
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
-    const [lock_bnt, setlock_bnt] = useState(false);
     const [progress, setProgress] = useState<number>(0);
-    const [oder_img_in_list, setOder_img_in_list] = useState(1);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     async function fetchUser() {
         try {
             const response = await getUserByEmail({ email: localStorage.getItem('email') });
-            setUser(response);
             setUser_ID(response.ID);
             setName(response.U_NAME.split(' ')[0]);
             setSurname(response.U_NAME.split(' ')[1])
@@ -59,16 +42,13 @@ function MyProfile() {
             setImg(response.U_IMG);
             setOld_IMG(response.U_IMG)
             setAbout(response.ABOUT_ME);
-
         } catch (error) {
             console.error('พบข้อผิดพลาดในการดึงข้อมูลผู้ใช้:', error);
         }
     }
-
     useEffect(() => {
         fetchUser();
     }, []);
-
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setGender(event.target.value);
@@ -82,9 +62,6 @@ function MyProfile() {
             U_EMAIL: email,
             U_IMG: Img,
             ABOUT_ME: about,
-            // U_PASSWORD: passworld1,
-            // pass1: passworld1,
-            // pass2: passworld2
         }
         if (selectedImages.length !== 0) {
             Swal.fire({
@@ -92,8 +69,7 @@ function MyProfile() {
                 title: 'คุณยังไม่อัพโหลดภาพโปรไฟล์ใหม่ของคุณ',
                 text: 'หากดำเนินการต่อ ระบบจะใช้ภาพโปรไฟล์เก่าของคุณ',
                 showCancelButton: true,
-                confirmButtonText: 'OK',
-                // denyButtonText: ``,
+                confirmButtonText: 'OK'
             }).then((result) => {
                 if (result.isConfirmed) {
                     setImg(old_IMG);
@@ -103,27 +79,16 @@ function MyProfile() {
                     update(data, 'updateUser/' + User_ID);
                 }
             })
-
         } else {
             setCheckEdit_btn(false);
             console.log(data);
             update(data, 'updateUser/' + User_ID);
         }
-
-
-
-
     }
 
     const sendmail_for_resetPassword = () => {
-        // sendEmaiChangePassword(email);
-        // ResetPasswordPage_canLogin;
-        window.open(URL_backend+'/ChangePassword');
-
+        window.open(URL_frontend+'/ChangePassword');
     }
-
-
-
     //------------------------------------------------------------------------------------------------------------------------------------------
     const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -165,49 +130,24 @@ function MyProfile() {
             }
         );
     };
-
     const handleUploadButtonClick = () => {
         if (inputRef.current) {
             inputRef.current.click(); // เมื่อคลิกปุ่มอัปโหลด ให้เรียกใช้ click ของ input
         }
     };
-
     function alert_before_upload() {
         onUploadSelectedImage();
-        // return (
-        //     Swal.fire({
-        //         icon: 'warning',
-        //         title: 'อัพโหลดรูปภาพ',
-        //         text: 'คุณต้องการอัพโหลดภาพโปรไฟล์เข้าสู่ระบบ',
-        //         showCancelButton: true,
-        //         confirmButtonText: 'upload',
-        //         denyButtonText: `Don't upload`,
-        //     }).then((result) => {
-        //         if (result.isConfirmed) {
-        //             onUploadSelectedImage();
-        //         }
-        //     })
-        // )
     }
-
     //------------------------------------------------------------------------------------------------------------------------------------------
     //  fn() สำรับเช็ตว่า โหลดภาพโปรไฟล์ได้ไหม
     const handleImageLoad = () => {
         setIsImageLoaded(true);
     };
-
-
-
-
-
     return (
         <center>
-
             <div className='contentPage' style={{ height: '100%', width: '90%', padding: '20px' }}>
                 <div style={{ display: 'flex' }} className='subcontentPage'>
                     <div className='Profile_IMG_space'>
-                        {/* <input type="file" style={{ display: 'none' }} /> */}
-
                         {Img !== '' && (
                             <div className='container_IMG'>
                                 <img
@@ -225,6 +165,7 @@ function MyProfile() {
                                 )}
                             </div>
                         )}
+
                         {Img === '' && (
                             <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
                                 <h2>ไม่พบรูปภาพ</h2>
@@ -251,24 +192,14 @@ function MyProfile() {
                                     <div className="progress-bar" style={{ width: `${progress}%` }}></div>
                                 </div>
                                 <div>
-                                    <p>กำลังอัพโหลดไฟล์ที่ {oder_img_in_list}: <b>{progress}%</b></p>
+                                    <p>กำลังอัพโหลดไฟล์: <b>{progress}%</b></p>
                                 </div>
                             </div>
-
                         )}
-
-
-
-
-
-
-
-
                     </div>
 
                     <div className='Profile_text_space'>
                         <h1> MyProfile </h1>
-
                         <div style={{ display: 'flex' }}>
                             <div style={{ width: '50%', marginRight: '1rem' }}>
                                 <label className='Profile_label'>ชื่อ </label>
@@ -316,8 +247,6 @@ function MyProfile() {
                             </label>
                         </div>
 
-
-
                         <div>
                             <label className='Profile_label'>อธิบายเพิ่มเติมเกี่ยวกับคุณ </label>
                             <textarea className='ThepatforInput_Profile' placeholder='อธิบายเพิ่มเติมเกี่ยวกับคุณ'
@@ -332,24 +261,16 @@ function MyProfile() {
                                 เปลี่ยนรหัสผ่าน
                             </button>
                         </div>
-
-
-
-
-
                     </div>
                 </div>
+
                 <div style={{ marginTop: '30px' }}>
                     {CheckEdit_btn === false && <button className="btn_edit" style={{ width: '50%' }} onClick={() => setCheckEdit_btn(true)}> แก้ไข Profile </button>}
                     {CheckEdit_btn === true && <button className="btn_edit" style={{ width: '30%', backgroundColor: 'red' }} onClick={() => setCheckEdit_btn(false)}>ยกเลิก </button>}
                     {CheckEdit_btn === true && <button className="btn_edit" style={{ width: '50%', backgroundColor: 'green' }} onClick={handleUpdate}> อัพเดตข้อมูลของคุณ </button>}
-
                 </div>
             </div>
-
         </center>
-
     );
 }
-
 export default MyProfile;

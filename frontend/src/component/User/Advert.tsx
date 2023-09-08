@@ -1,21 +1,13 @@
-
-import React, { ChangeEvent, useEffect, useRef, useState, } from 'react';
-import '../css/Background.css';
-import '../css/Product.css';
-import { Avatar, Empty, Image, Tag } from 'antd';
-import { getUserByID, fetchCategories, fillter_product, getProductByID, Check_Token, getUserByEmail, update, Create_Ads, submit, getAdvertByProduct } from './system/HTTP_Request ';
-import moment, { now } from 'moment';
-import { Card, CardContent, Grid, ListItemTextClassKey, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
-import '../css/Profile.css';
-import { height, margin } from '@mui/system';
-import TransgenderIcon from '@mui/icons-material/Transgender';
-
-
+import '../../css/Product.css';
+import '../../css/Profile.css';
+import '../../css/Background.css';
+import Swal from 'sweetalert2';
+import { Empty, Image, Tag } from 'antd';
+import { storage } from '../WebSystem/firebase';
+import { Card, CardContent, Typography } from '@mui/material';
+import { ChangeEvent, useEffect, useRef, useState, } from 'react';
+import { Create_Ads, getAdvertByProduct } from '../WebSystem/HTTP_Request ';
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
-import { storage } from './system/firebase';
-const url_frontend = 'http://localhost:3000';
 
 interface DataType {
     key: number;
@@ -30,18 +22,12 @@ interface DataType {
     P_IMG: string[];
     P_ADS: boolean;
 }
-
 const product_Str = localStorage.getItem('DataProduct_Ads');
 let product: DataType = { key: 0, ID: 0, P_NAME: '', P_CATEGORY: '', P_PRICE: 0, P_TYPE: '', P_ADS: false, P_POST: '', P_UPDATE: '', P_STATUS: '', P_IMG: [] };
 if (product_Str) {
     product = JSON.parse(product_Str);
 }
-
-
-// console.log(product);
-
 function Advert() {
-
     //----------------------------------------- เกี่ยวกับการเช็คโฆษณา -------------------------------------------------------
     interface dataAdsType { ID: Number; P_ID: Number; Ad_CREATE_BILL: string; Ad_IMG: string; Ad_CHECKED: boolean; }
     const [dataAdsStatus, setDataAdsStatus] = useState<dataAdsType>({ ID: 0, P_ID: 0, Ad_CREATE_BILL: '', Ad_IMG: '', Ad_CHECKED: false, });
@@ -56,22 +42,16 @@ function Advert() {
     useEffect(() => {
         Check_Advert();
     }, []);
-    // console.log('Is a data Ads ---> ', dataAdsStatus);
     //-------------------------------------------------------------------------------------------------------------------
-
-    const Email_User = localStorage.getItem('email');
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
     const [img, setImg] = useState<string | null>(null); // URL.createObjectURL(selectedImage)
     const inputRef = useRef<HTMLInputElement | null>(null); // Ref สำหรับ input file element
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
-
-
     let data_to_backend = {
         P_ID: product.ID,
         Ad_IMG: img,
     }
-
     //-------------------------------------------------------------------------------------------------------------------
     // ฟังก์ชันเรียกเมื่อมีการเลือกไฟล์รูปภาพ
     const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -84,10 +64,8 @@ function Advert() {
             inputRef.current.value = '';
         }
     };
-
     // ฟังก์ชันอัปโหลดรูปภาพที่เลือก
     const onUploadSelectedImage = async () => {
-
         const currentDate = new Date();
         const day = String(currentDate.getDate()).padStart(2, '0');
         const month = String(currentDate.getMonth() + 1).padStart(2, '0');
@@ -114,10 +92,8 @@ function Advert() {
                     setImg(downloadUrl); // Update the image URL after successful upload
                     setIsLoading(false);
                     setSelectedImages([]);
-
                     data_to_backend.Ad_IMG = downloadUrl;
                     Create_Ads(data_to_backend);
-                                   
                     return true;
                 } catch (error: any) {
                     console.error('Error getting download URL:', error);
@@ -126,67 +102,20 @@ function Advert() {
                         title: 'พบข้อผิดพลาด',
                         text: error.message,
                         showCancelButton: false,
-                        // showConfirmButton: false,
                     })
                     return false;
                 }
             }
         );
     };
-
     const handleUploadButtonClick = () => {
         if (inputRef.current) {
             inputRef.current.click(); // เมื่อคลิกปุ่มอัปโหลด ให้เรียกใช้ click ของ input
         }
     };
-
     function alert_before_upload() {
         onUploadSelectedImage();
-
-
-        // return (
-        //     Swal.fire({
-        //         icon: 'warning',
-        //         title: 'อัพโหลดรูปภาพ',
-        //         text: 'คุณต้องการอัพโหลดภาพโปรไฟล์เข้าสู่ระบบ',
-        //         showCancelButton: true,
-        //         confirmButtonText: 'upload',
-        //         denyButtonText: `Don't upload`,
-        //     }).then((result) => {
-        //         if (result.isConfirmed) {
-        //             onUploadSelectedImage();
-        //         }
-        //     })
-        // )
     }
-
-    // function submit(){
-    //     Create_Ads(data_to_backend);
-    //     console.log(data_to_backend);
-
-    // }
-
-    //------------------------------------------------------------------------------------------------------------------------------------------
-    //  fn() สำรับเช็ตว่า โหลดภาพโปรไฟล์ได้ไหม
-    // const handleImageLoad = () => {
-    //     setIsImageLoaded(true);
-    // };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     return (
         <center>
             <div>
@@ -197,7 +126,6 @@ function Advert() {
                     width: '1000px',
                     height: '600px',
                     backgroundImage: "url('https://images.unsplash.com/photo-1664262283606-d4e198491656?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1712&q=80')",
-                    // backgroundImage: "url('https://images.unsplash.com/photo-1680883444335-edab16830290?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2532&q=80')",
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     borderRadius: '20px',
@@ -210,9 +138,6 @@ function Advert() {
                 {cardProductAds()}
             </div>
             <div style={{ height: '100%', width: '90%', backgroundColor: '#ffffff89', marginTop: '10px' }} className='contentPage'>
-                {/* <h2 style={{ color: '#333' }}>แสดงประกาศขายสินค้าของคุณเป็นอันดับต้น ๆ <br />ให้ผู้ที่สนใจเห็นสินค้าของคุณก่อนใคร</h2> */}
-                {/* <img style={{ width: '60%', borderRadius: '20px' }} src='https://images.unsplash.com/photo-1664262283606-d4e198491656?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1712&q=80' /> */}
-
                 <div style={{ backgroundColor: '#DAC0A3', padding: '5px', marginTop: '10px' }}>
                     <hr style={{ border: 'none', height: '4px', backgroundImage: 'linear-gradient(to right, #C58940, #E5BA73, #ffd700)' }} />
 
@@ -227,16 +152,7 @@ function Advert() {
                 <div style={{ marginTop: '1rem', color: '#ffffff' }}>
                     <img style={{ borderRadius: '20px', height: '500px' }} src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FQR%2029%20B.png?alt=media&token=87c1d506-26d4-48ce-b967-833fe978341f' />
                 </div>
-
-
-
-
-
                 <div style={{ backgroundColor: '#DAC0A3', padding: '5px', }}>
-
-
-
-
 
                     {/* กรณีนี้คือยังไม่มีการโฆษราสินค้าชิ้นนี้ */}
                     {dataAdsStatus.ID === 0 && product.P_ADS === false && (
@@ -275,6 +191,7 @@ function Advert() {
                             </div>
                         </div>
                     )}
+
                     {/* กรณีนี้คือ รายการมีการทำเรื่องโฆษณา แต่ยังไม่ตรวจสอบความถูกต้อง = */}
                     {dataAdsStatus.ID !== 0 && dataAdsStatus.Ad_CHECKED === false && (
                         <div>
@@ -293,39 +210,12 @@ function Advert() {
                             <hr style={{ border: 'none', height: '4px', backgroundImage: 'linear-gradient(to right, #C58940, #E5BA73, #ffd700)' }} />
                         </div>
                     )}
-
-
-
-
-
-
-
                 </div>
-
-
-
-
-
-
-
-
             </div>
-
-
         </center>
-
     );
 }
-
 export default Advert;
-
-
-
-
-
-
-
-
 
 function cardProductAds() {
     const send_data_to_Product = (data: any) => {
@@ -338,7 +228,6 @@ function cardProductAds() {
 
     return (
         <Card sx={{ width: '250px', borderRadius: '15px', backgroundColor: '#FFFDE8', border: '4px solid #FFCC48', boxShadow: ' 10px 12px 20px #00000080', position: 'absolute' }} className='product_cardContainer' >
-            {/* // <Card sx={{ width: '100%', borderRadius: '10px', backgroundColor: '#FFFDE8', position: 'relative',boxShadow: ' 0 0 0 4px #FFCC48' }} className='product_cardContainer' > */}
             <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'absolute', top: '0', right: '0', padding: '10px' }}>
                 <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FICON%2FPremium%20ICON.png?alt=media&token=2da96bd0-d868-4a85-9f52-becfe26fda9b" style={{ height: '40px', width: '35px', filter: 'drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.9))' }} />
             </div>
@@ -368,6 +257,5 @@ function cardProductAds() {
                 </Typography>
             </CardContent>
         </Card>
-
     )
 }

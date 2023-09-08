@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import '../../css/Login.css';
-import '../../css/checkbox.css';
+import { useState } from 'react';
+
 import '../../css/MyProduct.css';
 import '../../css/Admin_Home.css';
+
 import Swal from 'sweetalert2';
-import { validateForm } from '../Validateinput';
-import { TP_VerifyEmail, submit } from '../system/HTTP_Request ';
-import { Grid, TextField, FormControl, FormControlLabel, Radio, RadioGroup, Button, Typography, Box } from '@mui/material';
+import { validateForm } from '../WebSystem/Validateinput';
+import { submit } from '../WebSystem/HTTP_Request ';
+import { Grid, FormControl, Button, Box } from '@mui/material';
 
 const CreateAdmin = () => {
   const [name, setName] = useState('');
@@ -37,14 +37,12 @@ const CreateAdmin = () => {
 
     if (validateForm(data).isValid) {  //ผ่าน ไม่มี errors
       submit(data, 'createAdmin') // สร้างบัญชี admin โดยการส่งค่าไปเพื่อบันทึก เลยโดยไม่ verify email เพราะ จะสามารถกำหนด email จำลองได้(ไม่จำเป็นต้องใช้ email จริงสำหรับ email ของ ad`)
-
     } else { //ตรวจพบ errors
       Swal.fire({
         titleText: validateForm(data).messageErrors[0],
         icon: 'warning',
       })
     }
-
   };
 
   return (
@@ -52,7 +50,6 @@ const CreateAdmin = () => {
       {/* <NavBar /> */}
       <div className="contentPage" style={{ marginTop: '2rem', width: '95%' }}>
         <Grid container spacing={3}>
-
           <Grid item xs={12} sm={6} >
             <Box>
               <img
@@ -61,14 +58,7 @@ const CreateAdmin = () => {
                 style={{ maxWidth: '100%', height: '600px', marginTop: '1rem', borderRadius: '70px' }}
               />
             </Box>
-            <Box>
-              {/* <Button variant="contained" color="primary" onClick={handleSubmit} size="large">
-                upload
-              </Button> */}
-            </Box>
           </Grid>
-
-
           <Grid item xs={12} sm={5.6}>
             <div className="backform">
               <p className="Texttoppic" style={{ marginTop: '10px', marginBottom: '20px', color: '#33333395', fontSize: '30px' }}>เพิ่มบัญชีผู้ดูแลระบบ</p>
@@ -104,20 +94,6 @@ const CreateAdmin = () => {
                     <span className="TP_span_create_user" style={{ width: '90px' }}> อื่นๆ </span>
                   </label>
                 </div>
-
-                {/* <RadioGroup value={gender} onChange={handleChange} >
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm={4}>
-                      <FormControlLabel value="ชาย" control={<Radio />} label="ชาย" className="Thepatradio" />
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                      <FormControlLabel value="หญิง" control={<Radio />} label="หญิง" className="Thepatradio" />
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                      <FormControlLabel value="อื่น ๆ" control={<Radio />} label="อื่น ๆ" className="Thepatradio" />
-                    </Grid>
-                  </Grid>
-                </RadioGroup> */}
               </Box>
               <Box mb={2} marginLeft={-2.5}>
                 <FormControl sx={{ width: '90%' }}>
@@ -188,11 +164,9 @@ const CreateAdmin = () => {
               </Button>
             </Box>
           </Grid>
-
         </Grid>
       </div>
     </div>
   );
 };
-
 export default CreateAdmin;

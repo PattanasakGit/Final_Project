@@ -2,12 +2,12 @@
 
 .tp_tab {
     font-family: 'Noto Sans Thai', sans-serif !important;
-    height: 50px !important;
-    align-items: center !important;
     background: rgb(255, 235, 196);
+    align-items: center !important;
+    border: 2px solid #ffffff;
+    height: 50px !important;
     margin-bottom: 10px;
     padding: 5px;
-    border: 2px solid #ffffff;
 }
 
 .tp_tab .ant-segmented-item-label {
@@ -64,7 +64,6 @@
 .btn_ads_true:hover,
 .btn_edit_table:hover {
     background-color: #840000;
-
 }
 
 .div_cover_table_and_tab {

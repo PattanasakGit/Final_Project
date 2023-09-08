@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 const { Schema } = mongoose;
 const { insertData, getData, updateData, deleteData, getDataById, getNextDataId, getUserBy_Email, listAdmins } = require('../database/Database.js');
-const { addLogin, getLoginSchema } = require('./LoginController');
+const { addLogin } = require('./LoginController');
 const { sendEmail } = require('./MailController');
 const { TP_VerifyEmail, getVerifySchema } = require('./TP_VerifyEmail.js');
 
@@ -55,8 +55,6 @@ userSchema.path('U_PHONE').validate(function (phone) {
 }, 'เบอร์โทรศัพท์ไม่ถูกต้อง');
 
 //=========================== เพิ่ม validator ใน Schema===================================
-
-
 
 async function addUser(req, res) {
 
@@ -284,13 +282,4 @@ async function deleteUser(req, res) {
   }
 }
 
-
 module.exports = { addUser, listUsers, updateUser, deleteUser, getUserById, User_Verify_Email, getUserByEmail, getUserModel, addReview, List_admin, addAdmin };
-
-
-
-
-
-
-
-

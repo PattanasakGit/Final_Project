@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const { insertData, getData, updateData, deleteData, getDataById, getNextDataId, getToken_check } = require('../database/Database.js');
+const { insertData, getNextDataId, getToken_check } = require('../database/Database.js');
 var str_collection = "Token";
 const jwt = require('jsonwebtoken');
 
@@ -8,19 +8,17 @@ const TokenSchema = new Schema({
     ID: { type: Number, required: true, unique: true },
     Token: { type: String },
     EMAIL: { type: String },
-    role: { type: String}
+    role: { type: String }
 }, { versionKey: false });
 
 const DataModel = mongoose.model(str_collection, TokenSchema);
-
-
 
 async function addToken(Token_input, email, role) {
     const Data = {
         ID: "",
         Token: Token_input,
         EMAIL: email,
-        role:role
+        role: role
     };
     try {
         Data.ID = await getNextDataId(DataModel);
@@ -33,7 +31,6 @@ async function addToken(Token_input, email, role) {
     }
 }
 
-
 // ฟังก์ชันตรวจสอบและแยก payload จาก JWT
 function decodeJwtToken(token) {
     try {
@@ -44,8 +41,6 @@ function decodeJwtToken(token) {
         throw error;
     }
 }
-
-
 
 async function Token(req, res) {
     try {
@@ -59,19 +54,15 @@ async function Token(req, res) {
         } catch (error) {
             decodedToken = "";
         }
-        // console.log(decodedToken); 
-
         // ตรวจสอบว่า token ยังคงใช้งานได้หรือไม่
         if (!decodedToken || Date.now() >= decodedToken.exp * 1000) {
             return res.status(401).json({ status: false, message: 'Token has expired' });
         }
-
         // ค้นหา token ในฐานข้อมูล
         const tokenData = await getToken_check(token, DataModel);
 
         if (tokenData) {
             // console.log(tokenData); //จะแสดงทุกครั้เมื่อมีการ ตรวจสอบ Token
-
             // ตรวจสอบเส้นทางของ token โดยตรวจสอบข้อมูลเพิ่มเติมจาก tokenData และจัดการตามที่ต้องการ
             // ส่งข้อมูลต่างๆ ที่เกี่ยวข้องกับ token กลับไปยัง Frontend
             return res.json({ status: true, message: 'Token OK', data: tokenData });
@@ -83,26 +74,6 @@ async function Token(req, res) {
         return res.status(500).json({ status: false, error: 'Internal server error' });
     }
 }
-
-
-
-
-
-
-
-// // ฟังก์ชันค้นหา token ในฐานข้อมูล (ต้องแก้ไขให้เหมาะสมกับระบบฐานข้อมูลที่คุณใช้)
-// async function findTokenInDatabase(token) {
-//     try {
-//         const tokenData = await DataModel.findOne({ Token: token }).exec();
-//         return tokenData;
-//     } catch (error) {
-//         console.error('Failed to find token in database:', error);
-//         throw error;
-//     }
-// }
-
-
-
 module.exports = {
     Token,
     addToken,

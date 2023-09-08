@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import '../../css/Login.css';
 import '../../css/checkbox.css';
-// import submit from '../component/FetchData';
 import { submitLogin } from "./HTTP_Request ";
-const Path = 'Login';
 
 function Login() {
   localStorage.clear();
   sessionStorage.clear();
-
   const [showPassword, setShowPassword] = useState(false);
   const [emailInput, setEmail] = useState('');
   const [passwordInput, setPassword] = useState('');
@@ -29,10 +26,8 @@ function Login() {
 
   const handleClick = (): void => {
     submitLogin(data, 'Login')
-    // console.log(data);
   };
   return (
-
     <div className='backgroundLogin'>
       <div>
         <div className="Login_Container">
@@ -72,28 +67,23 @@ function Login() {
                   <span className="slider"></span>
                 </label>
               </div>
-              <div className="text-containercheckbox">แสดงรหัสผ่าน</div>
+              <div className="text-containercheckbox" style={{ marginLeft: '10px', color: '#333' }}>แสดงรหัสผ่าน</div>
               <div className="link-containercheckbox">
                 <a href="http://localhost:3000/forget_password" className="forgetpass">
                   Forget Password?
                 </a>
               </div>
             </div>
-            <input
-              type="submit"
-              value="Sign in"
-              onClick={handleClick}
-              className="btn1" />
+            <div className='cover_btn1_login'>
+              <input type="submit" value="Sign in" onClick={handleClick} className="btn1" />
+            </div>
           </form>
-          <a href="http://localhost:3000/CreateUser" className="dnthave">
-            Don’t have an account? Sign up
-          </a>
+          <div className='cover_btn1_login'>
+            <a href="http://localhost:3000/CreateUser" className="dnthave"> Don’t have an account? Sign up </a>
+          </div>
         </div>
       </div>
-    </div>
-
+    </div >
   );
-
 }
-
 export default Login;

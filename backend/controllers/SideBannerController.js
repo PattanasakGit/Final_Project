@@ -32,7 +32,6 @@ async function addSideBanner(req, res) {
   }
 }
 
-
 async function listSideBanners(req, res) {
   try {
     const data = await getData(DataModel); 

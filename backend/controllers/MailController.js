@@ -2,7 +2,6 @@ const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const url = 'http://localhost:8000'
 
-
 function formatNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
@@ -46,7 +45,6 @@ function sendEmail(Code_verify_Email, To) {
 
 }
 
-
 function html_in_mail(Code_verify_Email) {
   let html_code = `
 
@@ -87,30 +85,16 @@ function html_in_mail(Code_verify_Email) {
   return html_code;
 }
 
-
-
 //======================================================================================================================
 //                      Email forget & change Password
 //======================================================================================================================
 async function changePassword(req, res) {
   try {
-
-
-
     const User_Email = req.params.email;
-    console.log('********************');
-    console.log(User_Email);
-    console.log('********************');
-
     const from = 'Yakkai.th@gmail.com';
     const subject = 'เปลี่ยรหัสผ่านบัญชี YAKKAI';
-
-
     const token = jwt.sign({ User_Email }, 'TP_KEY_login', { expiresIn: '1h' });
     const resetLink = `http://localhost:3000/resetPassword?token=${token}`;
-
-
-
     // สร้าง transporter
     let transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -180,8 +164,6 @@ async function changePassword(req, res) {
   }
 
 }
-
-
 
 //======================================================================================================================
 //                      อันนี้จะเป็นการรับเอาค่าต่าง ๆ เพื่อส่ง email มีขึ้นเพื่อส่งอีเมลย์ถึงใครก็ได้ เนื้อหาใดก็ได้
@@ -265,8 +247,6 @@ async function Every_Email(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
-
-
 
 //======================================================================================================================
 //                      อันนี้คือ เมื่อ Admin อนุมัติ/ไม่อนุมัต จะทำการส่ง Email ไปแจ้งคนขาย 
@@ -484,38 +464,4 @@ async function Send_Email_after_checkd_Ads(SEND_EMAIL_TO, data, status, Ads_Limi
     console.error('เกิดข้อผิดพลาดที่กระบวนการส่ง Email:', error);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 module.exports = { sendEmail, changePassword, Every_Email, Send_Email_after_checkd, Send_Email_after_checkd_Ads };

@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { addToken } = require('./Token.js');
 
-
 var str_collection = "Login";
 
 function formatDate(date) {
@@ -137,7 +136,6 @@ async function resetPass(req, res) {
       }
     }
 
-
     // ค้นหาผู้ใช้ด้วยอีเมลล์
     const user = await DataModel.findOne({ EMAIL: email });
     if (!user) {
@@ -153,9 +151,6 @@ async function resetPass(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
-
-
-
 
 // fn สำหรับเข้าสู่ระบบ และ token
 async function Login(req, res) {
