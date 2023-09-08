@@ -86,7 +86,7 @@ function Shop() {
         setProducts(productsData);
         setTotalProducts(totalProducts);
     };
-    const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
+    const handlePageChange = (_event: React.ChangeEvent<unknown>, page: number) => {
         setCurrentPage(page);
         filter_searchProducts(page); // เรียกใช้งานฟังก์ชัน filter_searchProducts เพื่ออัพเดตข้อมูลสินค้าในหน้าปัจจุบัน
         window.scrollTo(0, 0); // เมื่อกดเปลี่ยนหน้าให้เลื่อนขึ้นด้านบนของหน้าเพจ
@@ -132,7 +132,7 @@ function Shop() {
                             <button className="close_button_popup_comment" onClick={togglePopup}> <CloseIcon /> </button>
                             <h3 style={{ margin: '0px ' }}>รีวิวร้านค้า</h3>
                             <div className="popup_reviews">
-                                <Rating value={RATE} className='star_review_comment' onChange={(event, newValue: any) => { setRATE(newValue) }} /><br />
+                                <Rating value={RATE} className='star_review_comment' onChange={(_event, newValue: any) => { setRATE(newValue) }} /><br />
                                 <textarea value={COMMENT} onChange={(event) => { setCOMMENT(event.target.value) }} className='textarea_comment' /><br />
                                 <button className='btn_submit_review' onClick={submit_data_comment}>ส่งรายการรีวิว</button>
                             </div>

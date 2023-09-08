@@ -39,7 +39,7 @@ function MyProduct() {
     type DataIndex = keyof DataType;
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     const searchInput = useRef<InputRef>(null);
-    const handleSearch = (selectedKeys: string[], confirm: (param?: FilterConfirmProps) => void, dataIndex: DataIndex,) => { confirm(); };
+    const handleSearch = (_selectedKeys: string[], confirm: (param?: FilterConfirmProps) => void, _dataIndex: DataIndex,) => { confirm(); };
     const handleReset = (clearFilters: () => void) => { clearFilters(); };
     const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<DataType> => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (

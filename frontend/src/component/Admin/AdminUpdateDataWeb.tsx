@@ -11,16 +11,6 @@ import { getDataWeb, update } from '../WebSystem/HTTP_Request ';
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
 
 function DataWeb() {
-    interface DataWebType {
-        ID: number;
-        W_NAME: string;
-        W_ADDR: string;
-        W_CONTACT: string;
-        W_EMAIL: string;
-        ABOUT_WEB: string;
-        W_IMG: string;
-    }
-    const [DataWeb, setDataWeb] = useState<DataWebType[]>([]);
     const [W_NAME, setW_NAME] = useState('');
     const [W_ADDR, setW_ADDR] = useState('');
     const [W_CONTACT, setW_CONTACT] = useState('');
@@ -31,7 +21,6 @@ function DataWeb() {
     const listAllData = async () => {
         const DataWeb_from_backend = await getDataWeb();
         if (DataWeb_from_backend) {
-            setDataWeb(DataWeb_from_backend);
             setW_NAME(DataWeb_from_backend.W_NAME || '');
             setW_ADDR(DataWeb_from_backend.W_ADDR || '');
             setW_CONTACT(DataWeb_from_backend.W_CONTACT || '');

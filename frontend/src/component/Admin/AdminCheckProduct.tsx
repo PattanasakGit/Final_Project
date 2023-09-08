@@ -42,7 +42,7 @@ function AdminCheckProduct() {
 
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     const searchInput = useRef<InputRef>(null);
-    const handleSearch = (selectedKeys: string[], confirm: (param?: FilterConfirmProps) => void, dataIndex: DataIndex,) => { confirm(); };
+    const handleSearch = (_selectedKeys: string[], confirm: (param?: FilterConfirmProps) => void, _dataIndex: DataIndex,) => { confirm(); };
     const handleReset = (clearFilters: () => void) => { clearFilters(); };
     const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<DataType> => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -177,10 +177,8 @@ function AdminCheckProduct() {
 
             )
 
-
         },
     ];
-    const [EmailSeller, setSeller] = useState('');
     const [products, setProducts] = useState<DataType[]>([]);
     const [selectedTab, setSelectedTab] = useState<string>('รายการที่รออนุมัติ');
     const [filteredProducts, setFilteredProducts] = useState<DataType[]>(products);
@@ -188,13 +186,10 @@ function AdminCheckProduct() {
     const [Data_ShowTicketPopup, setData_ShowTicketPopup] = useState<DataType>();
     const [OpenPopup, setOpenPopup] = useState(false);
 
-
     //----------------- ดึงสินค้าที่ตรงกับ User ----------------------------
-    const userEmail: any = localStorage.getItem('email');
     async function Listdata() {
         const dataProduct = await listProduct();
         setProducts(dataProduct);
-        setSeller(dataProduct.U_EMAIL);
     }
     //----------------------------------------------------------------
     useEffect(() => {
@@ -215,19 +210,12 @@ function AdminCheckProduct() {
         setFilteredProducts(filteredData as any);
     }, [selectedTab, products]);
 
-    const handleSubmit = () => { }
-
     const data: DataType[] = filteredProducts; //ขอมูลที่จะแสดงใน ตาราง
-
-
-
 
     const hendle_btn_in_table = (data: DataType) => {
         setData_ShowTicketPopup(data);
         setOpenPopup(!OpenPopup)
-
     }
-
     return (
         <center>
             <div style={{ height: '75vh', width: '90%', paddingBottom: '7rem' }} className='contentPage'>
@@ -274,13 +262,6 @@ function AdminCheckProduct() {
 
 
                 <div className='div_cover_table_and_tab'>
-                    {/* <Segmented
-                        block
-                        options={['รายการที่กำลังประกาศขาย', 'รายการที่รออนุมัติ', 'รายการที่ยกเลิกประกาศขาย', 'รายการทั้งหมด']}
-                        onChange={newTab => setSelectedTab(newTab as string)}
-                        className='tp_tab'
-                    /> */}
-
                     <Table
                         scroll={{ x: 1300 }}
                         columns={columns}
@@ -295,10 +276,7 @@ function AdminCheckProduct() {
                             className: 'TP_pagination_table'
                         }}
                     />
-
                 </div>
-
-
             </div>
             {OpenPopup && Data_ShowTicketPopup && (
                 <div className='popupShowTicket'>
@@ -310,18 +288,13 @@ function AdminCheckProduct() {
                             </button>
                         </div>
                         <div style={{ padding: '10px 0px', display: 'flex', justifyContent: 'center' }}>
-
                             {showDataTicket(Data_ShowTicketPopup)}
-
-
                         </div>
 
                     </div>
                 </div>
             )}
         </center>
-
-
 
     );
 }
@@ -337,10 +310,7 @@ const showDataTicket = (data: any) => {
             P_STATUS: status,
             SEND_EMAIL_TO: data.U_EMAIL
         }
-        update(newData,`updateProductByAdmin/`+newData.ID);
-        
-        // console.log('status ------>', newData);
-
+        update(newData, `updateProductByAdmin/` + newData.ID);
     };
 
     return (
@@ -362,8 +332,6 @@ const showDataTicket = (data: any) => {
                                 <p>ผู้ขายไม่ได้อัพโหลดภาพสินค้า</p>
                                 <Empty />
                             </div>
-
-
                         )}
                     </div>
 
@@ -394,7 +362,7 @@ const showDataTicket = (data: any) => {
                 </div>
                 <div style={{ margin: '1rem', padding: '20px', boxShadow: '0 -5px 5px #00000010', borderRadius: '10px' }}>
                     <h1 style={{ color: '#333', marginTop: '0px' }}> อัพเดตรายการประกาศขาย </h1>
-                    <div className='container_btn_select' style={{ margin: '0rem', backgroundColor: '#00000015',padding:'20px' }}>
+                    <div className='container_btn_select' style={{ margin: '0rem', backgroundColor: '#00000015', padding: '20px' }}>
                         <button className='btn_Yellow' onClick={() => hendle_update_status('รอตรวจสอบ')}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <img className='icon_in_btn' src='ICON/Icon_Padding.png' />
