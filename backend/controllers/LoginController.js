@@ -4,7 +4,6 @@ const { Schema } = mongoose;
 const { insertData, getData, updateData, deleteData, getDataById, getNextDataId } = require('../database/Database.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 const { addToken } = require('./Token.js');
 
 var str_collection = "Login";
