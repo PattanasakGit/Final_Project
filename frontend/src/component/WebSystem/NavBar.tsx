@@ -6,16 +6,16 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Box, Toolbar, IconButton, Typography, Button, Menu, MenuItem, Avatar } from '@mui/material';
 
+const PortFrontend = import.meta.env.VITE_URL_FRONTEND
+
 const NavBar = () => {
-  const URL_backend = 'http://localhost:3000';
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [user, setUser] = React.useState<any>([]);
   let blank_dataWeb = { W_NAME: "", W_ADDR: "", W_CONTACT: "", W_EMAIL: "", ABOUT_WEB: "" }
   const [dataWeb, setDataWeb] = useState<any>(blank_dataWeb);
 
   const fetchDataWeb = async () => {
-    const DataWeb_from_backend = await getDataWeb();
-    console.log('|---Navbar โหลดข้อมูลเว็ปไซต์---|');
+    const DataWeb_from_backend = await getDataWeb();    
     if (DataWeb_from_backend) {
       setDataWeb(DataWeb_from_backend)
     }
@@ -51,7 +51,7 @@ const NavBar = () => {
   function handleLogout() {
     localStorage.clear();
     sessionStorage.clear();
-    window.location.href = URL_backend + '/';
+    window.location.href = PortFrontend + '/';
   }
 
   return (
@@ -66,13 +66,13 @@ const NavBar = () => {
           </a>
         </Box>
         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => (window.location.href = URL_backend + '/MyProduct')}>ประกาศขายของฉัน</Button>}
-          {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => window.location.href = URL_backend + "/MyProfile"}>  {user.U_NAME}</Button>}
+          {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => (window.location.href = PortFrontend + '/MyProduct')}>ประกาศขายของฉัน</Button>}
+          {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => window.location.href = PortFrontend + "/MyProfile"}>  {user.U_NAME}</Button>}
           {user.length === 0 && <Button color="inherit" onClick={handleLogout} style={{marginRight:'1rem',fontSize:'18px'}}>Login</Button>}
         </Box>
         {user.length !== 0 && (
           <Box >
-            <button className='Btn_sell' onClick={() => (window.location.href = URL_backend + '/CreateProduct')} >ประกาศขาย</button>
+            <button className='Btn_sell' onClick={() => (window.location.href = PortFrontend + '/CreateProduct')} >ประกาศขาย</button>
             <IconButton
               color="inherit"
               aria-label="open menu"
@@ -88,15 +88,15 @@ const NavBar = () => {
               open={Boolean(anchorEl)}
               onClose={handleMenuClose}
             >
-              <MenuItem onClick={() => (window.location.href = URL_backend + '/CreateProduct')}>
+              <MenuItem onClick={() => (window.location.href = PortFrontend + '/CreateProduct')}>
                 <Typography className='TP_font' variant="body1"><AddShoppingCartIcon /> ประกาศขาย</Typography>
               </MenuItem>
-              <MenuItem onClick={() => (window.location.href = URL_backend + '/MyProduct')}>
+              <MenuItem onClick={() => (window.location.href = PortFrontend + '/MyProduct')}>
                 <Typography className='TP_font' variant="body1"><StorefrontIcon /> ประกาศขายของฉัน</Typography>
               </MenuItem>
 
               {user.length !== 0 &&
-                <MenuItem onClick={() => (window.location.href = URL_backend + '/MyProfile')}>
+                <MenuItem onClick={() => (window.location.href = PortFrontend + '/MyProfile')}>
                   <Typography className='TP_font' variant="body1"><ManageAccountsIcon /> โปรไฟล์ของฉัน</Typography>
                 </MenuItem>
               }<center>

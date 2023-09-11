@@ -2,8 +2,8 @@ import axios from 'axios';
 import Swal from 'sweetalert2'
 import jwt_decode from 'jwt-decode';
 
-const PortBackend = 'http://localhost:8000'
-const PortFrontend = 'http://localhost:3000'
+const PortBackend = import.meta.env.VITE_URL_BACKEND
+const PortFrontend = import.meta.env.VITE_URL_FRONTEND
 
 //==============================================================================================================================================================================================================
 export const submit = (data: any, part: string) => {

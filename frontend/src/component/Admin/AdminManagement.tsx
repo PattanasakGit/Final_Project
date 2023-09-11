@@ -14,7 +14,7 @@ import type { ColumnType, ColumnsType } from 'antd/es/table';
 import { listAdmins, DeleteByID } from '../WebSystem/HTTP_Request ';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 
-const url = 'http://localhost:3000'
+const PortFrontend = import.meta.env.VITE_URL_FRONTEND
 const Root_Email = "yakkai.th@gmail.com"
 
 function AdminManagement() {
@@ -111,7 +111,7 @@ function AdminManagement() {
                 localStorage.getItem('email') === Root_Email ? (
                     record.U_EMAIL === localStorage.getItem("email") ? (
                         <Space size="small" style={{ textAlign: 'center' }}>
-                            <button className='btn_edit_table' onClick={() => window.location.href = url + '/MyProfile'}><EditIcon /></button>
+                            <button className='btn_edit_table' onClick={() => window.location.href = PortFrontend + '/MyProfile'}><EditIcon /></button>
                         </Space>
                     ) : (
                         <Space size="small" style={{ textAlign: 'center' }}>
@@ -121,7 +121,7 @@ function AdminManagement() {
                 ) : (
                     record.U_EMAIL === localStorage.getItem("email") ? (
                         <Space size="small" style={{ textAlign: 'center' }}>
-                            <button className='btn_edit_table' onClick={() => window.location.href = url + '/MyProfile'}><EditIcon /></button>
+                            <button className='btn_edit_table' onClick={() => window.location.href = PortFrontend + '/MyProfile'}><EditIcon /></button>
                         </Space>
                     ) : (
                         <Space size="small">

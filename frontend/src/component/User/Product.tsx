@@ -8,9 +8,10 @@ import { useParams } from 'react-router-dom';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { fillter_product, getProductByID, Check_Token, getUserByEmail, Every_Email } from '../WebSystem/HTTP_Request ';
 
+const PortFrontend = import.meta.env.VITE_URL_FRONTEND
+
 let Data_seller_out: any = {};
 let PhoneNumber_in_product: any = '';
-const url_frontend = 'http://localhost:3000'
 
 function format_Price(number: number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -66,7 +67,7 @@ function Product() {
     };
     function go_to_shop_page() {
         localStorage.setItem("UserEmail_for_Shop", Data_seller.U_EMAIL);
-        window.location.href = url_frontend + '/Shop';
+        window.location.href = PortFrontend + '/Shop';
     };
     // ส่วนของการจัดการวันเวลา
     const dateString = Data_seller.U_REGISTER;
@@ -234,7 +235,7 @@ async function need_to_buy(product: interface_Product) {
             }
         });
     } else {
-        window.location.href = "http://localhost:3000/";
+        window.location.href = PortFrontend;
     }
 }
 

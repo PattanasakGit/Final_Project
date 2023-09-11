@@ -15,7 +15,7 @@ import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import { Check_Token, update, getProductBy_EmailUser } from '../WebSystem/HTTP_Request ';
 
-const url = 'http://localhost:3000'
+const PortFrontend = import.meta.env.VITE_URL_FRONTEND
 
 function format_Price(number: number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -151,7 +151,7 @@ function MyProduct() {
             render: (_, record) => (
                 record.P_STATUS === "กำลังประกาศขาย" ? (
                     <Space size="small" style={{ textAlign: 'center' }}>
-                        <button className='btn_show' onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
+                        <button className='btn_show' onClick={() => window.location.href = PortFrontend + '/Product/' + record.ID}><VisibilityIcon /></button>
                         <button
                             className='btn_delete'
                             onClick={async () => {
@@ -182,8 +182,8 @@ function MyProduct() {
                     </Space>
                 ) : record.P_STATUS === "รอตรวจสอบ" ? (
                     <Space size="small">
-                        <button className='btn_show' onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
-                        <button className='btn_edit_table' onClick={() => window.location.href = url + '/EditProduct/' + record.ID}><EditIcon /></button>
+                        <button className='btn_show' onClick={() => window.location.href = PortFrontend + '/Product/' + record.ID}><VisibilityIcon /></button>
+                        <button className='btn_edit_table' onClick={() => window.location.href = PortFrontend + '/EditProduct/' + record.ID}><EditIcon /></button>
                         <button
                             className='btn_delete'
                             onClick={async () => {
@@ -209,7 +209,7 @@ function MyProduct() {
                     </Space >
                 ) : (
                     <Space size="small">
-                        <button className='btn_show' onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
+                        <button className='btn_show' onClick={() => window.location.href = PortFrontend + '/Product/' + record.ID}><VisibilityIcon /></button>
                     </Space>
                 )
             ),
@@ -225,7 +225,7 @@ function MyProduct() {
             P_ADS: data.P_ADS
         }
         localStorage.setItem('DataProduct_Ads', JSON.stringify(newData));
-        window.location.href = url + '/Advert';
+        window.location.href = PortFrontend + '/Advert';
     }
     const [products, setProducts] = useState<DataType[]>([]);
     const [selectedTab, setSelectedTab] = useState<string>('รายการที่กำลังประกาศขาย');

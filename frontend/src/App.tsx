@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
 // นำเข้า หน้าต่าง ๆ ที่เป็นของ Web System
-import Login from './component/WebSystem/Login.tsx'
+import Login from './component/WebSystem/Login.tsx';
 import NavBar from "./component/WebSystem/NavBar.tsx";
 import Footer from "./component/WebSystem/Footer.tsx";
 import PrivacyPolicy from "./component/WebSystem/PrivacyPolicy.tsx"

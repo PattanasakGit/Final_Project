@@ -8,7 +8,8 @@ import React, { useEffect, useState, } from 'react';
 import { Avatar, Card, CardContent, Grid, Pagination, Rating, Typography } from '@mui/material';
 import { Check_Token, getUserByEmail, getProductBy_EmailUser, addReview } from '../WebSystem/HTTP_Request ';
 
-const URL_frontend = 'http://localhost:3000';
+const PortFrontend = import.meta.env.VITE_URL_FRONTEND
+
 interface DataType {
     key: number;
     ID: number;
@@ -146,7 +147,7 @@ function Shop() {
     const fraud_repoet = () => {
         if (userEmail) {
             sessionStorage.setItem('User_Seller_Data_for_Report', userEmail);
-            window.location.href = URL_frontend + '/FraudReport';
+            window.location.href = PortFrontend + '/FraudReport';
         }
     }
     return (
