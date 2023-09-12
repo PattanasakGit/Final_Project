@@ -119,8 +119,8 @@ function Advert() {
     }
     return (
         <center>
-            <div>
-                <img style={{ width: '100%' }} src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2F%E0%B8%9B%E0%B9%89%E0%B8%B2%E0%B8%A2%E0%B9%80%E0%B8%8A%E0%B8%B4%E0%B8%8D%E0%B8%8A%E0%B8%A7%E0%B8%99%E0%B9%82%E0%B8%86%E0%B8%A9%E0%B8%93%E0%B8%B2.png?alt=media&token=9e8ce507-d90c-491f-a303-4f7712f0195a" />
+            <div className='top_img_in_ADS'>
+                <img style={{ width: '100%',margin:0 }} src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2F%E0%B8%9B%E0%B9%89%E0%B8%B2%E0%B8%A2%E0%B9%80%E0%B8%8A%E0%B8%B4%E0%B8%8D%E0%B8%8A%E0%B8%A7%E0%B8%99%E0%B9%82%E0%B8%86%E0%B8%A9%E0%B8%93%E0%B8%B2.png?alt=media&token=9e8ce507-d90c-491f-a303-4f7712f0195a" />
             </div>
             <div className='bg_crad'>
                 {cardProductAds()}
@@ -138,7 +138,7 @@ function Advert() {
                     <p style={{ marginTop: '1rem', color: '#C58940' }}>การลงโฆษณา 1 ครั้งมีอายุการใช้งาน 30 วัน (นับจากวันที่ระบบอนุมัติ)</p>
                 </div>
                 <div style={{ marginTop: '1rem', color: '#ffffff' }}>
-                    <img style={{ borderRadius: '20px', height: '500px' }} src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FQR%2029%20B.png?alt=media&token=87c1d506-26d4-48ce-b967-833fe978341f' />
+                    <img style={{ borderRadius: '20px', height: '500px',width:'100vw' }} src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FQR%2029%20B.png?alt=media&token=87c1d506-26d4-48ce-b967-833fe978341f' />
                 </div>
                 <div style={{ backgroundColor: '#DAC0A3', padding: '5px', }}>
 

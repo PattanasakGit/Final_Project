@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { storage } from '../WebSystem/firebase';
 import { validateCreateProduct } from "../WebSystem/Validateinput";
 import { Button, MenuItem, Select } from '@mui/material';
-import { ChangeEvent, useRef,useEffect, useState, } from 'react';
+import { ChangeEvent, useRef, useEffect, useState, } from 'react';
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
 import { submit, fetchCategories, Check_Token } from '../WebSystem/HTTP_Request ';
 
@@ -233,7 +233,7 @@ function CreateProduct() {
 
                         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                             <label style={{ fontSize: '16px' }}>หมวดหมู่ :</label>
-                            <Select value={category} onChange={(event) => handleSetTextParam(event.target.value as string)} className='TP_combobox_search' style={{ width: '62.8%', margin: '5px 5% 5px 1%' }}>
+                            <Select value={category} onChange={(event) => handleSetTextParam(event.target.value as string)} className='TP_combobox_search' style={{ width: '62.8%', margin: '5px 5% 5px 1%',display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
                                 {categories.map((category: any) => (
                                     <MenuItem key={category.ID} value={category.CP_NAME}>
                                         <img src={category.CP_ICON} style={{ height: '30px', width: '30px', marginRight: '1rem' }} />

@@ -10,6 +10,10 @@
     align-items: center;
     margin-top: 10px;
 }
+.top_img_in_ADS{
+    padding: 75px 0 0 0;
+    background-color: #4A5C6D;
+}
 
 @media (max-width: 768px) {
     .bg_crad{

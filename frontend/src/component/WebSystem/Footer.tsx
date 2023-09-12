@@ -2,7 +2,7 @@ import '../../css/footer.css'
 import { useEffect, useState } from 'react';
 import { getDataWeb } from './HTTP_Request ';
 
-const URL_front = 'http://localhost:3000';
+const PortFrontend = import.meta.env.VITE_URL_FRONTEND
 
 const Footer = () => {
   let blank_dataWeb = { W_NAME: "", W_ADDR: "", W_CONTACT: "", W_EMAIL: "", ABOUT_WEB: "" }
@@ -42,7 +42,7 @@ const Footer = () => {
         </div>
 
         <div className='cover_content_footer'>
-          <a href={URL_front + '/PrivacyPolicy'} ><h3 style={{ margin: '20px 0 0 0' }}> * นโยบายความเป็นส่วนตัว </h3> </a>
+          <a href={PortFrontend + '/PrivacyPolicy'} ><h3 style={{ margin: '20px 0 0 0' }}> * นโยบายความเป็นส่วนตัว </h3> </a>
           <a href='https://tinyurl.com/4dsc4h4t'><h3> * เครดิตการใช้รูปภาพ </h3> </a>
         </div>
 

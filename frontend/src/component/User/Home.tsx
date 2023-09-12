@@ -28,7 +28,7 @@ function Home() {
         listAllData_SideBanner();
         setTimeout(() => {
             setIsLoading(false);
-        }, 1500);
+        }, 1000);
     }, []);
 
     const Loading = () => {

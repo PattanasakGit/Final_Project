@@ -19,6 +19,7 @@ const NavBar = () => {
     if (DataWeb_from_backend) {
       setDataWeb(DataWeb_from_backend)
       localStorage.setItem('LOGO',DataWeb_from_backend.W_IMG)
+      localStorage.setItem('WEB_NAME',DataWeb_from_backend.W_NAME)
     }
   }
   useEffect(() => {

@@ -111,7 +111,7 @@ const ProductsGrid = () => {
 
   //------------------------ สำหรับแสดงหมวดหมู่ --------------------------
   const [showAllItems, setShowAllItems] = useState(false);
-  const [itemsPerPage_CP, setItemsPerPage_CP] = useState(15);
+  const [itemsPerPage_CP, setItemsPerPage_CP] = useState(3);
 
   useEffect(() => {
     const handleResize = () => {
