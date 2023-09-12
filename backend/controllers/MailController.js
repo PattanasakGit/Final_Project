@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
-const url = 'http://localhost:8000'
+
+const PortFrontend = "https://yakkai.vercel.app"
 
 function formatNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -94,7 +95,7 @@ async function changePassword(req, res) {
     const from = 'Yakkai.th@gmail.com';
     const subject = 'เปลี่ยรหัสผ่านบัญชี YAKKAI';
     const token = jwt.sign({ User_Email }, 'TP_KEY_login', { expiresIn: '1h' });
-    const resetLink = `http://localhost:3000/resetPassword?token=${token}`;
+    const resetLink = `${PortFrontend}/resetPassword?token=${token}`;
     // สร้าง transporter
     let transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -131,7 +132,7 @@ async function changePassword(req, res) {
     <body>
       <div class="container">
         <div class="logo">
-          <a href="http://localhost:3000/">
+          <a href=${PortFrontend}>
             <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FLOGO_YaKKAI.png?alt=media&token=1410c18c-d307-4612-a1e4-30f21b6ee705" alt="Yakkai Logo">
           </a>
         </div>
@@ -221,7 +222,7 @@ async function Every_Email(req, res) {
                         <p style="margin: 0;font-family: 'Noto Sans Thai', sans-serif;" >ชื่อสินค้า:   ${data.P_NAME} </p>
                         <p style="margin: 0;font-family: 'Noto Sans Thai', sans-serif;" >ราคา ${formatNumber(data.P_PRICE)} บาท</p><br />
                         <img style="height:200px; border-radius: 15px;" src=${data.P_IMG[0]}><br />
-                        <a href="http://localhost:3000/Product/${data.ID}">
+                        <a href="${PortFrontend}/Product/${data.ID}">
                           <button class="button"> 
                             ดูรายการประกาศขายของคุณ!
                           </button>
@@ -309,7 +310,7 @@ async function Send_Email_after_checkd(SEND_EMAIL_TO, data) {
                   <div class="container">
                     <div class="content">
                     <div class="logo">
-                      <a href="http://localhost:3000/">
+                      <a href=${PortFrontend}>
                         <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FLOGO_YaKKAI.png?alt=media&token=1410c18c-d307-4612-a1e4-30f21b6ee705" alt="Yakkai Logo">
                       </a>
                     </div>
@@ -317,7 +318,7 @@ async function Send_Email_after_checkd(SEND_EMAIL_TO, data) {
                     <h2> ผลการตรวจสอบคือ <h2>
                     <h1 style='background-color: #F8F0E5'> ${status_text} <h1>
                       
-                        <a href="http://localhost:3000/Product/${data.ID}">
+                        <a href="${PortFrontend}/Product/${data.ID}">
                           <button class="button"> 
                             ดูรายการประกาศขายของคุณ!
                           </button>
@@ -433,12 +434,12 @@ async function Send_Email_after_checkd_Ads(SEND_EMAIL_TO, data, status, Ads_Limi
                 <div class="container">
                   <div class="content">
                     <div class="logo">
-                      <a href="http://localhost:3000/">
+                      <a href=${PortFrontend}>
                         <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FLOGO_YaKKAI.png?alt=media&token=1410c18c-d307-4612-a1e4-30f21b6ee705" alt="Yakkai Logo">
                       </a>
                     </div>
                     ${html_for_send()}
-                    <a href="http://localhost:3000/Product/${data.ID}">
+                    <a href="${PortFrontend}/Product/${data.ID}">
                       <button class="button"> 
                         ดูรายการประกาศขายของคุณ!
                       </button>
