@@ -16,6 +16,9 @@
     text-align: left;
     text-align: center;
 }
+.more_product_right{
+    display: none;
+}
 
 .product_container_text {
     text-align: left;
@@ -24,7 +27,7 @@
 }
 
 .TP_text_product {
-    background-color: rgba(0, 0, 0, 0.32);
+    background-color: rgba(0, 0, 0, 0.122);
     padding: 20px;
     border-radius: 15px;
 }
@@ -50,7 +53,7 @@
 }
 
 .product_images {
-    width: 10%;
+    width: 100%;
     display: grid;
     grid-template-rows: repeat(auto-fill, minmax(80px, 1fr));
     grid-auto-rows: 100px;
@@ -73,7 +76,8 @@
 /* ================================================================ */
 .btn_product,
 .btn_product1,
-.btn_product2 {
+.btn_product2,
+.btn_call {
     font-family: 'Noto Sans Thai', sans-serif;
     width: 30%;
     height: 60px;
@@ -82,8 +86,14 @@
     border-radius: 15px;
     border: 2px solid #ffd8d853;
     transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+.btn_call {
+    background-color: #789654;
+}
 .btn_product1 {
     background-color: rgb(228, 68, 0);
 }
@@ -101,7 +111,8 @@
 
 .btn_product:hover,
 .btn_product1:hover,
-.btn_product2:hover {
+.btn_product2:hover,
+.btn_call:hover {
     box-shadow: 8px 5px 10px rgba(0, 0, 0, 0.477);
 }
 
@@ -214,6 +225,7 @@
 .IMG_Upload {
     width: 150px !important;
     height: 120px !important;
+    object-fit: scale-down;
 }
 
 /* ========================== shop =================================== */
@@ -454,11 +466,11 @@
     }
 
     .product_container {
+        padding-top: 1rem;
         display: block;
     }
 
     .TP_text_product {
-        background-color: rgba(0, 0, 0, 0.32);
         padding: 20px;
         border-radius: 15px;
         width: 85%;
@@ -471,6 +483,12 @@
 
     .product_container_img {
         width: 100%;
+    }
+    .more_product_left{
+        display: none;
+    }
+    .more_product_right{
+        display: block;
     }
 
     .product_container_text {
@@ -492,8 +510,9 @@
     }
 
     .text_space {
+        margin-top: 1rem;
         width: 100% !important;
-        padding: 0px !important;
+        padding: 20px 0px !important;
     }
 
     .btn_want_to_buy {
@@ -502,7 +521,8 @@
     }
 
     .btn_product1,
-    .btn_product2 {
+    .btn_product2,
+    .btn_call {
         font-family: 'Noto Sans Thai', sans-serif;
         font-size: 12px;
         width: 30%;
@@ -593,5 +613,6 @@
         scale: 1.1;
         box-shadow: 4px 4px 5px #00000055;
     }
+
     /* ================================================================ */
 }

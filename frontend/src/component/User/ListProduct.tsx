@@ -4,6 +4,7 @@ import { Select, MenuItem } from '@mui/material';
 import { useState, useEffect, SetStateAction } from 'react';
 import { fetchCategories, fillter_product } from '../WebSystem/HTTP_Request ';
 import { Grid, Card, CardContent, Typography, Pagination } from '@mui/material';
+import { MenuUnfoldOutlined , SearchOutlined } from '@ant-design/icons';
 
 const colors = ["FF8C32", "D7A86E", "A64B2A", "8E3200"];
 
@@ -256,7 +257,7 @@ const ProductsGrid = () => {
 
       <div className="TP_Box_for_search">
         <div style={{ width: "15%", marginRight: '2%', marginLeft: '1%' }}>
-          <button className="TP_btn_sell" onClick={showDrawer}> ตัวกรอง </button>
+          <button className="TP_btn_sell" onClick={showDrawer}> <MenuUnfoldOutlined /> </button>
         </div>
         <div style={{ width: "60%" }}>
           <input className="ThepatforInput" value={nameProduct} onChange={(event) => setnameProduct(event.target.value)}
@@ -264,7 +265,7 @@ const ProductsGrid = () => {
           />
         </div>
         <div style={{ width: "15%", marginLeft: '4%' }}>
-          <button className="TP_btn_s" onClick={Search}> ค้นหา </button>
+          <button className="TP_btn_s" onClick={Search}> <SearchOutlined /> </button>
         </div>
       </div>
 

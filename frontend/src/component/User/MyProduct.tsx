@@ -228,7 +228,7 @@ function MyProduct() {
         window.location.href = PortFrontend + '/Advert';
     }
     const [products, setProducts] = useState<DataType[]>([]);
-    const [selectedTab, setSelectedTab] = useState<string>('รายการที่กำลังประกาศขาย');
+    const [selectedTab, setSelectedTab] = useState<string>('🟢กำลังประกาศขาย');
     const [filteredProducts, setFilteredProducts] = useState<DataType[]>(products);
 
     //----------------- ดึงสินค้าที่ตรงกับ User ----------------------------
@@ -243,11 +243,11 @@ function MyProduct() {
 
     useEffect(() => {
         const filteredData = products.filter(item => {
-            if (selectedTab === 'รายการที่กำลังประกาศขาย') {
+            if (selectedTab === '🟢กำลังประกาศขาย') {
                 return item.P_STATUS as string === 'กำลังประกาศขาย';
-            } else if (selectedTab === 'รายการที่รออนุมัติ') {
+            } else if (selectedTab === '🟡รออนุมัติ') {
                 return item.P_STATUS as string === 'รอตรวจสอบ';
-            } else if (selectedTab === 'รายการที่ยกเลิกประกาศขาย') {
+            } else if (selectedTab === '🔴ยกเลิกแล้ว') {
                 return item.P_STATUS as string === 'ยกเลิกประกาศขาย';
             }
             return true;
@@ -263,7 +263,7 @@ function MyProduct() {
                 <div className='div_cover_table_and_tab'>
                     <Segmented
                         block
-                        options={['รายการที่กำลังประกาศขาย', 'รายการที่รออนุมัติ', 'รายการที่ยกเลิกประกาศขาย', 'รายการทั้งหมด']}
+                        options={['🟢กำลังประกาศขาย', '🟡รออนุมัติ', '🔴ยกเลิกแล้ว', 'รายการทั้งหมด']}
                         onChange={newTab => setSelectedTab(newTab as string)}
                         className='tp_tab'
                     />

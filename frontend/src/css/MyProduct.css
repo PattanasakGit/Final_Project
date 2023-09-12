@@ -25,7 +25,8 @@
 
 .topics_table {
     margin: 0 0 20px 0;
-    text-shadow: -1px -1px 0 rgb(114, 114, 114), 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    color: #fffaf0;
+    /* text-shadow: -1px -1px 0 rgb(114, 114, 114), 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black; */
 }
 
 .btn_show,
@@ -77,6 +78,6 @@
         margin-bottom: 1rem;
     }
     .tp_tab {
-        font-size: -1px;
+        font-size: 5px !important;
     }
 }

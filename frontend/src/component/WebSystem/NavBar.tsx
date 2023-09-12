@@ -18,6 +18,7 @@ const NavBar = () => {
     const DataWeb_from_backend = await getDataWeb();    
     if (DataWeb_from_backend) {
       setDataWeb(DataWeb_from_backend)
+      localStorage.setItem('LOGO',DataWeb_from_backend.W_IMG)
     }
   }
   useEffect(() => {
@@ -68,8 +69,8 @@ const NavBar = () => {
         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => (window.location.href = PortFrontend + '/MyProduct')}>ประกาศขายของฉัน</Button>}
           {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => window.location.href = PortFrontend + "/MyProfile"}>  {user.U_NAME}</Button>}
-          {user.length === 0 && <Button color="inherit" onClick={handleLogout} style={{marginRight:'1rem',fontSize:'18px'}}>Login</Button>}
         </Box>
+          {user.length === 0 && <Button color="inherit" onClick={handleLogout} style={{marginRight:'1rem',fontSize:'18px'}}>Login</Button>}
         {user.length !== 0 && (
           <Box >
             <button className='Btn_sell' onClick={() => (window.location.href = PortFrontend + '/CreateProduct')} >ประกาศขาย</button>

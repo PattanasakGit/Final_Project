@@ -1,6 +1,7 @@
 import '../../css/Product.css';
 import '../../css/Profile.css';
 import '../../css/Background.css';
+import '../../css/Advert.css';
 import Swal from 'sweetalert2';
 import { Empty, Image, Tag } from 'antd';
 import { storage } from '../WebSystem/firebase';
@@ -121,20 +122,7 @@ function Advert() {
             <div>
                 <img style={{ width: '100%' }} src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2F%E0%B8%9B%E0%B9%89%E0%B8%B2%E0%B8%A2%E0%B9%80%E0%B8%8A%E0%B8%B4%E0%B8%8D%E0%B8%8A%E0%B8%A7%E0%B8%99%E0%B9%82%E0%B8%86%E0%B8%A9%E0%B8%93%E0%B8%B2.png?alt=media&token=9e8ce507-d90c-491f-a303-4f7712f0195a" />
             </div>
-            <div
-                style={{
-                    width: '1000px',
-                    height: '600px',
-                    backgroundImage: "url('https://images.unsplash.com/photo-1664262283606-d4e198491656?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1712&q=80')",
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    borderRadius: '20px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: '10px'
-                }}
-            >
+            <div className='bg_crad'>
                 {cardProductAds()}
             </div>
             <div style={{ height: '100%', width: '90%', backgroundColor: '#ffffff89', marginTop: '10px' }} className='contentPage'>
@@ -227,14 +215,14 @@ function cardProductAds() {
     }
 
     return (
-        <Card sx={{ width: '250px', borderRadius: '15px', backgroundColor: '#FFFDE8', border: '4px solid #FFCC48', boxShadow: ' 10px 12px 20px #00000080', position: 'absolute' }} className='product_cardContainer' >
+        <Card sx={{ height:'350px' , width: '250px', borderRadius: '15px', backgroundColor: '#FFFDE8', border: '4px solid #FFCC48', boxShadow: ' 10px 12px 20px #00000080', position: 'absolute' }} className='product_cardContainer' >
             <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'absolute', top: '0', right: '0', padding: '10px' }}>
-                <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FICON%2FPremium%20ICON.png?alt=media&token=2da96bd0-d868-4a85-9f52-becfe26fda9b" style={{ height: '40px', width: '35px', filter: 'drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.9))' }} />
+                <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FICON%2FPremium%20ICON.png?alt=media&token=2da96bd0-d868-4a85-9f52-becfe26fda9b" style={{ height: '40px', width: '40px', filter: 'drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.9))' }} />
             </div>
             <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
-                <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
+                <div  style={{height:'250px'}} >
                     {product.P_IMG.length > 0 ? (
-                        <img src={product.P_IMG[0]} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <img src={product.P_IMG[0]} style={{height:'250px'}}/>
                     ) : (
                         <div className='TP_text_product_seller' style={{ color: '#D8D9DA' }}>
                             <p>ผู้ขายไม่ได้อัพโหลด<br />ภาพสินค้า</p>
@@ -242,9 +230,9 @@ function cardProductAds() {
                         </div>
                     )}
                 </div>
-                <Typography variant="h6" component="div" className='TP_font'>
+                <p className='TP_font_in_card' >
                     {product.P_NAME}
-                </Typography>
+                </p>
                 <Typography variant="body1" component="div" className='TP_font'>
                     ราคา: {format_Price(product.P_PRICE)} บาท
                 </Typography>

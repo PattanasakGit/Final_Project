@@ -276,8 +276,7 @@ export const submitLogin = (data: any, part: string) => {
       }
     })
     .catch((error) => {
-
-      if (error.message) {
+      if (error.message !== 'Network Error') {
         Swal.fire({
           title: 'เข้าสู่ระบบไม่สำเร็จ',
           text: 'รหัสผ่านหรือ email ไม่ถูกต้อง',

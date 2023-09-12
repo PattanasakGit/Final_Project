@@ -7,7 +7,7 @@ function PrivacyPolicy() {
     return (
         <center>
             <div style={{ height: 'auto', width: '90%', color: '#111', backgroundColor: '#fff' }} className='contentPage'>
-                <div style={{ padding: '0 2rem 2rem 2rem'  }}>
+                <div style={{ padding: '1rem 2rem 2rem 2rem'  }}>
 
                     <h1>นโยบายความเป็นส่วนตัว</h1>
 
