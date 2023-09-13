@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap');
 
-.container_btn_select{
+.container_btn_select {
     display: flex;
     justify-content: center;
     text-align: center;
@@ -10,10 +10,13 @@
     width: fit-content;
 }
 
-.btn_All,.btn_Yellow,.btn_Green,.btn_Pink,
+.btn_All,
+.btn_Yellow,
+.btn_Green,
+.btn_Pink,
 .btn_blue {
     margin: 10px;
-    width: 300px;
+    width: 18vw;
     height: 70px;
     border: 0;
     border-radius: 10px;
@@ -44,7 +47,10 @@
     background-color: #A1C2F1;
 }
 
-.btn_All:hover,.btn_Yellow:hover,.btn_Green:hover,.btn_Pink:hover,
+.btn_All:hover,
+.btn_Yellow:hover,
+.btn_Green:hover,
+.btn_Pink:hover,
 .btn_blue:hover {
     scale: 1.1;
     box-shadow: 4px 6px 16px 0 rgba(0, 0, 0, 0.507);
@@ -114,4 +120,16 @@
     justify-content: center;
     background-color: #ffffff75;
 
+}
+
+@media (max-width: 992px) {
+    .btn_All,
+    .btn_Yellow,
+    .btn_Green,
+    .btn_Pink,
+    .btn_blue {
+        margin: 6px;
+        /* width: 20vw; */
+        height: 70px;
+    }
 }
