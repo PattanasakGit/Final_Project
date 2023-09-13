@@ -30,7 +30,7 @@
     backdrop-filter: blur(5px);
     background-size: cover;
     background-position: center;
-    background-color: #ffffff2e ;
+    background-color: #ffffff2e;
 }
 
 .formInput {
@@ -52,6 +52,24 @@
 }
 
 .ThepatforInput:focus {
+    outline: none;
+    border-color: #ffcc00;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+}
+.ThepatforInput_search {
+    width: 90%;
+    height: 50px;
+    color: black;
+    font-size: 20px;
+    text-align: left;
+    padding-left: 15px;
+    border-radius: 7px;
+    border: 2px solid #5e5e5e53;
+    background-color: #ffffff0e;
+    font-family: 'Noto Sans Thai', sans-serif;
+}
+
+.ThepatforInput_search:focus {
     outline: none;
     border-color: #ffcc00;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
@@ -136,6 +154,14 @@
     border-radius: 20px;
 }
 
+.bg_category_home_page {
+    width: 90vw;
+    padding: 10px 5px;
+    border-radius: 15px;
+    background-color: #ffffff2f;
+    border: 6px solid #ffffff10;
+}
+
 .BannerSide {
     display: flex;
     align-items: center;
@@ -192,10 +218,12 @@
         object-fit: cover;
         object-position: center;
     }
+
     .TP_fun_button {
         margin-bottom: 1.5rem !important;
     }
 }
+
 @media (min-width: 767px) and (max-width: 992px) {
     .Img_SideBanner {
         border-radius: 15px;
@@ -203,6 +231,24 @@
         height: 300px;
         object-fit: cover;
         object-position: center;
+    }
+
+    .pigture_Carousel {
+        width: 95%;
+        height: 350px;
+        position: relative;
+        border: 10px;
+        margin-bottom: 0rem;
+    }
+
+    .pigture_Carousel img {
+        margin-top: 5rem;
+        margin-bottom: 1rem;
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 20px;
     }
 }
 
@@ -252,7 +298,7 @@
 .TP_Box_for_search {
     display: flex;
     align-items: center;
-    align-content: center;
+    justify-content: space-between;
     padding: 0.5rem;
     border: 3;
     width: 55%;
@@ -270,7 +316,6 @@
     border-radius: 10px !important;
     font-size: 20px !important;
     width: 100% !important;
-    margin-left: 1rem;
     color: #ffffff;
     height: 50px;
 }
@@ -284,7 +329,7 @@
     width: 100% !important;
     height: 50px;
     color: #ffffff;
-    margin-right: 1rem;
+    margin: 0!important;
 
 }
 
@@ -319,7 +364,8 @@
     }
 
     .TP_Box_for_search {
-        width: 95%;
+        width: 90%;
+        box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.199);
     }
 
 }
@@ -562,12 +608,13 @@
         font-size: 9px;
         max-width: 120px;
     }
+
     .text_alert_on_search_box {
         font-family: 'Noto Sans Thai', sans-serif !important;
         font-size: 13px;
         width: 350px !important;
     }
-    
+
 }
 
 @media (min-width: 576px) and (max-width: 992px) {
