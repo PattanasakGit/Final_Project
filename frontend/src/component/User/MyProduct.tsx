@@ -15,7 +15,7 @@ import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import { Check_Token, update, getProductBy_EmailUser } from '../WebSystem/HTTP_Request ';
 
-const url = 'http://localhost:3000'
+const PortFrontend = import.meta.env.VITE_URL_FRONTEND
 
 function format_Price(number: number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -143,7 +143,7 @@ function MyProduct() {
                 ) : record.P_STATUS === "ยกเลิกประกาศขาย" ? (
                     <Tag className='TP_font' color="red" > 🔴 {record.P_STATUS} </Tag>
                 ) : (<Tag className='TP_font' color="purple" >  {record.P_STATUS} </Tag>)
-            )            
+            )
         },
         {
             title: '',
@@ -151,7 +151,7 @@ function MyProduct() {
             render: (_, record) => (
                 record.P_STATUS === "กำลังประกาศขาย" ? (
                     <Space size="small" style={{ textAlign: 'center' }}>
-                        <button className='btn_show' onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
+                        <button className='btn_show' onClick={() => window.location.href = PortFrontend + '/Product/' + record.ID}><VisibilityIcon /></button>
                         <button
                             className='btn_delete'
                             onClick={async () => {
@@ -182,8 +182,8 @@ function MyProduct() {
                     </Space>
                 ) : record.P_STATUS === "รอตรวจสอบ" ? (
                     <Space size="small">
-                        <button className='btn_show' onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
-                        <button className='btn_edit_table' onClick={() => window.location.href = url + '/EditProduct/' + record.ID}><EditIcon /></button>
+                        <button className='btn_show' onClick={() => window.location.href = PortFrontend + '/Product/' + record.ID}><VisibilityIcon /></button>
+                        <button className='btn_edit_table' onClick={() => window.location.href = PortFrontend + '/EditProduct/' + record.ID}><EditIcon /></button>
                         <button
                             className='btn_delete'
                             onClick={async () => {
@@ -209,7 +209,7 @@ function MyProduct() {
                     </Space >
                 ) : (
                     <Space size="small">
-                        <button className='btn_show' onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
+                        <button className='btn_show' onClick={() => window.location.href = PortFrontend + '/Product/' + record.ID}><VisibilityIcon /></button>
                     </Space>
                 )
             ),
@@ -225,7 +225,7 @@ function MyProduct() {
             P_ADS: data.P_ADS
         }
         localStorage.setItem('DataProduct_Ads', JSON.stringify(newData));
-        window.location.href = url + '/Advert';
+        window.location.href = PortFrontend + '/Advert';
     }
     const [products, setProducts] = useState<DataType[]>([]);
     const [selectedTab, setSelectedTab] = useState<string>('รายการที่กำลังประกาศขาย');
@@ -243,11 +243,11 @@ function MyProduct() {
 
     useEffect(() => {
         const filteredData = products.filter(item => {
-            if (selectedTab === 'รายการที่กำลังประกาศขาย') {
+            if (selectedTab === 'รายการที่กำลังประกาศขาย' || selectedTab === 'กำลังประกาศ') {
                 return item.P_STATUS as string === 'กำลังประกาศขาย';
-            } else if (selectedTab === 'รายการที่รออนุมัติ') {
+            } else if (selectedTab === 'รายการที่รออนุมัติ' || selectedTab === 'รออนุมัติ') {
                 return item.P_STATUS as string === 'รอตรวจสอบ';
-            } else if (selectedTab === 'รายการที่ยกเลิกประกาศขาย') {
+            } else if (selectedTab === 'รายการที่ยกเลิกประกาศขาย' || selectedTab === 'ยกเลิกแล้ว') {
                 return item.P_STATUS as string === 'ยกเลิกประกาศขาย';
             }
             return true;
@@ -256,17 +256,72 @@ function MyProduct() {
     }, [selectedTab, products]);
 
     const data: DataType[] = filteredProducts; //ขอมูลที่จะแสดงใน ตาราง
+
+    const show_count_product = () => {
+        if (selectedTab === 'รายการที่กำลังประกาศขาย' || selectedTab === 'กำลังประกาศ') {
+            return (
+                <div className='show_select_myproduct'>
+                    <img className='icon_in_btn' src='ICON/Icon_Accepted.png' />
+                    <div style={{ display: 'block' }}>
+                        <p className='text_in_btn'>รายการที่กำลังประกาศขาย</p>
+                        <p className='small_text_in_btn'> จำนวน {products.filter(product => product.P_STATUS === 'กำลังประกาศขาย').length} รายการ </p>
+                    </div>
+                </div>
+            );
+        } else if (selectedTab === 'รายการที่รออนุมัติ' || selectedTab === 'รออนุมัติ') {
+            return (
+                <div className='show_select_myproduct'>
+                    <img className='icon_in_btn' src='ICON/Icon_Padding.png' />
+                    <div style={{ display: 'block' }}>
+                        <p className='text_in_btn'> รายการที่รออนุมัติ </p>
+                        <p className='small_text_in_btn'> จำนวน {products.filter(product => product.P_STATUS === 'รอตรวจสอบ').length} รายการ </p>
+                    </div>
+                </div>
+            );
+        } else if (selectedTab === 'รายการที่ยกเลิกประกาศขาย' || selectedTab === 'ยกเลิกแล้ว') {
+            return (
+                <div className='show_select_myproduct'>
+                    <img className='icon_in_btn' src='ICON/Icon_Reject.png' />
+                    <div style={{ display: 'block' }}>
+                        <p className='text_in_btn'>รายการที่ยกเลิกประกาศขาย</p>
+                        <p className='small_text_in_btn'> จำนวน {products.filter(product => product.P_STATUS === 'ยกเลิกประกาศขาย').length} รายการ </p>
+                    </div>
+                </div>
+            );
+        } else {
+            return (
+                <div className='show_select_myproduct'>
+                    <img className='icon_in_btn' src='https://img.icons8.com/?size=512&id=0a0Pgc8Lxvoe&format=png' />
+                    <div style={{ display: 'block' }}>
+                        <p className='text_in_btn'>รายการทั้งหมด</p>
+                        <p className='small_text_in_btn'> จำนวน {products.length} รายการ </p>
+                    </div>
+                </div>
+            );
+        }
+    }
+
     return (
         <center>
-            <div style={{ height: 'fit-content', width: '90%', paddingBottom: '7rem' }} className='contentPage'>
-                <h1 className='topics_table'>  รายการประกาศขาย </h1>
+            <div style={{ height: 'fit-content', width: '95%', paddingBottom: '7rem' }} className='contentPage'>
+                <h1 className='topics_table'>  รายการประกาศขายของฉัน </h1>
                 <div className='div_cover_table_and_tab'>
-                    <Segmented
-                        block
-                        options={['รายการที่กำลังประกาศขาย', 'รายการที่รออนุมัติ', 'รายการที่ยกเลิกประกาศขาย', 'รายการทั้งหมด']}
-                        onChange={newTab => setSelectedTab(newTab as string)}
-                        className='tp_tab'
-                    />
+
+                    {show_count_product()}
+
+
+
+                    <div className='containner_btn_myProduct_for_desktop'>
+                        <Segmented block className='tp_tab' onChange={newTab => setSelectedTab(newTab as string)}
+                            options={['รายการที่กำลังประกาศขาย', 'รายการที่รออนุมัติ', 'รายการที่ยกเลิกประกาศขาย', 'รายการทั้งหมด']}
+                        />
+                    </div>
+                    <div className='containner_btn_myProduct_for_mobile'>
+                        <Segmented block className='tp_tab' onChange={newTab => setSelectedTab(newTab as string)}
+                            options={['กำลังประกาศ', 'รออนุมัติ', 'ยกเลิกแล้ว', 'ทั้งหมด']}
+                        />
+                    </div>
+
                     <Table
                         scroll={{ x: 1300 }}
                         columns={columns}

@@ -4,6 +4,7 @@ import { Select, MenuItem } from '@mui/material';
 import { useState, useEffect, SetStateAction } from 'react';
 import { fetchCategories, fillter_product } from '../WebSystem/HTTP_Request ';
 import { Grid, Card, CardContent, Typography, Pagination } from '@mui/material';
+import { MenuUnfoldOutlined , SearchOutlined } from '@ant-design/icons';
 
 const colors = ["FF8C32", "D7A86E", "A64B2A", "8E3200"];
 
@@ -110,7 +111,7 @@ const ProductsGrid = () => {
 
   //------------------------ สำหรับแสดงหมวดหมู่ --------------------------
   const [showAllItems, setShowAllItems] = useState(false);
-  const [itemsPerPage_CP, setItemsPerPage_CP] = useState(15);
+  const [itemsPerPage_CP, setItemsPerPage_CP] = useState(3);
 
   useEffect(() => {
     const handleResize = () => {
@@ -219,7 +220,7 @@ const ProductsGrid = () => {
       </Drawer>
 
       {/* --------------------------------------- หมวดหมู่ --------------------------------------------------------- */}
-      <div className="table_show_products" >
+      <div className="bg_category_home_page" >
         <div className="tp-category-container">
           <Card className={`tp-category-card`} onClick={() => handleCategoryClick('')}>
             <img src={'https://img.icons8.com/?size=512&id=IJNt9jGwqy9N&format=png'} className="tp-category-card-image" />
@@ -255,16 +256,16 @@ const ProductsGrid = () => {
       </center>
 
       <div className="TP_Box_for_search">
-        <div style={{ width: "15%", marginRight: '2%', marginLeft: '1%' }}>
-          <button className="TP_btn_sell" onClick={showDrawer}> ตัวกรอง </button>
+        <div style={{ width: "15%",margin:0}}>
+          <button className="TP_btn_sell" onClick={showDrawer}> <MenuUnfoldOutlined /> </button>
         </div>
-        <div style={{ width: "60%" }}>
-          <input className="ThepatforInput" value={nameProduct} onChange={(event) => setnameProduct(event.target.value)}
+        <div style={{ width: "70%" }}>
+          <input className="ThepatforInput_search" value={nameProduct} onChange={(event) => setnameProduct(event.target.value)}
             style={{ borderRadius: '15px', backgroundColor: '#ffffff', paddingLeft: '5%' }} onKeyPress={handleKeyPress}
           />
         </div>
-        <div style={{ width: "15%", marginLeft: '4%' }}>
-          <button className="TP_btn_s" onClick={Search}> ค้นหา </button>
+        <div style={{ width: "15%",margin:0}}>
+          <button className="TP_btn_s" onClick={Search}> <SearchOutlined /> </button>
         </div>
       </div>
 

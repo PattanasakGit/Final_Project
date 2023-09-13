@@ -81,7 +81,6 @@
   padding: 50px 0px 70px 0px;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-image: "https://images.unsplash.com/photo-1633265486064-086b219458ec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80";
 }
 
 .reset-password-title {
@@ -257,10 +256,27 @@
 
   .TP_Box_radio {
     margin: 1rem;
-    width: 120%;
+    width: 110%;
   }
 
   .TP_Box_radio_create_user {
     width: 250px;
+  }
+  .reset_page {
+    width: 100%;
+    height: 80vh;
+    margin: 0 !important;
+    padding: 100px 0px 100px 0px;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .reset-password-container {
+    width: 90%;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    padding: 50px 0px 70px 0px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 }

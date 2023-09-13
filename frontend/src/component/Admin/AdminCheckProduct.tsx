@@ -13,7 +13,7 @@ import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import { Check_Token, update, listProduct } from '../WebSystem/HTTP_Request ';
 
-const url = 'http://localhost:3000'
+const PortFrontend = import.meta.env.VITE_URL_FRONTEND
 
 function format_Price(number: number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -165,7 +165,7 @@ function AdminCheckProduct() {
             width: '60px',
             render: (_, record) => (
                 <Space size="small">
-                    <button className='btn_show' onClick={() => window.location.href = url + '/Product/' + record.ID}><VisibilityIcon /></button>
+                    <button className='btn_show' onClick={() => window.location.href = PortFrontend + '/Product/' + record.ID}><VisibilityIcon /></button>
                 </Space>
             )
         },

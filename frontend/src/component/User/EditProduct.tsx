@@ -114,7 +114,7 @@ function EditProduct() {
                                 </Select><br />
                             </div>
 
-                            <div style={{ display: 'flex', justifyContent: 'center' }} className='TP_Box_radio'>
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <label className="TP_label"> <input type="radio" value="สินค้ามือ 1" checked={type === 'สินค้ามือ 1'} onChange={handleTypeChange} />
                                     <span className="TP_span" style={{ width: '90px' }}> มือ1 </span>
                                 </label>

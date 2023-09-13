@@ -5,12 +5,14 @@ import Swal from 'sweetalert2'
 import { Image, Tag, Empty } from 'antd';
 import { useEffect, useState, } from 'react';
 import { useParams } from 'react-router-dom';
+import CallIcon from '@mui/icons-material/Call';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { fillter_product, getProductByID, Check_Token, getUserByEmail, Every_Email } from '../WebSystem/HTTP_Request ';
 
+const PortFrontend = import.meta.env.VITE_URL_FRONTEND
+
 let Data_seller_out: any = {};
 let PhoneNumber_in_product: any = '';
-const url_frontend = 'http://localhost:3000'
 
 function format_Price(number: number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -66,7 +68,7 @@ function Product() {
     };
     function go_to_shop_page() {
         localStorage.setItem("UserEmail_for_Shop", Data_seller.U_EMAIL);
-        window.location.href = url_frontend + '/Shop';
+        window.location.href = PortFrontend + '/Shop';
     };
     // ส่วนของการจัดการวันเวลา
     const dateString = Data_seller.U_REGISTER;
@@ -81,14 +83,20 @@ function Product() {
     if (!data.P_NAME || !data.P_IMG || !data.P_TYPE) {
         return <div> <br /><br /><br /><br /><br />Loading...<br /><br /><br /><br /><br /></div>;
     }
+
     return (
         <center>
             <div style={{ height: '100%', width: '90%' }} className='contentPage'>
                 <div className='product_container'>
-                    <div className='product_images' style={{ marginTop: '10px' }}>
-                        {data.P_IMG.slice(1).map((image: string) => (
-                            <Image src={image} alt='Product Image' key={image} className='TP_IMG' />
-                        ))}
+                    
+                    <div className='more_product_left'>
+                        {data.P_IMG.length > 2 && (
+                            <div className='product_images' style={{ marginTop: '10px' }}>
+                                {data.P_IMG.slice(1).map((image: string) => (
+                                    <Image src={image} alt='Product Image' key={image} className='TP_IMG' />
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     <div className='product_container_img'>
@@ -99,6 +107,16 @@ function Product() {
                                 <h2>ขออภัย</h2>
                                 <p>ผู้ขายไม่ได้อัพโหลดภาพสินค้า</p>
                                 <Empty />
+                            </div>
+                        )}
+                    </div>
+
+                    <div className='more_product_right'>
+                        {data.P_IMG.length > 2 && (
+                            <div className='product_images' style={{ marginTop: '10px' }}>
+                                {data.P_IMG.slice(1).map((image: string) => (
+                                    <Image src={image} alt='Product Image' key={image} className='TP_IMG' />
+                                ))}
                             </div>
                         )}
                     </div>
@@ -131,10 +149,13 @@ function Product() {
                             รหัสประกาศขาย : #{data.ID}
                         </div>
 
-                        <div style={{ marginTop: '100px', textAlign: 'center' }} className='btn_want_to_buy'>
-                            <button className='btn_product2' onClick={Tell}>โทรหาผู้ขาย</button>
+                        <div style={{ marginTop: '100px', display: 'flex', justifyContent: 'center' }} className='btn_want_to_buy'>
+                            <button className='btn_call' onClick={Tell}> <CallIcon fontSize='large' /> โทร </button>
                             <button className='btn_product1' onClick={() => need_to_buy(data)}>ให้ผู้ขายติดต่อหาคุณ</button>
-                            <button className='btn_product2' onClick={go_to_shop_page}>ดูสินค้าจากร้านนี้</button>
+                            <button className='btn_product2' onClick={go_to_shop_page}><img src='/ICON/shop.png' style={{ height: '30px' }} /> ร้านค้า</button>
+                            {/* <button className='btn_product2' onClick={Tell}>โทรหาผู้ขาย</button>
+                            <button className='btn_product1' onClick={() => need_to_buy(data)}>ให้ผู้ขายติดต่อหาคุณ</button>
+                            <button className='btn_product2' onClick={go_to_shop_page}>ดูสินค้าจากร้านนี้</button> */}
                         </div>
 
                     </div>
@@ -234,7 +255,7 @@ async function need_to_buy(product: interface_Product) {
             }
         });
     } else {
-        window.location.href = "http://localhost:3000/";
+        window.location.href = PortFrontend;
     }
 }
 

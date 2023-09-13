@@ -39,6 +39,10 @@ export const validateForm = (data:any) => {
   else if (password1.trim() === '') {
     messageErrors.push('โปรดระบุรหัสผ่าน');
   }
+   // ตรวจสอบความยาวของรหัสผ่าน
+   else if (password1.length < 6) {
+    messageErrors.push('รหัสผ่านจะต้องมีความยาวไม่น้อยกว่า 6 ตัวอักษร');
+  }
   // ตรวจสอบความถูกต้องของรหัสผ่าน 2
   else if (password2.trim() === '') {
     messageErrors.push('โปรดระบุรหัสผ่าน อีกครั้ง');

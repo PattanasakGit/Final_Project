@@ -3,7 +3,7 @@ import React, { useState, } from 'react';
 import '../../css/Login.css';
 import '../../css/checkbox.css';
 import jwt_decode from 'jwt-decode';
-import {update } from './HTTP_Request ';
+import { update } from './HTTP_Request ';
 import { useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2' // Alert text --> npm install sweetalert2
 
@@ -85,7 +85,23 @@ export const ResetPasswordPage_canLogin: React.FC = () => {
     usetoken: false
   }
   const handleSubmit = () => {
-    if (newPassword !== confirmPassword) {
+
+
+    if (newPassword === '' && confirmPassword === '') {
+      Swal.fire({
+        title: 'รหัสผ่านไม่สามารถว่างได้',
+        text: 'โปรดตรวจสอบรหัสผ่านของท่านและทำรายการอีกครั้ง',
+        icon: 'warning',
+      });
+      return;
+    } else if (newPassword.length < 6) {
+      Swal.fire({
+        title: 'รหัสผ่านสั้นเกินไป',
+        text: 'รหัสผ่านจะต้องมีความยาวไม่น้อยกว่า 6 ตัวอักษร',
+        icon: 'warning',
+      });
+      return;
+    } else if (newPassword !== confirmPassword) {
       Swal.fire({
         title: 'รหัสผ่านไม่ตรงกัน',
         text: 'โปรดตรวจสอบรหัสผ่านของท่านและทำรายการอีกครั้ง',

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '../../css/Login.css';
 import '../../css/checkbox.css';
+import '../../css/foget_password.css';
 
 import Swal from 'sweetalert2';
 import { sendEmaiChangePassword, getUserByEmail } from './HTTP_Request ';
@@ -37,29 +38,31 @@ function ForgetPassword() {
     }
     return (
         <center>
-            <div style={{ height: '100%', width: '90%', display: 'flex', backgroundColor: '#fff' }} className='contentPage'>
-                <div style={{ width: "50%" }}>
-                    <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FforgetPassword.jpg?alt=media&token=e1b3389f-09e1-4c0f-9a61-cc42464171aa"
-                        height='100%x' width="80%"
-                    />
-                </div>
-
-                <div style={{ width: "50%", color: '#333', paddingTop: '180px' }}>
-                    <h1>กรุณาป้อน Email ของคุณ</h1>
-                    <h4>เราจะทำการส่งลิงค์ไปยัง Email ของคุณเพื่อทำการกำหนดรหัสผ่าน</h4>
-                    <div className="input_resetpass_container" style={{}}>
-                        <input
-                            style={{ height: '80%' }}
-                            className='ThepatforInput'
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder='Email Address'
-                            required
+            <div className='contentPage' style={{ height: '100%', width: '90%', backgroundColor: '#fff' }}>
+                <div className='foget_pass_container' >
+                    <div className='foget_pass_left'>
+                        <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FforgetPassword.jpg?alt=media&token=e1b3389f-09e1-4c0f-9a61-cc42464171aa"
+                            width="90%"
                         />
-                        <div className="button-container">
-                            <button className="btn_edit" onClick={handleSubmit}>ดำเนินการต่อ</button>
+                    </div>
+
+                    <div className='foget_pass_right'>
+                        <h1>กรุณาป้อน Email ของคุณ</h1>
+                        <h4>เราจะทำการส่งลิงค์ไปยัง Email ของคุณเพื่อทำการกำหนดรหัสผ่าน</h4>
+                        <div className="input_resetpass_container" style={{}}>
+                            <input
+                                style={{ height: '80%' }}
+                                className='ThepatforInput'
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder='Email Address'
+                                required
+                            />
+                            <div className="button-container">
+                                <button className="btn_edit" style={{width:'fit-content',padding:'0 20px'}} onClick={handleSubmit}>ดำเนินการต่อ</button>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -8,7 +8,7 @@ import { Check_Token, getUserByEmail, update } from '../WebSystem/HTTP_Request '
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
 import { storage } from '../WebSystem/firebase';
 
-const URL_frontend = 'http://localhost:3000';
+const PortFrontend = import.meta.env.VITE_URL_FRONTEND
 
 function MyProfile() {
     Check_Token();
@@ -87,7 +87,7 @@ function MyProfile() {
     }
 
     const sendmail_for_resetPassword = () => {
-        window.open(URL_frontend+'/ChangePassword');
+        window.open(PortFrontend+'/ChangePassword');
     }
     //------------------------------------------------------------------------------------------------------------------------------------------
     const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {

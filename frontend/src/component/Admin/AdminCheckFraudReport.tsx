@@ -4,12 +4,14 @@ import '../../css/Admin_Home.css';
 import '../../css/AdminCheckProduct.css';
 import '../../css/AdminManageTable.css';
 
+import Swal from 'sweetalert2';
 import { Space, Table, Image } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { listData } from '../WebSystem/HTTP_Request ';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { listData, DeleteByID } from '../WebSystem/HTTP_Request ';
 
 function CheckFraudReport() {
-    interface Category { ID: number, SELLER: string, EMAIL_REPORTER: string ,INFORMATIONS: string,IMG_FRAUD_REPORT: string}
+    interface Category { ID: number, SELLER: string, EMAIL_REPORTER: string, INFORMATIONS: string, IMG_FRAUD_REPORT: string }
     const [AllFraudReport, setAllFraudReport] = useState<Category[]>([]);
 
     const listAllData = async () => {
@@ -32,6 +34,7 @@ function CheckFraudReport() {
             width: '80px',
             fixed: 'left',
             sorter: (a, b) => a.ID - b.ID,
+            defaultSortOrder: 'descend', 
         },
         {
             title: 'ผู้ที่ถูกรายงาน',
@@ -73,6 +76,36 @@ function CheckFraudReport() {
             render: (_, record) => (
                 <Space size="small">
                     <Image src={record.IMG_FRAUD_REPORT} style={{ height: '100px' }} />
+                </Space>
+            )
+        },
+        {
+            title: '',
+            className: 'TP_font',
+            align: 'center',
+            width: '100px',
+            key: 'action',
+            render: (_, record) => (
+                <Space size="small">
+                    <button
+                        className='btn_delete'
+                        onClick={async () => {
+                            Swal.fire({
+                                title: 'คุณแน่ใจหรือไม่ว่าต้องการลบ?',
+                                text:'การลบรายงานการโกง จะไม่สามารถกู้คืนได้อีก',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: 'green',
+                                cancelButtonColor: '#d33',
+                            }).then(async (result) => {
+                                if (result.isConfirmed) {
+                                    await DeleteByID(record.ID, 'deleteFRAUD_REPORT');
+                                }
+                            })
+                        }}
+                    >
+                        <DeleteIcon />
+                    </button>
                 </Space>
             )
         },

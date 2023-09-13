@@ -47,3 +47,12 @@ body {
   color: #fff;
   font-size: 1em;
 }
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  padding-right: 32px;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+  font-family: 'Noto Sans Thai', sans-serif !important;
+}

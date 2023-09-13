@@ -56,6 +56,24 @@
     border-color: #ffcc00;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
 }
+.ThepatforInput_search {
+    width: 90%;
+    height: 50px;
+    color: black;
+    font-size: 20px;
+    text-align: left;
+    padding-left: 15px;
+    border-radius: 7px;
+    border: 2px solid #5e5e5e53;
+    background-color: #ffffff0e;
+    font-family: 'Noto Sans Thai', sans-serif;
+}
+
+.ThepatforInput_search:focus {
+    outline: none;
+    border-color: #ffcc00;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+}
 
 .Thepatradio {
     width: 100%;
@@ -136,6 +154,14 @@
     border-radius: 20px;
 }
 
+.bg_category_home_page {
+    width: 90vw;
+    padding: 10px 5px;
+    border-radius: 15px;
+    background-color: #ffffff2f;
+    border: 6px solid #ffffff10;
+}
+
 .BannerSide {
     display: flex;
     align-items: center;
@@ -145,8 +171,8 @@
 
 .Img_SideBanner {
     border-radius: 15px;
-    width: 600px;
-    height: 600px;
+    width: 40vw;
+    height: 40vw;
     object-fit: cover;
     object-position: center;
 }
@@ -187,10 +213,42 @@
 
     .Img_SideBanner {
         border-radius: 15px;
-        width: 100%;
-        height: 600px;
+        width: 90%;
+        height: 300px;
         object-fit: cover;
         object-position: center;
+    }
+
+    .TP_fun_button {
+        margin-bottom: 1.5rem !important;
+    }
+}
+
+@media (min-width: 767px) and (max-width: 992px) {
+    .Img_SideBanner {
+        border-radius: 15px;
+        width: 90%;
+        height: 300px;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .pigture_Carousel {
+        width: 95%;
+        height: 350px;
+        position: relative;
+        border: 10px;
+        margin-bottom: 0rem;
+    }
+
+    .pigture_Carousel img {
+        margin-top: 5rem;
+        margin-bottom: 1rem;
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 20px;
     }
 }
 
@@ -240,7 +298,7 @@
 .TP_Box_for_search {
     display: flex;
     align-items: center;
-    align-content: center;
+    justify-content: space-between;
     padding: 0.5rem;
     border: 3;
     width: 55%;
@@ -258,7 +316,6 @@
     border-radius: 10px !important;
     font-size: 20px !important;
     width: 100% !important;
-    margin-left: 1rem;
     color: #ffffff;
     height: 50px;
 }
@@ -272,7 +329,7 @@
     width: 100% !important;
     height: 50px;
     color: #ffffff;
-    margin-right: 1rem;
+    margin: 0!important;
 
 }
 
@@ -307,29 +364,15 @@
     }
 
     .TP_Box_for_search {
-        width: 95%;
+        width: 90%;
+        box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.199);
     }
 
-    .TP_btn_s {
-        font-size: 10px !important;
-    }
-
-    .TP_btn_sell {
-        font-size: 10px !important;
-    }
 }
 
 @media (min-width: 576px) and (max-width: 992px) {
     .TP_Box_for_search {
         width: 80%;
-    }
-
-    .TP_btn_s {
-        font-size: 15px !important;
-    }
-
-    .TP_btn_sell {
-        font-size: 15px !important;
     }
 }
 
@@ -473,29 +516,27 @@
     background-color: rgba(255, 255, 255, 0.425);
     border-radius: 5px;
     margin-bottom: 5px;
+    background-color: #f3f95c;
     color: #F55353;
     font-size: 20px;
     width: 400px;
-}
-
-/* ปุ่มเคียร์ filter บนช่องเตือน */
-.text_alert_on_search_box {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 390px;
 }
 
 .button-clear-filter_text_alert {
     font-family: 'Noto Sans Thai', sans-serif !important;
+    color: #F55353;
     height: auto;
     margin-left: 10px;
     padding: 3px;
-    background-color: rgba(0, 0, 0, 0.114);
-    border: .5px solid #787878;
+    background-color: rgba(255, 156, 156, 0.248);
+    border: .5px solid #fd7474;
     border-radius: 5px;
     cursor: pointer;
     margin-left: 2rem;
+    margin-right: 1px;
 }
 
 .button-clear-filter_text_alert:hover {
@@ -567,6 +608,13 @@
         font-size: 9px;
         max-width: 120px;
     }
+
+    .text_alert_on_search_box {
+        font-family: 'Noto Sans Thai', sans-serif !important;
+        font-size: 13px;
+        width: 350px !important;
+    }
+
 }
 
 @media (min-width: 576px) and (max-width: 992px) {
