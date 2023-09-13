@@ -145,8 +145,8 @@
 
 .Img_SideBanner {
     border-radius: 15px;
-    width: 600px;
-    height: 600px;
+    width: 40vw;
+    height: 40vw;
     object-fit: cover;
     object-position: center;
 }
@@ -194,6 +194,15 @@
     }
     .TP_fun_button {
         margin-bottom: 1.5rem !important;
+    }
+}
+@media (min-width: 767px) and (max-width: 992px) {
+    .Img_SideBanner {
+        border-radius: 15px;
+        width: 90%;
+        height: 300px;
+        object-fit: cover;
+        object-position: center;
     }
 }
 
