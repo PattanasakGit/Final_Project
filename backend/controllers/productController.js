@@ -258,12 +258,12 @@ async function update_Ads(id, status) {
     if (Product) {
       if (status === true) { // admin กดอนุมัติให้โฆษณา
         const currentDate = new Date();
-        const currentDate_plus_29 = currentDate.setDate(currentDate.getDate() + 29);
+        const currentDate_plus_30_day = currentDate.setDate(currentDate.getDate() + 30);
         const data_for_update = {
           P_ADS: true,
-          P_ADS_Limit_time: formatDate(currentDate_plus_29)
+          P_ADS_Limit_time: formatDate(currentDate_plus_30_day)
         }
-        Send_Email_after_checkd_Ads(Product.U_EMAIL, Product, true, formatDate(currentDate_plus_29));
+        Send_Email_after_checkd_Ads(Product.U_EMAIL, Product, true, formatDate(currentDate_plus_30_day));
         await updateData(id, data_for_update, DataModel);
         return true;
       } else { // admin ทำการยกกเลิก โฆาณา
@@ -324,5 +324,5 @@ async function Check_Ads_Product() {
   console.log('-------------------------------------------------');
 }
 
-setInterval(Check_Ads_Product, 1000 * 60 * 60 * 24);
+setInterval(Check_Ads_Product, 1000 * 60 * 60 * 12);
 // setInterval(Check_Ads_Product, 1000 * 3);
