@@ -4,11 +4,6 @@ const { Schema } = mongoose;
 const { insertData, getData, updateData, deleteData, getDataById, getNextDataId } = require('../database/Database.js');
 var str_collection = "CategoryProduct";
 
-function formatDate(date) {
-  const formattedDate = moment(date).utcOffset('+07:00').format('YYYY/MM/DD HH:mm:ss');
-  return formattedDate;
-}
-
 const CategoryProductSchema = new Schema({
   ID: { type: Number, required: true, unique: true },
   CP_NAME: { type: String },
