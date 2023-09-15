@@ -129,7 +129,7 @@ function Advert() {
                 <div style={{ backgroundColor: '#DAC0A3', padding: '5px', marginTop: '10px' }}>
                     <hr style={{ border: 'none', height: '4px', backgroundImage: 'linear-gradient(to right, #C58940, #E5BA73, #ffd700)' }} />
 
-                    <h2 style={{ color: '#333' }}>ผู้ขายสามารถ ลงโฆษณา ได้ครั้งละ 30 วัน  <br />ค่าบริการเพียง 29 บาท/ครั้ง</h2>
+                    <h2 style={{ color: '#333' }}>ผู้ขายลงโฆษณาได้ครั้งละ 30 วัน  <br />ค่าบริการเพียง 29 บาท/ครั้ง</h2>
                     <hr style={{ border: 'none', height: '4px', backgroundImage: 'linear-gradient(to right, #C58940, #E5BA73, #ffd700)' }} />
                 </div>
                 <div style={{ color: '#333', padding: '1rem', width: '70%', marginTop: '10px', borderRadius: '20px' }}>
@@ -138,7 +138,7 @@ function Advert() {
                     <p style={{ marginTop: '1rem', color: '#C58940' }}>การลงโฆษณา 1 ครั้งมีอายุการใช้งาน 30 วัน (นับจากวันที่ระบบอนุมัติ)</p>
                 </div>
                 <div style={{ marginTop: '1rem', color: '#ffffff' }}>
-                    <img style={{ borderRadius: '20px', height: '500px',width:'100vw' }} src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FQR%2029%20B.png?alt=media&token=87c1d506-26d4-48ce-b967-833fe978341f' />
+                    <img className='img_QR' src='https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FQR%2029%20B.png?alt=media&token=87c1d506-26d4-48ce-b967-833fe978341f' />
                 </div>
                 <div style={{ backgroundColor: '#DAC0A3', padding: '5px', }}>
 
