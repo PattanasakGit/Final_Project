@@ -204,7 +204,7 @@ function CreateProduct() {
                             <div className="file-upload-container">
                                 {renderSelectedImagesPreview({ disableUploadButton: selectedImages.length >= 6 })}
                                 {!lock_bnt && ( //ถ้าเคยกดอัพโหลดรูปภาพแล้วปุ่มจะหายไป
-                                    <button onClick={alert_before_upload} className='Btn_upload'>ฉันต้องการใช้ภาพเหล่านี้</button>
+                                    <button onClick={alert_before_upload} className='Btn_upload'> อัพโหลดรูปภาพ </button>
                                 )}
                             </div>
                         )}

@@ -2,6 +2,7 @@ import '../../css/Product.css';
 import '../../css/Background.css';
 import { Empty, Tag } from 'antd';
 import moment from 'moment';
+import Swal from 'sweetalert2'
 import { deepOrange } from '@mui/material/colors';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useEffect, useState, } from 'react';
@@ -102,7 +103,21 @@ function Shop() {
         COMMENT: COMMENT
     }
     const submit_data_comment = async () => {
-        await addReview(data_comment);
+
+        Swal.fire({
+            title: 'ยืนยันการรีวิว',
+            html: `การรีวิวของคุณคือการรีวิวต่อผู้ขาย ไม่ใช่สินค้า <br>คุณสามารถรีวิวให้ผู้ขายได้ 1 ครั้งเท่านั้น <br>และจะไม่สามารถแก้ไขภายหลังได้ `,
+            icon: 'warning',
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'ยืนยัน',
+            cancelButtonText : 'ยกเลิก',
+            confirmButtonColor: '#7A9D54',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await addReview(data_comment);
+            }
+        });
     }
     const calculateAverageRating = () => {
         if (U_REVIEWS && U_REVIEWS.length > 0) {
@@ -196,7 +211,7 @@ function Shop() {
                                 {products
                                     .filter((product: any) => product.P_ADS === true)
                                     .map((product: any) => (
-                                        <Grid item xs={6} sm={4} md={3} lg={4} key={product.ID}>
+                                        <Grid item xs={6} sm={6} md={6} lg={4} key={product.ID}>
                                             <Card sx={{ width: '100%', borderRadius: '10px', backgroundColor: '#FFFDE8', position: 'relative', boxShadow: ' 0 0 0 4px #FFCC48' }} className='product_cardContainer' >
                                                 <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'absolute', top: '0', right: '0', padding: '10px' }}>
                                                     <img src="https://firebasestorage.googleapis.com/v0/b/yakkai.appspot.com/o/images%2FSystem%2FICON%2FPremium%20ICON.png?alt=media&token=2da96bd0-d868-4a85-9f52-becfe26fda9b" style={{ height: '40px', width: '40px', filter: 'drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.9))' }} />
@@ -234,7 +249,7 @@ function Shop() {
                                 {products
                                     .filter((product: any) => product.P_ADS !== true)
                                     .map((product: any) => (
-                                        <Grid item xs={6} sm={4} md={3} lg={4} key={product.ID}>
+                                        <Grid item xs={6} sm={6} md={6} lg={4} key={product.ID}>
                                             <Card sx={{ width: '100%', borderRadius: '10px' }} className='product_cardContainer' >
                                                 <CardContent sx={{ padding: 0 }} onClick={() => send_data_to_Product(product)} >
                                                     <div className='container_show_img_in_card'>

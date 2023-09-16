@@ -25,7 +25,7 @@ export const submit = (data: any, part: string) => {
             }
           });
           if (part === 'createProduct') {
-            await axios.get('https://maker.ifttt.com/trigger/NewProduct/with/key/cqOUDIfBCoBgEdeaZc5stu');
+            await axios.post(PortBackend+'/IFTTT_NewProduct');
           }
           return true;
         } else {
@@ -364,7 +364,7 @@ export const TP_VerifyEmail = (data: any, part: string) => {
               }
               setTimeout(() => { window.location.href = PortFrontend; }, 1500);
             });
-            await axios.get('https://maker.ifttt.com/trigger/NewUser/with/key/cqOUDIfBCoBgEdeaZc5stu');
+            await axios.post(PortBackend+'/IFTTT_NewUser');
           }
         });
 

@@ -61,9 +61,10 @@ function Home() {
                 <center>
                     <div className="pigture_Carousel">
                         <Carousel autoplay >
-                            {IMG_Banner.map((oneBanner: any) => (
-                                <img src={oneBanner.TB_IMG} onClick={() => window.location.href = oneBanner.TB_LINK} />
+                            {IMG_Banner.map((oneBanner: any, index: number) => (
+                                <img key={index} src={oneBanner.TB_IMG} onClick={() => window.location.href = oneBanner.TB_LINK} />
                             ))}
+
                         </Carousel>
                     </div>
 
@@ -74,8 +75,8 @@ function Home() {
                     <div className="BannerSide">
                         <div className="coverSideBar">
                             <Carousel autoplay dotPosition='top'>
-                                {IMG_Side_Banner.map((oneBanner: any) => (
-                                    <a href={oneBanner.SB_LINK}>
+                                {IMG_Side_Banner.map((oneBanner: any, index: number) => (
+                                    <a key={index} href={oneBanner.SB_LINK}>
                                         <img src={oneBanner.SB_IMG} className="Img_SideBanner" />
                                     </a>
                                 ))}
