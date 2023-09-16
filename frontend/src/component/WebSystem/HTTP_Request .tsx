@@ -11,7 +11,7 @@ export const submit = (data: any, part: string) => {
 
   axios
     .post(apiUrl, data)
-    .then((response) => {
+    .then(async (response) => {
       const res = response.data;
       console.log(res);
 
@@ -24,6 +24,9 @@ export const submit = (data: any, part: string) => {
               window.location.reload();
             }
           });
+          if (part === 'createProduct') {
+            await axios.get('https://maker.ifttt.com/trigger/NewProduct/with/key/cqOUDIfBCoBgEdeaZc5stu');
+          }
           return true;
         } else {
           Swal.fire({
@@ -361,7 +364,7 @@ export const TP_VerifyEmail = (data: any, part: string) => {
               }
               setTimeout(() => { window.location.href = PortFrontend; }, 1500);
             });
-
+            await axios.get('https://maker.ifttt.com/trigger/NewUser/with/key/cqOUDIfBCoBgEdeaZc5stu');
           }
         });
 
