@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Analytics } from '@vercel/analytics/react';
 import './App.css'
 // นำเข้า หน้าต่าง ๆ ที่เป็นของ Web System
 import Login from './component/WebSystem/Login.tsx';
@@ -32,11 +33,12 @@ function App() {
   const role: string | null = localStorage.getItem('role'); // ควนรจาก LS
   return (
     <>
+      <Analytics />
       <NavBar />
       <BrowserRouter>
         <Routes>
           {role !== 'User' && role !== 'Admin' && (
-              <Route path="/" element={<Login />} />
+            <Route path="/" element={<Login />} />
           )}
           {role === 'User' && (
             <>

@@ -117,11 +117,11 @@ const ProductsGrid = () => {
     const handleResize = () => {
       const windowWidth = window.innerWidth;
       if (windowWidth < 576) { // หน้าจอมือถือ (mobile)
-        setItemsPerPage_CP(3);
+        setItemsPerPage_CP(windowWidth/130);
       } else if (windowWidth >= 576 && windowWidth < 992) { // หน้าจอ iPad
-        setItemsPerPage_CP(6);
+        setItemsPerPage_CP(windowWidth/130);
       } else { // หน้าจอ desktop
-        setItemsPerPage_CP(14);
+        setItemsPerPage_CP(windowWidth/130);
       }
     };
     // ตอนที่โหลดหน้าหรือปรับขนาดหน้าจอ

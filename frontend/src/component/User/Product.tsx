@@ -1,6 +1,7 @@
 import '../../css/Product.css';
 import '../../css/Background.css';
 import moment from 'moment';
+import momentTZ from 'moment-timezone';
 import Swal from 'sweetalert2'
 import { Image, Tag, Empty } from 'antd';
 import { useEffect, useState, } from 'react';
@@ -150,7 +151,7 @@ function Product() {
                         </div>
 
                         <div style={{ marginTop: '100px', display: 'flex', justifyContent: 'center' }} className='btn_want_to_buy'>
-                            <button className='btn_call' onClick={Tell}> <CallIcon fontSize='large' /> โทร </button>
+                            <button className='btn_call' onClick={() => Tell(data)}> <CallIcon fontSize='large' /> โทร </button>
                             <button className='btn_product1' onClick={() => need_to_buy(data)}>ให้ผู้ขายติดต่อหาคุณ</button>
                             <button className='btn_product2' onClick={go_to_shop_page}><img src='/ICON/shop.png' style={{ height: '30px' }} /> ร้านค้า</button>
                             {/* <button className='btn_product2' onClick={Tell}>โทรหาผู้ขาย</button>
@@ -259,18 +260,44 @@ async function need_to_buy(product: interface_Product) {
     }
 }
 
-function Tell() {
-    Swal.fire({
-        title: 'คุณสนใจสินค้าใช่ไหม',
-        text: 'โทรหาผู้ขายโดยตรง : ' + PhoneNumber_in_product,
-        showConfirmButton: true,
-        confirmButtonText: 'Tell',
-        confirmButtonColor: '#7A9D54',
-        confirmButtonAriaLabel: 'โทร',
-        showCloseButton: true,
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.open('tel://' + PhoneNumber_in_product);
-        }
-    });
+function Tell(product: interface_Product) {
+    const currentTime = momentTZ().tz("Asia/Bangkok");
+    const currentHour = currentTime.hours();
+
+    // เช็คว่าเวลาอยู่ระหว่าง 23:00 - 05:00
+    if (currentHour >= 23 || currentHour < 5) {
+        Swal.fire({
+            title: 'ขออภัย',
+            text: 'ไม่สามารถโทรหาผู้ขายได้ในช่วงเวลานี้ (23:00 - 05:00)',
+            icon: 'warning',
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'ให้ผู้ขายติดต่อหาคุณ',
+            cancelButtonText : 'ยกเลิก',
+            confirmButtonColor: '#7A9D54',
+            confirmButtonAriaLabel: 'ให้ผู้ขายติดต่อหาคุณ',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                need_to_buy(product);
+            }
+        });
+    } else {
+        Swal.fire({
+            title: 'คุณสนใจสินค้าใช่ไหม',
+            text: 'โทรหาผู้ขายโดยตรง : ' + PhoneNumber_in_product,
+            showConfirmButton: true,
+            confirmButtonText: 'โทรหาผู้ขาย',
+            confirmButtonColor: '#7A9D54',
+            confirmButtonAriaLabel: 'โทร',
+            showCloseButton: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.open('tel://' + PhoneNumber_in_product);
+            }
+        });
+    }
 }
+
+
+
+

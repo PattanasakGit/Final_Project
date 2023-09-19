@@ -182,7 +182,7 @@ function MyProfile() {
                         {selectedImages.length !== 0 && CheckEdit_btn === true && (
                             <div >
                                 <button onClick={handleUploadButtonClick} className='btn_select_file'>เลือกภาพใหม่เพื่ออัปโหลด</button> <br />
-                                <button onClick={alert_before_upload} className='Btn_upload'>ฉันต้องการใช้ภาพนี้</button>
+                                <button onClick={alert_before_upload} className='Btn_upload'> อัพโหลดรูปภาพ </button>
                             </div>
                         )}
 
@@ -266,8 +266,8 @@ function MyProfile() {
 
                 <div style={{ marginTop: '30px' }}>
                     {CheckEdit_btn === false && <button className="btn_edit" style={{ width: '50%' }} onClick={() => setCheckEdit_btn(true)}> แก้ไข Profile </button>}
-                    {CheckEdit_btn === true && <button className="btn_edit" style={{ width: '30%', backgroundColor: 'red' }} onClick={() => setCheckEdit_btn(false)}>ยกเลิก </button>}
                     {CheckEdit_btn === true && <button className="btn_edit" style={{ width: '50%', backgroundColor: 'green' }} onClick={handleUpdate}> อัพเดตข้อมูลของคุณ </button>}
+                    {CheckEdit_btn === true && <button className="btn_edit" style={{ width: '30%', backgroundColor: '#F24C3D' }} onClick={() => setCheckEdit_btn(false)}>ยกเลิก </button>}
                 </div>
             </div>
         </center>
