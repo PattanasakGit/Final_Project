@@ -392,7 +392,7 @@ async function Send_Email_after_checkd_Ads(SEND_EMAIL_TO, data, status, Ads_Limi
     //----------------------------------------------------------------
 
     const from = 'Yakkai.th@gmail.com';
-    const subject = 'แจ้งผลการลงโฆษณา 29 วัน';
+    const subject = 'แจ้งผลการลงโฆษณา 30 วัน';
 
     // สร้าง transporter
     let transporter = nodemailer.createTransport({

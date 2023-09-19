@@ -28,7 +28,7 @@ async function addCategoryProduct(req, res) {
 
 async function listCategoryProducts(req, res) {
   try {
-    const data = await getData(DataModel);
+    const data = await DataModel.find({}).sort({ _id: 1 }).exec();
 
     res.status(200).json(data);
   } catch (error) {
