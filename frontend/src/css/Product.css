@@ -10,6 +10,11 @@
     align-items: flex-start;
 }
 
+.more_product_left{
+    width: 100px;
+    margin-right: 1rem;
+}
+
 /* CSS สำหรับ desktop */
 .product_container_img {
     width: 40%;
@@ -22,7 +27,8 @@
 
 .product_container_text {
     text-align: left;
-    width: 60%;
+    /* width: 50%; */
+    flex: 1;
     padding: 0rem 1rem;
 }
 

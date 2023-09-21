@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import CallIcon from '@mui/icons-material/Call';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { fillter_product, getProductByID, Check_Token, getUserByEmail, Every_Email } from '../WebSystem/HTTP_Request ';
+import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
 
 const PortFrontend = import.meta.env.VITE_URL_FRONTEND
 
@@ -89,7 +90,7 @@ function Product() {
         <center>
             <div style={{ height: '100%', width: '90%' }} className='contentPage'>
                 <div className='product_container'>
-                    
+
                     <div className='more_product_left'>
                         {data.P_IMG.length > 2 && (
                             <div className='product_images' style={{ marginTop: '10px' }}>
@@ -126,16 +127,19 @@ function Product() {
                         <h1 style={{ margin: 0 }}> {data.P_NAME}</h1>
                         <h1 style={{ margin: 1 }}> ราคา {format_Price(data.P_PRICE)} บาท</h1>
                         <h2 style={{ margin: 1 }}> {data.P_TYPE} </h2>
-                        {
-                            data.P_STATUS === "กำลังประกาศขาย" ? (
-                                <Tag className='TP_font' color="green" > {data.P_STATUS} </Tag>
-                            ) : data.P_STATUS === "รอตรวจสอบ" ? (
-                                <Tag className='TP_font' color="gold" > {data.P_STATUS} </Tag>
-                            ) : data.P_STATUS === "ยกเลิกประกาศขาย" ? (
-                                <Tag className='TP_font' color="red" > {data.P_STATUS} </Tag>
-                            ) : (<Tag className='TP_font' color="purple" > {data.P_STATUS} </Tag>)
-                        }
-                        <center> <h2>รายละเอียดสินค้า</h2> </center>
+                        <h3 style={{ margin: 1, color: '#FAF2D3', display: 'flex', alignItems: 'center' }}>  <ClassOutlinedIcon /> หมวดหมู่ : {data.P_CATEGORY} </h3>
+                        <div style={{marginTop:'10px'}}>
+                            {
+                                data.P_STATUS === "กำลังประกาศขาย" ? (
+                                    <Tag className='TP_font' color="green" > {data.P_STATUS} </Tag>
+                                ) : data.P_STATUS === "รอตรวจสอบ" ? (
+                                    <Tag className='TP_font' color="gold" > {data.P_STATUS} </Tag>
+                                ) : data.P_STATUS === "ยกเลิกประกาศขาย" ? (
+                                    <Tag className='TP_font' color="red" > {data.P_STATUS} </Tag>
+                                ) : (<Tag className='TP_font' color="purple" > {data.P_STATUS} </Tag>)
+                            }
+                        </div>
+                        <center> <h2  style={{ color: '#F8F0E5' }}>------ รายละเอียดสินค้า ------</h2> </center>
                         <div className='TP_text_product' style={{ whiteSpace: 'pre-line' }}>
                             {data.P_TEXT}
                         </div>
@@ -163,7 +167,7 @@ function Product() {
                 </div>
             </div>
 
-            <center> <h2 className='TP_font' style={{ color: '#2d1400' }}>สินค้าเพิ่มเติมที่คุณอาจสนใจ</h2> </center>
+            <center> <h2 className='TP_font' style={{ color: '#F8F0E5' }}> ------ สินค้าเพิ่มเติมที่คุณอาจสนใจ ------</h2> </center>
             <div style={{ height: '100%', width: '88%' }} className="table_show_products">
                 <Grid container spacing={2} >
                     {products.map((product: any) => (
@@ -273,7 +277,7 @@ function Tell(product: interface_Product) {
             showConfirmButton: true,
             showCancelButton: true,
             confirmButtonText: 'ให้ผู้ขายติดต่อหาคุณ',
-            cancelButtonText : 'ยกเลิก',
+            cancelButtonText: 'ยกเลิก',
             confirmButtonColor: '#7A9D54',
             confirmButtonAriaLabel: 'ให้ผู้ขายติดต่อหาคุณ',
         }).then((result) => {
@@ -297,7 +301,3 @@ function Tell(product: interface_Product) {
         });
     }
 }
-
-
-
-

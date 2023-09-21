@@ -11,6 +11,7 @@ import { Space, Table, Tag, Image, Empty } from 'antd';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
+import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
 import { Check_Token, update, listProduct } from '../WebSystem/HTTP_Request ';
 
 const PortFrontend = import.meta.env.VITE_URL_FRONTEND
@@ -319,17 +320,21 @@ const showDataTicket = (data: any) => {
         <center>
             <div style={{ margin: 0, height: '100%', width: '95%' }} className='contentPage'>
                 <div className='product_container'>
-                    <div className='product_images' style={{ marginTop: '10px' }}>
-                        {data.P_IMG.slice(1).map((image: string) => (
-                            <Image src={image} alt='Product Image' key={image} className='TP_IMG' />
-                        ))}
+                <div className='more_product_left'>
+                        {data.P_IMG.length > 2 && (
+                            <div className='product_images' style={{ marginTop: '10px' }}>
+                                {data.P_IMG.slice(1).map((image: string) => (
+                                    <Image src={image} alt='Product Image' key={image} className='TP_IMG' />
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     <div className='product_container_img'>
                         {data.P_IMG.length > 0 ? (
                             <Image src={data.P_IMG[0]} className='TP_main_img_product' />
                         ) : (
-                            <div className='TP_text_product_seller' style={{ color: '#333' }} >
+                            <div className='TP_text_product_seller'>
                                 <h2>ขออภัย</h2>
                                 <p>ผู้ขายไม่ได้อัพโหลดภาพสินค้า</p>
                                 <Empty />
@@ -341,15 +346,18 @@ const showDataTicket = (data: any) => {
                         <h1 style={{ margin: 0 }}> {data.P_NAME}</h1>
                         <h1 style={{ margin: 1 }}> ราคา {format_Price(data.P_PRICE)} บาท</h1>
                         <h2 style={{ margin: 1 }}> {data.P_TYPE} </h2>
-                        {
-                            data.P_STATUS === "กำลังประกาศขาย" ? (
-                                <Tag className='TP_font' color="green" > {data.P_STATUS} </Tag>
-                            ) : data.P_STATUS === "รอตรวจสอบ" ? (
-                                <Tag className='TP_font' color="gold" > {data.P_STATUS} </Tag>
-                            ) : data.P_STATUS === "ยกเลิกประกาศขาย" ? (
-                                <Tag className='TP_font' color="red" > {data.P_STATUS} </Tag>
-                            ) : (<Tag className='TP_font' color="purple" > {data.P_STATUS} </Tag>)
-                        }
+                        <h3 style={{ margin: 1, color: '#555', display: 'flex', alignItems: 'center' }}>  <ClassOutlinedIcon /> หมวดหมู่ : {data.P_CATEGORY} </h3>
+                        <div style={{marginTop:'10px'}}>
+                            {
+                                data.P_STATUS === "กำลังประกาศขาย" ? (
+                                    <Tag className='TP_font' color="green" > {data.P_STATUS} </Tag>
+                                ) : data.P_STATUS === "รอตรวจสอบ" ? (
+                                    <Tag className='TP_font' color="gold" > {data.P_STATUS} </Tag>
+                                ) : data.P_STATUS === "ยกเลิกประกาศขาย" ? (
+                                    <Tag className='TP_font' color="red" > {data.P_STATUS} </Tag>
+                                ) : (<Tag className='TP_font' color="purple" > {data.P_STATUS} </Tag>)
+                            }
+                        </div>
                         <center> <h2>รายละเอียดสินค้า</h2> </center>
                         <div className='TP_text_product' style={{ backgroundColor: '#00000015', whiteSpace: 'pre-line' }}>
                             {data.P_TEXT}
@@ -362,7 +370,7 @@ const showDataTicket = (data: any) => {
                         </div>
                     </div>
                 </div>
-                <div style={{ margin: '1rem', padding: '20px', boxShadow: '0 -5px 5px #00000010', borderRadius: '10px' }}>
+                <div style={{ margin: '4rem 1rem', padding: '20px', boxShadow: '0 -5px 5px #00000010', borderRadius: '10px' }}>
                     <h1 style={{ color: '#333', marginTop: '0px' }}> อัพเดตรายการประกาศขาย </h1>
                     <div className='container_btn_select' style={{ margin: '0rem', backgroundColor: '#00000015', padding: '20px' }}>
                         <button className='btn_Yellow' onClick={() => hendle_update_status('รอตรวจสอบ')}>

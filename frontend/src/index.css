@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai&display=swap');
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Noto Sans Thai', sans-serif !important;
   line-height: 1.5;
-  color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  color:#fff;
 }
 
 body {
@@ -17,45 +17,10 @@ body {
   min-width: 320px;
   min-height: 100vh;
   width: 100%;
-  /* background-image: linear-gradient(to right, #d3321d, #ffcf67); */
-  /* background: #9b0e0e; */
-  /* background: #6f6d6d; */
 
-  /* background: #485563;
-  background: -webkit-linear-gradient(to top, #29323c, #485563);
-  background: linear-gradient(to top, #29323c, #485563); */
-
-  /* background: #870000;
-  background: -webkit-linear-gradient(to top, #190A05, #870000);
-  background: linear-gradient(to top, #190A05, #870000); */
-
-
-  /* background: #7474BF;
-  background: -webkit-linear-gradient(to top, #348AC7, #7474BF);
-  background: linear-gradient(to top, #348AC7, #7474BF); */
-
-  /* background: #283048;
-  background: -webkit-linear-gradient(to top, #859398, #283048);
-  background: linear-gradient(to top, #859398, #283048); */
-
-
-  background: #16222A;
-  background: -webkit-linear-gradient(to top, #3A6073, #16222A);
-  background: linear-gradient(to top, #3A6073, #16222A);
   background: #2a2216;
   background: -webkit-linear-gradient(to top, #73583a, #bdb5ae);
   background: linear-gradient(to top, #73583a, #85605c);
-
-  /* background: #B79891;
-  background: -webkit-linear-gradient(to top, #94716B, #B79891);
-  background: linear-gradient(to top, #94716B, #B79891); */
-  
-
-  /* background: #656d4a; */
-  /* background: #f38375; */
-  /* background: #a78a7f; */
-  /* background: #a2d6f9; */
-
 }
 
 button {

@@ -2,6 +2,7 @@ import '../../css/Navbar.css';
 import React, { useEffect, useState } from 'react';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import { getUserByEmail, getDataWeb } from './HTTP_Request ';
+import HomeIcon from '@mui/icons-material/Home'; 
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Box, Toolbar, IconButton, Typography, Button, Menu, MenuItem, Avatar } from '@mui/material';
@@ -68,6 +69,7 @@ const NavBar = () => {
           </a>
         </Box>
         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => (window.location.href = PortFrontend)}> หน้าแรก </Button>}
           {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => (window.location.href = PortFrontend + '/MyProduct')}>ประกาศขายของฉัน</Button>}
           {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => window.location.href = PortFrontend + "/MyProfile"}>  {user.U_NAME}</Button>}
         </Box>
@@ -90,16 +92,19 @@ const NavBar = () => {
               open={Boolean(anchorEl)}
               onClose={handleMenuClose}
             >
+              <MenuItem onClick={() => (window.location.href = PortFrontend)}>
+                <Typography className='TP_font' variant="body1" style={{display:'flex',alignItems:'center'}}><HomeIcon style={{marginRight:'15px'}}/> หน้าแรก</Typography>
+              </MenuItem>
               <MenuItem onClick={() => (window.location.href = PortFrontend + '/CreateProduct')}>
-                <Typography className='TP_font' variant="body1"><AddShoppingCartIcon /> ประกาศขาย</Typography>
+                <Typography className='TP_font' variant="body1" style={{display:'flex',alignItems:'center'}}><AddShoppingCartIcon style={{marginRight:'15px'}}/> ประกาศขาย</Typography>
               </MenuItem>
               <MenuItem onClick={() => (window.location.href = PortFrontend + '/MyProduct')}>
-                <Typography className='TP_font' variant="body1"><StorefrontIcon /> ประกาศขายของฉัน</Typography>
+                <Typography className='TP_font' variant="body1" style={{display:'flex',alignItems:'center'}}><StorefrontIcon  style={{marginRight:'15px'}}/> ประกาศขายของฉัน</Typography>
               </MenuItem>
 
               {user.length !== 0 &&
                 <MenuItem onClick={() => (window.location.href = PortFrontend + '/MyProfile')}>
-                  <Typography className='TP_font' variant="body1"><ManageAccountsIcon /> โปรไฟล์ของฉัน</Typography>
+                  <Typography className='TP_font' variant="body1" style={{display:'flex',alignItems:'center'}} ><ManageAccountsIcon style={{marginRight:'15px'}}/> โปรไฟล์ของฉัน</Typography>
                 </MenuItem>
               }<center>
                 {user.length !== 0 && <button style={{ margin: '10px' }} className='Nav_button' onClick={handleLogout} >LOGOUT</button>}
