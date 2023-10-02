@@ -4,7 +4,7 @@ const app = express();
 const port = 8000;
 
 const { Token } = require('./controllers/Token');
-const { IFTTT_NewProduct, IFTTT_NewUser } = require('./controllers/IFTTT');
+const { IFTTT_NewProduct, IFTTT_NewUser, IFTTT_NewAds, IFTTT_NewReport } = require('./controllers/IFTTT');
 const { connectDatabase, closeDatabase } = require('./database/Database.js');
 const { TP_VerifyEmail_Check_Pass } = require('./controllers/TP_VerifyEmail');
 const { changePassword, Every_Email } = require('./controllers/MailController');
@@ -24,7 +24,8 @@ app.use(cors());
 // IFTTT API
 app.post('/IFTTT_NewProduct', IFTTT_NewProduct);
 app.post('/IFTTT_NewUser', IFTTT_NewUser);
-
+app.post('/IFTTT_NewAds', IFTTT_NewAds);
+app.post('/IFTTT_NewReport', IFTTT_NewReport);
 // System API
 app.post('/Every_Email', Every_Email); //ส่ง email โดยจะรับค่าต่างผ่าน body
 app.post('/sendEmaiChangePassword/:email', changePassword); //เมื่อใช้จะทำการส่ง email เพิ่มขอเปลี่ยนรหัสผ่าน
