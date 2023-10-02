@@ -56,19 +56,7 @@ function CreateProduct() {
     const submit_btn = async () => {
         if (validateCreateProduct(data).isValid) {  //ผ่าน ไม่มี errors
             if (URL_IMG.length === 0) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'คุณยังไม่อัพโหลดรูปภาพนะ',
-                    text: 'หากดำเนินการต่อ รายการของคุณจะไม่มีรูปภาพแสดง',
-                    showCancelButton: true,
-                    confirmButtonColor: 'green',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'OK'
-                }).then(async (result) => {
-                    if (result.isConfirmed) {
-                        await submit(data, 'createProduct');
-                    }
-                })
+                await alert_before_upload();
             } else {
                 await submit(data, 'createProduct');
             }
@@ -175,13 +163,14 @@ function CreateProduct() {
             Swal.fire({
                 icon: 'warning',
                 title: 'อัพโหลดรูปภาพ',
-                text: 'เมื่อคุณดำเนินการต่อ จะไม่สามารถเปลี่ยนแปลงรูปภาพที่ท่านเลือกได้',
+                text: 'โปรดตรวจสอบรูปภาพของคุณ เมื่อคุณดำเนินการต่อ จะไม่สามารถเปลี่ยนแปลงรูปภาพที่ท่านเลือกได้',
                 showCancelButton: true,
                 confirmButtonText: 'upload',
                 denyButtonText: `Don't upload`,
-            }).then((result) => {
+            }).then(async (result) => {
                 if (result.isConfirmed) {
-                    onUploadSelectedImages();
+                    await onUploadSelectedImages();
+                    await submit(data, 'createProduct');
                 }
             })
         )
@@ -203,9 +192,6 @@ function CreateProduct() {
                         {selectedImages.length > 0 && (
                             <div className="file-upload-container">
                                 {renderSelectedImagesPreview({ disableUploadButton: selectedImages.length >= 6 })}
-                                {!lock_bnt && ( //ถ้าเคยกดอัพโหลดรูปภาพแล้วปุ่มจะหายไป
-                                    <button onClick={alert_before_upload} className='Btn_upload'> อัพโหลดรูปภาพ </button>
-                                )}
                             </div>
                         )}
                         {isLoading && (
@@ -233,7 +219,7 @@ function CreateProduct() {
 
                         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                             <label style={{ fontSize: '16px' }}>หมวดหมู่ :</label>
-                            <Select value={category} onChange={(event) => handleSetTextParam(event.target.value as string)} className='TP_combobox_search' style={{ width: '62.8%', margin: '5px 5% 5px 1%',display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
+                            <Select value={category} onChange={(event) => handleSetTextParam(event.target.value as string)} className='TP_combobox_search' style={{ width: '62.8%', margin: '5px 5% 5px 1%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 {categories.map((category: any) => (
                                     <MenuItem key={category.ID} value={category.CP_NAME}>
                                         <img src={category.CP_ICON} style={{ height: '30px', width: '30px', marginRight: '1rem' }} />
@@ -276,6 +262,7 @@ function CreateProduct() {
                                 onChange={(event) => setPhoneNumber(event.target.value)}
                                 value={PhoneNumber}
                                 style={{ width: '60%', backgroundColor: '#fff', margin: '5px 5% 5px 1%' }}
+                                maxLength={10} 
                             />
                         </div>
 

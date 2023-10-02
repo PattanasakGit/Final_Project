@@ -92,7 +92,7 @@ function Product() {
                 <div className='product_container'>
 
                     <div className='more_product_left'>
-                        {data.P_IMG.length > 2 && (
+                        {data.P_IMG.length > 1 && (
                             <div className='product_images' style={{ marginTop: '10px' }}>
                                 {data.P_IMG.slice(1).map((image: string) => (
                                     <Image src={image} alt='Product Image' key={image} className='TP_IMG' />
@@ -114,7 +114,7 @@ function Product() {
                     </div>
 
                     <div className='more_product_right'>
-                        {data.P_IMG.length > 2 && (
+                        {data.P_IMG.length > 1 && (
                             <div className='product_images' style={{ marginTop: '10px' }}>
                                 {data.P_IMG.slice(1).map((image: string) => (
                                     <Image src={image} alt='Product Image' key={image} className='TP_IMG' />
@@ -155,9 +155,9 @@ function Product() {
                         </div>
 
                         <div style={{ marginTop: '100px', display: 'flex', justifyContent: 'center' }} className='btn_want_to_buy'>
-                            <button className='btn_call' onClick={() => Tell(data)}> <CallIcon fontSize='large' /> โทร </button>
-                            <button className='btn_product1' onClick={() => need_to_buy(data)}>ให้ผู้ขายติดต่อหาคุณ</button>
-                            <button className='btn_product2' onClick={go_to_shop_page}><img src='/ICON/shop.png' style={{ height: '30px' }} /> ร้านค้า</button>
+                            <button className='btn_product1' onClick={go_to_shop_page}><img src='/ICON/shop.png' style={{ height: '30px' }} /> ร้านค้า</button>
+                            <button className='btn_product2' onClick={() => need_to_buy(data)}>ให้ผู้ขายติดต่อหาคุณ</button>
+                            <button className='btn_call' onClick={() => Tell(data)}> <CallIcon fontSize='large' /> ช่องทางติดต่อ </button>
                             {/* <button className='btn_product2' onClick={Tell}>โทรหาผู้ขาย</button>
                             <button className='btn_product1' onClick={() => need_to_buy(data)}>ให้ผู้ขายติดต่อหาคุณ</button>
                             <button className='btn_product2' onClick={go_to_shop_page}>ดูสินค้าจากร้านนี้</button> */}
@@ -233,6 +233,8 @@ async function need_to_buy(product: interface_Product) {
                 `,
             showConfirmButton: true,
             showCancelButton: true,
+            confirmButtonText: 'ส่งข้อมูลให้คนขาย',
+            cancelButtonText: 'ยกเลิก',
             // width: '70%',
         }).then((result) => {
             if (result.isConfirmed) {

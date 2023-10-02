@@ -12,7 +12,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
-import { Check_Token, update, listProduct } from '../WebSystem/HTTP_Request ';
+import { update, listProduct } from '../WebSystem/HTTP_Request ';
 
 const PortFrontend = import.meta.env.VITE_URL_FRONTEND
 
@@ -38,9 +38,6 @@ interface DataType {
 type DataIndex = keyof DataType;
 
 function AdminCheckProduct() {
-    Check_Token();
-
-
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     const searchInput = useRef<InputRef>(null);
     const handleSearch = (_selectedKeys: string[], confirm: (param?: FilterConfirmProps) => void, _dataIndex: DataIndex,) => { confirm(); };

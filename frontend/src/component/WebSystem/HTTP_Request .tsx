@@ -527,6 +527,7 @@ export const addFRAUD_REPORT = async (data: any) => {
         window.location.reload();
       }
     })
+    await axios.post(PortBackend+'/IFTTT_NewReport');
     return response.data;
   } catch (error: any) {
     Swal.fire({
@@ -566,6 +567,7 @@ export const Create_Ads = async (data: any) => {
         window.location.reload();
       }
     })
+    await axios.post(PortBackend+'/IFTTT_NewAds');
     return response.data;
   } catch (error: any) {
     Swal.fire({

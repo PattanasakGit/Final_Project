@@ -37,7 +37,7 @@
 .btn_edit,
 .btn_change_pass {
   font-family: 'Noto Sans Thai', sans-serif;
-  width: 40%;
+  width: 50%;
   height: 50px;
   margin: 0px 5px;
   font-size: 20px;
@@ -153,7 +153,8 @@
 
 /* ========================    เพศใน create user  ============================================ */
 .TP_Box_radio_create_user {
-  margin: 1rem;
+  /* margin: 0.5rem; */
+  width: 100%;
 }
 
 .TP_label_create_user {
@@ -260,7 +261,7 @@
   }
 
   .TP_Box_radio_create_user {
-    width: 250px;
+    width: 260px;
   }
   .reset_page {
     width: 100%;
