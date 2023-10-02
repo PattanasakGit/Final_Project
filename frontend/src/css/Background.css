@@ -97,7 +97,7 @@
 }
 
 .Texttoppic {
-    font-family: 'Noto Sans Thai', sans-serif;
+    font-family: 'Noto Sans Thai', sans-serif !important;
     font-size: 35px;
     color: black;
 }
@@ -293,6 +293,10 @@
     font-family: 'Noto Sans Thai', sans-serif !important;
     font-size: 20px;
     margin: 5px 0 0 0;
+    white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* max-width: 150px; */
 }
 
 .TP_Box_for_search {

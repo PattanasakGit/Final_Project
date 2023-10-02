@@ -2,7 +2,7 @@ import '../../css/Navbar.css';
 import React, { useEffect, useState } from 'react';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import { getUserByEmail, getDataWeb } from './HTTP_Request ';
-import HomeIcon from '@mui/icons-material/Home'; 
+import HomeIcon from '@mui/icons-material/Home';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Box, Toolbar, IconButton, Typography, Button, Menu, MenuItem, Avatar } from '@mui/material';
@@ -16,11 +16,11 @@ const NavBar = () => {
   const [dataWeb, setDataWeb] = useState<any>(blank_dataWeb);
 
   const fetchDataWeb = async () => {
-    const DataWeb_from_backend = await getDataWeb();    
+    const DataWeb_from_backend = await getDataWeb();
     if (DataWeb_from_backend) {
       setDataWeb(DataWeb_from_backend)
-      localStorage.setItem('LOGO',DataWeb_from_backend.W_IMG)
-      localStorage.setItem('WEB_NAME',DataWeb_from_backend.W_NAME)
+      localStorage.setItem('LOGO', DataWeb_from_backend.W_IMG)
+      localStorage.setItem('WEB_NAME', DataWeb_from_backend.W_NAME)
     }
   }
   useEffect(() => {
@@ -68,12 +68,12 @@ const NavBar = () => {
             </div>
           </a>
         </Box>
+        <Button className='btn_home_navbar' color="inherit" onClick={() => (window.location.href = PortFrontend)}> หน้าแรก </Button>
         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => (window.location.href = PortFrontend)}> หน้าแรก </Button>}
           {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => (window.location.href = PortFrontend + '/MyProduct')}>ประกาศขายของฉัน</Button>}
           {user.length !== 0 && <Button style={{ fontSize: '16px' }} className='TP_font' color="inherit" onClick={() => window.location.href = PortFrontend + "/MyProfile"}>  {user.U_NAME}</Button>}
         </Box>
-          {user.length === 0 && <Button color="inherit" onClick={handleLogout} style={{marginRight:'1rem',fontSize:'18px'}}>Login</Button>}
+        {user.length === 0 && <Button color="inherit" onClick={handleLogout} style={{ marginRight: '1rem', fontSize: '18px' }}>Login</Button>}
         {user.length !== 0 && (
           <Box >
             <button className='Btn_sell' onClick={() => (window.location.href = PortFrontend + '/CreateProduct')} >ประกาศขาย</button>
@@ -93,18 +93,18 @@ const NavBar = () => {
               onClose={handleMenuClose}
             >
               <MenuItem onClick={() => (window.location.href = PortFrontend)}>
-                <Typography className='TP_font' variant="body1" style={{display:'flex',alignItems:'center'}}><HomeIcon style={{marginRight:'15px'}}/> หน้าแรก</Typography>
+                <Typography className='TP_font' variant="body1" style={{ display: 'flex', alignItems: 'center' }}><HomeIcon style={{ marginRight: '15px' }} /> หน้าแรก</Typography>
               </MenuItem>
               <MenuItem onClick={() => (window.location.href = PortFrontend + '/CreateProduct')}>
-                <Typography className='TP_font' variant="body1" style={{display:'flex',alignItems:'center'}}><AddShoppingCartIcon style={{marginRight:'15px'}}/> ประกาศขาย</Typography>
+                <Typography className='TP_font' variant="body1" style={{ display: 'flex', alignItems: 'center' }}><AddShoppingCartIcon style={{ marginRight: '15px' }} /> ประกาศขาย</Typography>
               </MenuItem>
               <MenuItem onClick={() => (window.location.href = PortFrontend + '/MyProduct')}>
-                <Typography className='TP_font' variant="body1" style={{display:'flex',alignItems:'center'}}><StorefrontIcon  style={{marginRight:'15px'}}/> ประกาศขายของฉัน</Typography>
+                <Typography className='TP_font' variant="body1" style={{ display: 'flex', alignItems: 'center' }}><StorefrontIcon style={{ marginRight: '15px' }} /> ประกาศขายของฉัน</Typography>
               </MenuItem>
 
               {user.length !== 0 &&
                 <MenuItem onClick={() => (window.location.href = PortFrontend + '/MyProfile')}>
-                  <Typography className='TP_font' variant="body1" style={{display:'flex',alignItems:'center'}} ><ManageAccountsIcon style={{marginRight:'15px'}}/> โปรไฟล์ของฉัน</Typography>
+                  <Typography className='TP_font' variant="body1" style={{ display: 'flex', alignItems: 'center' }} ><ManageAccountsIcon style={{ marginRight: '15px' }} /> โปรไฟล์ของฉัน</Typography>
                 </MenuItem>
               }<center>
                 {user.length !== 0 && <button style={{ margin: '10px' }} className='Nav_button' onClick={handleLogout} >LOGOUT</button>}
